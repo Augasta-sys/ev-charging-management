@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+
+  color: #f8fafc;
+  background: #07111f;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+
+  background: #07111f;
+
+  overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Prevent accidental horizontal overflow */
+.overflow-safe {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Hide scrollbars where horizontal scrolling is not wanted */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Make native form controls visible on dark UI */
+input[type="time"],
+input[type="date"],
+input[type="datetime-local"] {
+  color-scheme: dark;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 1;
+  cursor: pointer;
+}
+
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+  cursor: pointer;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+select {
+  color-scheme: dark;
+  color: #ffffff !important;
+  background-color: #0d1b2a !important;
+}
+
+select option {
+  background-color: #0d1b2a !important;
+  color: #ffffff !important;
+}
+
+.login-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.login-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
