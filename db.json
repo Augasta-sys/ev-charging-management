@@ -107,7 +107,7 @@
       "connectorType": "CCS",
       "powerOutput": 60,
       "pricePerKwh": 18,
-      "status": "Available"
+      "status": "Offline"
     },
     {
       "id": "CH002",
@@ -399,7 +399,7 @@
       "endTime": "10:00",
       "estimatedDuration": 60,
       "estimatedCost": 3750,
-      "status": "Confirmed",
+      "status": "Cancelled",
       "createdDate": "2026-09-24T12:56:18.922Z"
     },
     {
@@ -474,7 +474,7 @@
       "paymentDate": "2026-09-22",
       "paymentMethod": "Card",
       "transactionReference": "CARD20260922001",
-      "status": "Paid"
+      "status": "Refunded"
     }
   ],
   "pricing": [
@@ -485,7 +485,7 @@
       "powerRange": "Up to 22 kW",
       "pricePerKwh": 12,
       "effectiveDate": "2026-09-01",
-      "status": "Active"
+      "status": "Inactive"
     },
     {
       "id": "PR002",
@@ -624,5 +624,6 @@
       "relatedRecordId": "BK009",
       "timestamp": "2026-09-24T14:03:58.930Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

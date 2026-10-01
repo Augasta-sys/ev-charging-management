@@ -91,18 +91,18 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
       <div className="flex items-start gap-3">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10">
           <Icon className="h-4 w-4 text-cyan-300" />
         </div>
 
         <div className="min-w-0">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {label}
           </p>
 
-          <p className="mt-1 break-words text-sm font-medium text-white">
+          <p className="mt-1 break-words text-sm font-medium text-[var(--text-primary)]">
             {value || "—"}
           </p>
         </div>
@@ -466,7 +466,7 @@ export default function CustomerProfile() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading profile...
           </p>
         </div>
@@ -493,7 +493,7 @@ export default function CustomerProfile() {
     <div className="w-full min-w-0 space-y-6">
       {/* HEADER */}
 
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 sm:p-6">
+      <section className="customer-profile-banner rounded-2xl border border-[var(--border-primary)] p-5 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-center gap-4">
             <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-cyan-400/20 bg-cyan-400/10">
@@ -505,12 +505,12 @@ export default function CustomerProfile() {
                 Customer Profile
               </span>
 
-              <h1 className="mt-2 truncate text-2xl font-bold text-white sm:text-3xl">
+              <h1 className="mt-2 truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
                 {customer.name ||
                   "Customer"}
               </h1>
 
-              <p className="mt-1 truncate text-sm text-slate-400">
+              <p className="mt-1 truncate text-sm text-[var(--text-secondary)]">
                 {customer.email || "—"}
               </p>
             </div>
@@ -576,14 +576,14 @@ export default function CustomerProfile() {
       {/* SUMMARY */}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 My Vehicles
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {vehicles.length}
               </p>
             </div>
@@ -594,14 +594,14 @@ export default function CustomerProfile() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Total Bookings
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {bookings.length}
               </p>
             </div>
@@ -612,14 +612,14 @@ export default function CustomerProfile() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Active Bookings
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {activeBookings}
               </p>
             </div>
@@ -630,14 +630,14 @@ export default function CustomerProfile() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Completed Sessions
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {completedSessions}
               </p>
             </div>
@@ -654,14 +654,14 @@ export default function CustomerProfile() {
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.8fr]">
         {/* PERSONAL DETAILS */}
 
-        <section className="rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+        <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
             <div>
-              <h2 className="font-semibold text-white">
+              <h2 className="font-semibold text-[var(--text-primary)]">
                 Personal Information
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Your account and contact
                 information.
               </p>
@@ -728,7 +728,7 @@ export default function CustomerProfile() {
             <div className="space-y-5 p-5">
               <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     Full Name *
                   </span>
 
@@ -741,13 +741,13 @@ export default function CustomerProfile() {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter full name"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     Email *
                   </span>
 
@@ -760,13 +760,13 @@ export default function CustomerProfile() {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter email"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     Phone
                   </span>
 
@@ -784,13 +784,13 @@ export default function CustomerProfile() {
                         )
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="10 digit phone number"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     Pincode
                   </span>
 
@@ -808,13 +808,13 @@ export default function CustomerProfile() {
                         )
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter pincode"
                   />
                 </label>
 
                 <label className="block sm:col-span-2">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     Address
                   </span>
 
@@ -827,13 +827,13 @@ export default function CustomerProfile() {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter address"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     City
                   </span>
 
@@ -846,13 +846,13 @@ export default function CustomerProfile() {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter city"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="mb-2 block text-xs font-medium text-slate-400">
+                  <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                     State
                   </span>
 
@@ -865,18 +865,18 @@ export default function CustomerProfile() {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                    className="customer-profile-input h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none focus:border-cyan-400/50"
                     placeholder="Enter state"
                   />
                 </label>
               </div>
 
-              <div className="flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:justify-end">
+              <div className="flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] pt-5 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   disabled={saving}
                   onClick={handleCancel}
-                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <X className="h-4 w-4" />
                   Cancel
@@ -908,26 +908,26 @@ export default function CustomerProfile() {
         {/* ACCOUNT / VEHICLE */}
 
         <div className="space-y-6">
-          <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+          <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-400/10">
                 <ShieldCheck className="h-5 w-5 text-violet-300" />
               </div>
 
               <div>
-                <h2 className="font-semibold text-white">
+                <h2 className="font-semibold text-[var(--text-primary)]">
                   Account
                 </h2>
 
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[var(--text-muted)]">
                   Role and account status
                 </p>
               </div>
             </div>
 
             <div className="mt-5 space-y-3">
-              <div className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <span className="text-sm text-slate-400">
+              <div className="flex items-center justify-between gap-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+                <span className="text-sm text-[var(--text-secondary)]">
                   Role
                 </span>
 
@@ -937,8 +937,8 @@ export default function CustomerProfile() {
                 </span>
               </div>
 
-              <div className="flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <span className="text-sm text-slate-400">
+              <div className="flex items-center justify-between gap-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+                <span className="text-sm text-[var(--text-secondary)]">
                   Status
                 </span>
 
@@ -948,30 +948,30 @@ export default function CustomerProfile() {
                 </span>
               </div>
 
-              <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <p className="text-xs text-slate-500">
+              <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+                <p className="text-xs text-[var(--text-muted)]">
                   Customer ID
                 </p>
 
-                <p className="mt-2 break-all text-sm font-medium text-white">
+                <p className="mt-2 break-all text-sm font-medium text-[var(--text-primary)]">
                   {customer.id}
                 </p>
               </div>
             </div>
           </section>
 
-          <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+          <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-400/10">
                 <Car className="h-5 w-5 text-cyan-300" />
               </div>
 
               <div>
-                <h2 className="font-semibold text-white">
+                <h2 className="font-semibold text-[var(--text-primary)]">
                   Default Vehicle
                 </h2>
 
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-[var(--text-muted)]">
                   Preferred vehicle for
                   charging
                 </p>
@@ -979,15 +979,15 @@ export default function CustomerProfile() {
             </div>
 
             {defaultVehicle ? (
-              <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <div className="mt-5 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="truncate text-base font-semibold text-white">
+                    <p className="truncate text-base font-semibold text-[var(--text-primary)]">
                       {defaultVehicle.vehicleNumber ||
                         "Vehicle"}
                     </p>
 
-                    <p className="mt-1 text-sm text-slate-400">
+                    <p className="mt-1 text-sm text-[var(--text-secondary)]">
                       {[
                         defaultVehicle.brand,
                         defaultVehicle.model,
@@ -1006,22 +1006,22 @@ export default function CustomerProfile() {
 
                 <div className="mt-4 grid grid-cols-2 gap-3">
                   <div>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                    <p className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
                       Type
                     </p>
 
-                    <p className="mt-1 text-sm text-white">
+                    <p className="mt-1 text-sm text-[var(--text-primary)]">
                       {defaultVehicle.vehicleType ||
                         "—"}
                     </p>
                   </div>
 
                   <div>
-                    <p className="text-[10px] uppercase tracking-wide text-slate-500">
+                    <p className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
                       Connector
                     </p>
 
-                    <p className="mt-1 text-sm text-white">
+                    <p className="mt-1 text-sm text-[var(--text-primary)]">
                       {defaultVehicle.connectorType ||
                         "—"}
                     </p>
@@ -1029,10 +1029,10 @@ export default function CustomerProfile() {
                 </div>
               </div>
             ) : (
-              <div className="mt-5 rounded-xl border border-dashed border-white/10 p-6 text-center">
-                <Car className="mx-auto h-8 w-8 text-slate-600" />
+              <div className="mt-5 rounded-xl border border-dashed border-[var(--border-primary)] p-6 text-center">
+                <Car className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                <p className="mt-3 text-sm text-slate-400">
+                <p className="mt-3 text-sm text-[var(--text-secondary)]">
                   No vehicle added yet.
                 </p>
               </div>
@@ -1040,6 +1040,17 @@ export default function CustomerProfile() {
           </section>
         </div>
       </div>
+      <style>{`
+        .customer-profile-banner { background: #ffffff; }
+        html.dark .customer-profile-banner {
+          background: linear-gradient(135deg, #0D1B2A 0%, #0B1726 50%, #111A35 100%);
+        }
+        .customer-profile-input {
+          background: var(--input-bg);
+          color: var(--input-text);
+        }
+        .customer-profile-input::placeholder { color: var(--text-muted); }
+      `}</style>
     </div>
   );
 }

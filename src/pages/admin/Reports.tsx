@@ -190,7 +190,7 @@ function getStatusClass(status: string) {
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -223,18 +223,18 @@ function ReportCard({
   iconClass: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+    <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-slate-500">
+          <p className="text-xs font-medium text-[var(--text-muted)]">
             {label}
           </p>
 
-          <p className="mt-2 truncate text-2xl font-bold tracking-tight text-white">
+          <p className="mt-2 truncate text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 text-[11px] text-slate-500">
+          <p className="mt-1 text-[11px] text-[var(--text-muted)]">
             {subtitle}
           </p>
         </div>
@@ -259,16 +259,16 @@ function SectionHeader({
   description: string;
 }) {
   return (
-    <div className="border-b border-white/10 px-4 py-4 sm:px-5">
+    <div className="border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
       <div className="flex items-center gap-2">
         <span className="text-cyan-400">{icon}</span>
 
-        <h2 className="text-sm font-semibold text-white">
+        <h2 className="text-sm font-semibold text-[var(--text-primary)]">
           {title}
         </h2>
       </div>
 
-      <p className="mt-1 text-xs text-slate-500">
+      <p className="mt-1 text-xs text-[var(--text-muted)]">
         {description}
       </p>
     </div>
@@ -652,7 +652,7 @@ export default function Reports() {
   if (loading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="flex items-center gap-3 text-sm text-slate-400">
+        <div className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
           <Loader2 className="h-5 w-5 animate-spin text-cyan-400" />
           Loading reports...
         </div>
@@ -670,11 +670,11 @@ export default function Reports() {
             Admin / Reports
           </div>
 
-          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
             Reports & Analytics
           </h1>
 
-          <p className="mt-1.5 text-sm text-slate-400">
+          <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
             Monitor charging activity, bookings, revenue and
             station performance.
           </p>
@@ -690,40 +690,40 @@ export default function Reports() {
                   event.target.value as ReportRange,
                 )
               }
-              className="h-[42px] w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-10 text-sm font-medium text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-              style={{ colorScheme: "dark" }}
+              className="reports-range-select h-[42px] w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 pr-10 text-sm font-medium text-[var(--input-text)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              style={{ colorScheme: "inherit" }}
             >
               <option
                 value="7"
-                className="bg-[#0D1B2A] text-white"
+                className="bg-[var(--card-bg)] text-[var(--text-primary)]"
               >
                 Last 7 Days
               </option>
 
               <option
                 value="30"
-                className="bg-[#0D1B2A] text-white"
+                className="bg-[var(--card-bg)] text-[var(--text-primary)]"
               >
                 Last 30 Days
               </option>
 
               <option
                 value="90"
-                className="bg-[#0D1B2A] text-white"
+                className="bg-[var(--card-bg)] text-[var(--text-primary)]"
               >
                 Last 90 Days
               </option>
 
               <option
                 value="all"
-                className="bg-[#0D1B2A] text-white"
+                className="bg-[var(--card-bg)] text-[var(--text-primary)]"
               >
                 All Time
               </option>
             </select>
 
             <svg
-              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+              className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -740,7 +740,7 @@ export default function Reports() {
             type="button"
             onClick={handleRefresh}
             disabled={refreshing}
-            className="inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-slate-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+            className="reports-refresh-button inline-flex h-[42px] items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <RefreshCw
               className={`h-4 w-4 ${
@@ -854,7 +854,7 @@ export default function Reports() {
 
       {/* Booking + Payment Overview */}
       <section className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
           <SectionHeader
             icon={
               <CalendarDays className="h-4 w-4" />
@@ -911,7 +911,7 @@ export default function Reports() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
           <SectionHeader
             icon={
               <CircleDollarSign className="h-4 w-4" />
@@ -949,14 +949,14 @@ export default function Reports() {
 
             <div className="mt-5 space-y-3">
               {paymentMethodReport.length === 0 ? (
-                <p className="py-5 text-center text-xs text-slate-500">
+                <p className="py-5 text-center text-xs text-[var(--text-muted)]">
                   No successful payments for this period.
                 </p>
               ) : (
                 paymentMethodReport.map((item) => (
                   <div
                     key={item.method}
-                    className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.025] px-3.5 py-3"
+                    className="flex items-center justify-between rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3.5 py-3"
                   >
                     <div className="flex items-center gap-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-300">
@@ -964,11 +964,11 @@ export default function Reports() {
                       </div>
 
                       <div>
-                        <p className="text-xs font-medium text-white">
+                        <p className="text-xs font-medium text-[var(--text-primary)]">
                           {item.method}
                         </p>
 
-                        <p className="mt-0.5 text-[11px] text-slate-500">
+                        <p className="mt-0.5 text-[11px] text-[var(--text-muted)]">
                           {item.count} payment
                           {item.count !== 1
                             ? "s"
@@ -977,7 +977,7 @@ export default function Reports() {
                       </div>
                     </div>
 
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-sm font-semibold text-[var(--text-primary)]">
                       {formatCurrency(item.amount)}
                     </span>
                   </div>
@@ -989,7 +989,7 @@ export default function Reports() {
       </section>
 
       {/* Station Performance */}
-      <section className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
+      <section className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
         <SectionHeader
           icon={<MapPin className="h-4 w-4" />}
           title="Station Performance"
@@ -997,7 +997,7 @@ export default function Reports() {
         />
 
         {stationReport.length === 0 ? (
-          <div className="p-8 text-center text-sm text-slate-500">
+          <div className="p-8 text-center text-sm text-[var(--text-muted)]">
             No station data available.
           </div>
         ) : (
@@ -1015,28 +1015,28 @@ export default function Reports() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="px-5 py-4 text-xs font-semibold text-slate-400">
+                  <tr className="border-b border-[var(--border-primary)] text-left">
+                    <th className="px-5 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Station
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Bookings
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Sessions
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Energy
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Revenue
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Status
                     </th>
                   </tr>
@@ -1046,35 +1046,35 @@ export default function Reports() {
                   {stationReport.map((station) => (
                     <tr
                       key={station.id}
-                      className="border-b border-white/[0.06] transition hover:bg-white/[0.025]"
+                      className="border-b border-[var(--border-primary)] transition hover:bg-[var(--bg-tertiary)]"
                     >
                       <td className="px-5 py-5">
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {station.name}
                           </p>
 
-                          <p className="mt-1 text-[11px] text-slate-500">
+                          <p className="mt-1 text-[11px] text-[var(--text-muted)]">
                             {station.stationId}
                           </p>
                         </div>
                       </td>
 
                       <td className="px-4 py-5">
-                        <span className="text-sm font-semibold text-white">
+                        <span className="text-sm font-semibold text-[var(--text-primary)]">
                           {station.bookings}
                         </span>
                       </td>
 
                       <td className="px-4 py-5">
-                        <span className="text-sm font-semibold text-white">
+                        <span className="text-sm font-semibold text-[var(--text-primary)]">
                           {station.sessions}
                         </span>
                       </td>
 
                       <td className="px-4 py-5">
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-[var(--text-primary)]">
                             {formatNumber(
                               station.energy,
                               2,
@@ -1082,7 +1082,7 @@ export default function Reports() {
                             kWh
                           </p>
 
-                          <div className="mt-2 h-1.5 w-full rounded-full bg-white/5">
+                          <div className="mt-2 h-1.5 w-full rounded-full bg-[var(--bg-tertiary)]">
                             <div
                               className="h-1.5 rounded-full bg-violet-400"
                               style={{
@@ -1106,13 +1106,13 @@ export default function Reports() {
 
                       <td className="px-4 py-5">
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-[var(--text-primary)]">
                             {formatCurrency(
                               station.revenue,
                             )}
                           </p>
 
-                          <div className="mt-2 h-1.5 w-full rounded-full bg-white/5">
+                          <div className="mt-2 h-1.5 w-full rounded-full bg-[var(--bg-tertiary)]">
                             <div
                               className="h-1.5 rounded-full bg-emerald-400"
                               style={{
@@ -1130,7 +1130,7 @@ export default function Reports() {
 
                       <td className="px-4 py-5">
                         <span
-                          className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
+                          className={`report-status-badge inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
                             station.status ||
                               "Inactive",
                           )}`}
@@ -1150,21 +1150,21 @@ export default function Reports() {
               {stationReport.map((station) => (
                 <div
                   key={station.id}
-                  className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
+                  className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">
                         {station.name}
                       </p>
 
-                      <p className="mt-1 text-[11px] text-slate-500">
+                      <p className="mt-1 text-[11px] text-[var(--text-muted)]">
                         {station.stationId}
                       </p>
                     </div>
 
                     <span
-                      className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStatusClass(
+                      className={`report-status-badge shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStatusClass(
                         station.status ||
                           "Inactive",
                       )}`}
@@ -1206,7 +1206,7 @@ export default function Reports() {
                   </div>
 
                   <div className="mt-4">
-                    <div className="flex items-center justify-between text-[10px] text-slate-500">
+                    <div className="flex items-center justify-between text-[10px] text-[var(--text-muted)]">
                       <span>Booking activity</span>
 
                       <span>
@@ -1214,7 +1214,7 @@ export default function Reports() {
                       </span>
                     </div>
 
-                    <div className="mt-2 h-1.5 rounded-full bg-white/5">
+                    <div className="mt-2 h-1.5 rounded-full bg-[var(--bg-tertiary)]">
                       <div
                         className="h-1.5 rounded-full bg-cyan-400"
                         style={{
@@ -1237,7 +1237,7 @@ export default function Reports() {
 
       {/* Charger Utilization + Payment Methods */}
       <section className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-2">
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
           <SectionHeader
             icon={
               <BatteryCharging className="h-4 w-4" />
@@ -1292,7 +1292,7 @@ export default function Reports() {
               {chargerReport.map((charger) => (
                 <div
                   key={charger.id}
-                  className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.025] p-3.5 sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-3 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3.5 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-300">
@@ -1300,11 +1300,11 @@ export default function Reports() {
                     </div>
 
                     <div className="min-w-0">
-                      <p className="truncate text-xs font-semibold text-white">
+                      <p className="truncate text-xs font-semibold text-[var(--text-primary)]">
                         {charger.chargerId}
                       </p>
 
-                      <p className="mt-0.5 truncate text-[10px] text-slate-500">
+                      <p className="mt-0.5 truncate text-[10px] text-[var(--text-muted)]">
                         {getStationName(
                           charger.stationId,
                           stations,
@@ -1315,21 +1315,21 @@ export default function Reports() {
 
                   <div className="flex items-center gap-5">
                     <div>
-                      <p className="text-[10px] text-slate-500">
+                      <p className="text-[10px] text-[var(--text-muted)]">
                         Sessions
                       </p>
 
-                      <p className="mt-0.5 text-xs font-semibold text-white">
+                      <p className="mt-0.5 text-xs font-semibold text-[var(--text-primary)]">
                         {charger.sessions}
                       </p>
                     </div>
 
                     <div>
-                      <p className="text-[10px] text-slate-500">
+                      <p className="text-[10px] text-[var(--text-muted)]">
                         Energy
                       </p>
 
-                      <p className="mt-0.5 text-xs font-semibold text-white">
+                      <p className="mt-0.5 text-xs font-semibold text-[var(--text-primary)]">
                         {formatNumber(
                           charger.energy,
                           1,
@@ -1339,7 +1339,7 @@ export default function Reports() {
                     </div>
 
                     <span
-                      className={`rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStatusClass(
+                      className={`report-status-badge rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStatusClass(
                         charger.status ||
                           "Unknown",
                       )}`}
@@ -1354,7 +1354,7 @@ export default function Reports() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
           <SectionHeader
             icon={<PieChart className="h-4 w-4" />}
             title="Payment Methods"
@@ -1363,7 +1363,7 @@ export default function Reports() {
 
           <div className="p-4 sm:p-5">
             {paymentMethodReport.length === 0 ? (
-              <div className="flex min-h-[220px] items-center justify-center text-sm text-slate-500">
+              <div className="flex min-h-[220px] items-center justify-center text-sm text-[var(--text-muted)]">
                 No payment data available.
               </div>
             ) : (
@@ -1380,11 +1380,11 @@ export default function Reports() {
                     <div key={item.method}>
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="text-xs font-semibold text-white">
+                          <p className="text-xs font-semibold text-[var(--text-primary)]">
                             {item.method}
                           </p>
 
-                          <p className="mt-1 text-[10px] text-slate-500">
+                          <p className="mt-1 text-[10px] text-[var(--text-muted)]">
                             {item.count} successful
                             payment
                             {item.count !== 1
@@ -1394,13 +1394,13 @@ export default function Reports() {
                         </div>
 
                         <div className="text-right">
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-[var(--text-primary)]">
                             {formatCurrency(
                               item.amount,
                             )}
                           </p>
 
-                          <p className="mt-1 text-[10px] text-slate-500">
+                          <p className="mt-1 text-[10px] text-[var(--text-muted)]">
                             {formatNumber(
                               percentage,
                               1,
@@ -1410,7 +1410,7 @@ export default function Reports() {
                         </div>
                       </div>
 
-                      <div className="mt-2 h-2 rounded-full bg-white/5">
+                      <div className="mt-2 h-2 rounded-full bg-[var(--bg-tertiary)]">
                         <div
                           className="h-2 rounded-full bg-cyan-400"
                           style={{
@@ -1457,6 +1457,35 @@ export default function Reports() {
           description="Current analytics window"
         />
       </section>
+
+      <style>{`
+        html.light .report-status-badge {
+          color: #334155 !important;
+        }
+
+        html.light .reports-refresh-button {
+          color: #000000 !important;
+        }
+
+        html.light .reports-range-select {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+          color-scheme: light !important;
+        }
+
+        html.light .reports-range-select option {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+        }
+
+        html.light .reports-range-select + svg {
+          color: #000000 !important;
+        }
+
+        html.dark .reports-range-select {
+          color-scheme: dark !important;
+        }
+      `}</style>
     </div>
   );
 }
@@ -1464,15 +1493,15 @@ export default function Reports() {
 function MiniMetric({
   label,
   value,
-  valueClass = "text-white",
+  valueClass = "text-[var(--text-primary)]",
 }: {
   label: string;
   value: number | string;
   valueClass?: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.025] p-3">
-      <p className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+      <p className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
@@ -1493,12 +1522,12 @@ function MobileMetric({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.025] p-3">
-      <p className="text-[10px] uppercase tracking-wide text-slate-500">
+    <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+      <p className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-1 text-sm font-semibold text-white">
+      <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -1522,19 +1551,19 @@ function ProgressRow({
   return (
     <div>
       <div className="flex items-center justify-between gap-3 text-xs">
-        <span className="text-slate-300">
+        <span className="text-[var(--text-secondary)]">
           {label}
         </span>
 
-        <span className="font-medium text-white">
+        <span className="font-medium text-[var(--text-primary)]">
           {value}{" "}
-          <span className="text-slate-500">
+          <span className="text-[var(--text-muted)]">
             ({formatNumber(percentage, 1)}%)
           </span>
         </span>
       </div>
 
-      <div className="mt-2 h-2 rounded-full bg-white/5">
+      <div className="mt-2 h-2 rounded-full bg-[var(--bg-tertiary)]">
         <div
           className={`h-2 rounded-full ${className}`}
           style={{
@@ -1561,21 +1590,21 @@ function SummaryCard({
   description: string;
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+    <div className="flex items-center gap-4 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
       <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-300">
         {icon}
       </div>
 
       <div className="min-w-0">
-        <p className="text-xs font-medium text-slate-500">
+        <p className="text-xs font-medium text-[var(--text-muted)]">
           {label}
         </p>
 
-        <p className="mt-1 truncate text-xl font-bold text-white">
+        <p className="mt-1 truncate text-xl font-bold text-[var(--text-primary)]">
           {value}
         </p>
 
-        <p className="mt-0.5 truncate text-[10px] text-slate-500">
+        <p className="mt-0.5 truncate text-[10px] text-[var(--text-muted)]">
           {description}
         </p>
       </div>

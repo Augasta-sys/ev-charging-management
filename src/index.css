@@ -1,18 +1,103 @@
 @import "tailwindcss";
 
+/* =========================================================
+   THEME VARIABLES
+   ========================================================= */
+
 :root {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
-
-  color: #f8fafc;
-  background: #07111f;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Default theme */
+  --bg-primary: #07111f;
+  --bg-secondary: #0b1628;
+  --bg-tertiary: #101d31;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --border-primary: #1e334d;
+  --border-secondary: #243b55;
+
+  --accent-primary: #22d3ee;
+  --accent-secondary: #8b5cf6;
+
+  --input-bg: #101d31;
+  --input-text: #ffffff;
+
+  --card-bg: #0b1628;
+  --header-bg: #07111f;
+  --sidebar-bg: #07111f;
 }
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+html.dark {
+  --bg-primary: #07111f;
+  --bg-secondary: #0b1628;
+  --bg-tertiary: #101d31;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --border-primary: #1e334d;
+  --border-secondary: #243b55;
+
+  --accent-primary: #22d3ee;
+  --accent-secondary: #8b5cf6;
+
+  --input-bg: #101d31;
+  --input-text: #ffffff;
+
+  --card-bg: #0b1628;
+  --header-bg: #07111f;
+  --sidebar-bg: #07111f;
+
+  color-scheme: dark;
+}
+
+/* =========================================================
+   LIGHT THEME
+   ========================================================= */
+
+html.light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #F0F9FF;
+  --bg-tertiary: #E0F2FE;
+
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --text-muted: #000000;
+
+  --border-primary: #BAE6FD;
+  --border-secondary: #7DD3FC;
+
+  --accent-primary: #0284C7;
+  --accent-secondary: #7C3AED;
+
+  --input-bg: #ffffff;
+  --input-text: #000000;
+
+  --card-bg: #ffffff;
+  --header-bg: #95CEF5;
+  --sidebar-bg: #95CEF5;
+
+  color-scheme: light;
+}
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
 
 * {
   box-sizing: border-box;
@@ -23,6 +108,9 @@ html {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 body {
@@ -32,9 +120,14 @@ body {
   max-width: 100%;
   min-height: 100vh;
 
-  background: #07111f;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 
   overflow-x: hidden;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 button,
@@ -60,94 +153,108 @@ canvas {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
-/* Prevent accidental horizontal overflow */
+/* =========================================================
+   PREVENT ACCIDENTAL HORIZONTAL OVERFLOW
+   ========================================================= */
+
 .overflow-safe {
   min-width: 0;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Hide scrollbars where horizontal scrolling is not wanted */
-.scrollbar-hidden {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+/* =========================================================
+   HIDDEN SCROLLBARS
+   ========================================================= */
 
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar but keep scrolling */
-.scrollbar-hidden {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hidden::-webkit-scrollbar {
-  display: none;
-}
-
-/* Make native form controls visible on dark UI */
-input[type="time"],
-input[type="date"],
-input[type="datetime-local"] {
-  color-scheme: dark;
-}
-
-input[type="time"]::-webkit-calendar-picker-indicator,
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-  opacity: 1;
-  cursor: pointer;
-}
-
-input[type="date"] {
-  color-scheme: dark;
-}
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: brightness(0) invert(1);
-  opacity: 1;
-  cursor: pointer;
-}
-
-.hide-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-select {
-  color-scheme: dark;
-  color: #ffffff !important;
-  background-color: #0d1b2a !important;
-}
-
-select option {
-  background-color: #0d1b2a !important;
-  color: #ffffff !important;
-}
-
+.scrollbar-hidden,
+.hide-scrollbar,
 .login-scroll {
-  scrollbar-width: none;
   -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+.scrollbar-hidden::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar,
 .login-scroll::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
 }
 
-/* Loading spinner */
+/* =========================================================
+   FORM CONTROLS
+   ========================================================= */
+
+html.dark input[type="time"],
+html.dark input[type="date"],
+html.dark input[type="datetime-local"] {
+  color-scheme: dark;
+}
+
+html.light input[type="time"],
+html.light input[type="date"],
+html.light input[type="datetime-local"] {
+  color-scheme: light;
+}
+
+html.dark
+  input[type="time"]::-webkit-calendar-picker-indicator,
+html.dark
+  input[type="date"]::-webkit-calendar-picker-indicator,
+html.dark
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1);
+  opacity: 1;
+  cursor: pointer;
+}
+
+html.light
+  input[type="time"]::-webkit-calendar-picker-indicator,
+html.light
+  input[type="date"]::-webkit-calendar-picker-indicator,
+html.light
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: none;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+html.dark select {
+  color-scheme: dark;
+  color: #ffffff;
+  background-color: #0d1b2a;
+}
+
+html.dark select option {
+  background-color: #0d1b2a;
+  color: #ffffff;
+}
+
+html.light select {
+  color-scheme: light;
+  color: #000000;
+  background-color: #ffffff;
+}
+
+html.light select option {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* =========================================================
+   LOADING SPINNER
+   ========================================================= */
+
 @keyframes spin {
   from {
     transform: rotate(0deg);

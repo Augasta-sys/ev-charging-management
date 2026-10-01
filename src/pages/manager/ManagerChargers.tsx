@@ -94,10 +94,10 @@ function getStatusClasses(status: ChargerStatus) {
       return "border-amber-400/20 bg-amber-400/10 text-amber-300";
 
     case "Offline":
-      return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+      return "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -145,18 +145,18 @@ function StatCard({
   description: string;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {label}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -184,7 +184,7 @@ function ActionButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:opacity-80"
     >
       {children}
     </button>
@@ -468,7 +468,7 @@ export default function ManagerChargers() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading chargers...
           </p>
         </div>
@@ -479,7 +479,7 @@ export default function ManagerChargers() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -488,17 +488,17 @@ export default function ManagerChargers() {
               </span>
 
               {station && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
+                <span className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
                   {station.stationId}
                 </span>
               )}
             </div>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Charger Management
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Manage and monitor chargers assigned to your station.
             </p>
 
@@ -512,7 +512,7 @@ export default function ManagerChargers() {
           <button
             type="button"
             onClick={() => void fetchChargers()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -533,7 +533,7 @@ export default function ManagerChargers() {
             <button
               type="button"
               onClick={() => setError("")}
-              className="mt-1 text-xs text-red-300 underline underline-offset-2 hover:text-white"
+              className="mt-1 text-xs text-red-300 underline underline-offset-2 hover:text-[var(--text-primary)]"
             >
               Dismiss
             </button>
@@ -574,14 +574,14 @@ export default function ManagerChargers() {
 
       {/* Additional status summary */}
       <section className="grid min-w-0 gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
                 Booked Chargers
               </p>
 
-              <p className="mt-2 text-2xl font-bold text-white">
+              <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
                 {bookedChargers}
               </p>
             </div>
@@ -592,19 +592,19 @@ export default function ManagerChargers() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
                 Offline Chargers
               </p>
 
-              <p className="mt-2 text-2xl font-bold text-white">
+              <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
                 {offlineChargers}
               </p>
             </div>
 
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-400/10 text-slate-300">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-400/10 text-[var(--text-secondary)]">
               <WifiOff className="h-5 w-5" />
             </div>
           </div>
@@ -612,14 +612,14 @@ export default function ManagerChargers() {
       </section>
 
       {/* Search & Filters */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find chargers by ID, type, connector or status.
             </p>
           </div>
@@ -631,7 +631,7 @@ export default function ManagerChargers() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -642,14 +642,14 @@ export default function ManagerChargers() {
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {/* Search */}
           <div className="relative min-w-0">
-            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
             <input
               type="text"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search chargers..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -686,14 +686,14 @@ export default function ManagerChargers() {
       </section>
 
       {/* Charger List */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-lg shadow-black/10">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-lg shadow-black/10">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Chargers
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Showing {filteredChargers.length} of {totalChargers} chargers
             </p>
           </div>
@@ -720,38 +720,38 @@ export default function ManagerChargers() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border-primary)] text-left">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Charger ID
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Type
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Connector
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Power
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Status
                     </th>
 
-                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Actions
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {filteredChargers.map((charger) => (
                     <tr
                       key={charger.id}
-                      className="transition hover:bg-white/[0.02]"
+                      className="transition hover:bg-[var(--bg-tertiary)]"
                     >
                       <td className="px-4 py-5">
                         <div className="flex min-w-0 items-center gap-3">
@@ -760,12 +760,12 @@ export default function ManagerChargers() {
                           </div>
 
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-white">
+                            <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                               {charger.chargerId}
                             </p>
 
                             {charger.name && (
-                              <p className="mt-1 truncate text-xs text-slate-500">
+                              <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                                 {charger.name}
                               </p>
                             )}
@@ -774,19 +774,19 @@ export default function ManagerChargers() {
                       </td>
 
                       <td className="px-4 py-5">
-                        <span className="text-sm text-slate-300">
+                        <span className="text-sm text-[var(--text-secondary)]">
                           {charger.chargerType}
                         </span>
                       </td>
 
                       <td className="px-4 py-5">
-                        <span className="text-sm text-slate-300">
+                        <span className="text-sm text-[var(--text-secondary)]">
                           {charger.connectorType}
                         </span>
                       </td>
 
                       <td className="px-4 py-5">
-                        <span className="text-sm font-medium text-white">
+                        <span className="text-sm font-medium text-[var(--text-primary)]">
                           {charger.powerOutput || charger.power || "—"}
                           {charger.powerOutput || charger.power
                             ? " kW"
@@ -850,7 +850,7 @@ export default function ManagerChargers() {
               {filteredChargers.map((charger) => (
                 <div
                   key={charger.id}
-                  className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                  className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-3">
@@ -859,11 +859,11 @@ export default function ManagerChargers() {
                       </div>
 
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {charger.chargerId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {charger.name || charger.chargerType}
                         </p>
                       </div>
@@ -946,14 +946,14 @@ export default function ManagerChargers() {
       {/* View Charger Popup */}
       {viewCharger && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex h-auto max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+          <div className="flex h-auto max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div className="min-w-0">
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Charger Details
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {viewCharger.chargerId}
                 </p>
               </div>
@@ -961,7 +961,7 @@ export default function ManagerChargers() {
               <button
                 type="button"
                 onClick={() => setViewCharger(null)}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:opacity-80"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1023,11 +1023,11 @@ export default function ManagerChargers() {
               </div>
             </div>
 
-            <div className="flex shrink-0 justify-end border-t border-white/10 px-4 py-3 sm:px-6">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] px-4 py-3 sm:px-6">
               <button
                 type="button"
                 onClick={() => setViewCharger(null)}
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80"
               >
                 Close
               </button>
@@ -1039,14 +1039,14 @@ export default function ManagerChargers() {
       {/* Edit Charger Popup */}
       {editCharger && (
         <div className="fixed inset-0 z-[100] h-screen w-screen overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="mx-auto flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+          <div className="mx-auto flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div className="min-w-0">
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Edit Charger
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   Update {editCharger.chargerId}
                 </p>
               </div>
@@ -1055,7 +1055,7 @@ export default function ManagerChargers() {
                 type="button"
                 onClick={closeEditModal}
                 disabled={saving}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1120,7 +1120,7 @@ export default function ManagerChargers() {
                 />
 
                 <div className="sm:col-span-2">
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Description
                   </label>
 
@@ -1133,18 +1133,18 @@ export default function ManagerChargers() {
                       )
                     }
                     rows={4}
-                    className="w-full resize-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="w-full resize-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 py-3 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter charger description"
                   />
                 </div>
               </div>
 
-              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
                 <button
                   type="button"
                   onClick={closeEditModal}
                   disabled={saving}
-                  className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -1191,15 +1191,15 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-        style={{ colorScheme: "dark" }}
+        className="h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-4 pr-11 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        
         aria-label={placeholder}
       >
         {options.map((option) => (
           <option
             key={option}
             value={option}
-            className="bg-[#0D1B2A] text-white"
+            className="bg-[var(--input-bg)] text-[var(--input-text)]"
           >
             {option === "All" ? placeholder : option}
           </option>
@@ -1207,7 +1207,7 @@ function FilterSelect({
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -1239,7 +1239,7 @@ function FormInput({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium text-slate-400">
+      <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
         {label}
       </label>
 
@@ -1249,10 +1249,10 @@ function FormInput({
         disabled={disabled}
         onChange={(event) => onChange?.(event.target.value)}
         placeholder={placeholder}
-        className={`h-11 w-full rounded-xl border border-white/10 px-4 text-sm outline-none transition ${
+        className={`h-11 w-full rounded-xl border border-[var(--border-primary)] px-4 text-sm outline-none transition ${
           disabled
-            ? "bg-black/20 text-slate-500"
-            : "bg-[#0D1B2A] text-white placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+            ? "bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+            : "bg-[var(--input-bg)] text-[var(--input-text)] placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
         }`}
       />
     </div>
@@ -1272,7 +1272,7 @@ function FormSelect({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-xs font-medium text-slate-400">
+      <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
         {label}
       </label>
 
@@ -1280,14 +1280,14 @@ function FormSelect({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-10 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-          style={{ colorScheme: "dark" }}
+          className="h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-4 pr-10 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+          
         >
           {options.map((option) => (
             <option
               key={option}
               value={option}
-              className="bg-[#0D1B2A] text-white"
+              className="bg-[var(--input-bg)] text-[var(--input-text)]"
             >
               {option}
             </option>
@@ -1295,7 +1295,7 @@ function FormSelect({
         </select>
 
         <svg
-          className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+          className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
@@ -1319,12 +1319,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -1339,12 +1339,12 @@ function MobileDetail({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
-      <p className="text-[10px] uppercase tracking-wide text-slate-500">
+    <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+      <p className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-1 break-words text-xs font-medium text-slate-200">
+      <p className="mt-1 break-words text-xs font-medium text-[var(--text-secondary)]">
         {value}
       </p>
     </div>
@@ -1354,14 +1354,14 @@ function MobileDetail({
 function EmptyChargerState() {
   return (
     <div className="p-6">
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-        <BatteryCharging className="mx-auto h-8 w-8 text-slate-600" />
+      <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+        <BatteryCharging className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-        <p className="mt-3 text-sm font-medium text-white">
+        <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
           No chargers found
         </p>
 
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs text-[var(--text-muted)]">
           Try changing your search or filter selections.
         </p>
       </div>

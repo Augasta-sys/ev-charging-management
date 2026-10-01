@@ -459,7 +459,7 @@ export default function ManagerDashboard() {
         return "border-amber-400/20 bg-amber-400/10 text-amber-300";
 
       default:
-        return "border-white/10 bg-white/5 text-slate-300";
+        return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
     }
   };
 
@@ -491,7 +491,7 @@ export default function ManagerDashboard() {
             <Activity className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading manager dashboard...
           </p>
         </div>
@@ -517,11 +517,11 @@ export default function ManagerDashboard() {
             Manager Dashboard
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Station Overview
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Monitor your assigned charging station.
           </p>
         </div>
@@ -530,7 +530,7 @@ export default function ManagerDashboard() {
           type="button"
           onClick={handleRefresh}
           disabled={refreshing}
-          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           <RefreshCw
             className={`h-4 w-4 ${
@@ -558,11 +558,11 @@ export default function ManagerDashboard() {
           ASSIGNED STATION
       =================================================== */}
 
-      <section className="mb-6 rounded-2xl border border-cyan-400/10 bg-[#0D1B2A] p-4 shadow-xl shadow-black/10 sm:p-5">
+      <section className="mb-6 rounded-2xl border border-cyan-400/10 bg-white dark:bg-[#0D1B2A] p-4 shadow-xl shadow-black/10 sm:p-5">
         <div className="flex min-w-0 flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex min-w-0 items-center gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
-              <MapPin className="h-6 w-6 !text-white" />
+              <MapPin className="h-6 w-6 text-[var(--text-primary)]" />
             </div>
 
             <div className="min-w-0">
@@ -570,12 +570,12 @@ export default function ManagerDashboard() {
                 Assigned Station
               </p>
 
-              <h2 className="mt-1 truncate text-lg font-bold text-white sm:text-xl">
+              <h2 className="mt-1 truncate text-lg font-bold text-[var(--text-primary)] sm:text-xl">
                 {assignedStation?.stationName ||
                   "No station assigned"}
               </h2>
 
-              <p className="mt-1 truncate text-xs text-slate-500">
+              <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                 {assignedStation
                   ? `${assignedStation.stationId}${
                       assignedStation.city
@@ -707,48 +707,48 @@ export default function ManagerDashboard() {
       <div className="mt-6 grid min-w-0 gap-6 xl:grid-cols-[1.5fr_1fr]">
         {/* Recent Bookings */}
 
-        <section className="min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-4 sm:px-5">
+        <section className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
             <div>
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">
                 Recent Bookings
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Latest bookings for your station.
               </p>
             </div>
 
-            <CalendarDays className="h-5 w-5 !text-white" />
+            <CalendarDays className="h-5 w-5 text-[var(--text-primary)]" />
           </div>
 
           {recentBookings.length === 0 ? (
             <div className="px-5 py-12 text-center">
-              <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+              <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm text-slate-400">
+              <p className="mt-3 text-sm text-[var(--text-secondary)]">
                 No bookings found.
               </p>
             </div>
           ) : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--border-primary)]">
               {recentBookings.map(
                 (booking) => (
                   <div
                     key={booking.id}
-                    className="flex min-w-0 flex-col gap-3 px-4 py-4 transition hover:bg-white/[0.025] sm:flex-row sm:items-center sm:justify-between sm:px-5"
+                    className="flex min-w-0 flex-col gap-3 px-4 py-4 transition hover:bg-[var(--bg-tertiary)] sm:flex-row sm:items-center sm:justify-between sm:px-5"
                   >
                     <div className="flex min-w-0 items-center gap-3">
                       <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10">
-                        <CalendarDays className="h-4 w-4 !text-white" />
+                        <CalendarDays className="h-4 w-4 text-[var(--text-primary)]" />
                       </div>
 
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {booking.bookingId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {booking.customerName ||
                             booking.customerId ||
                             "Customer"}
@@ -757,11 +757,11 @@ export default function ManagerDashboard() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 sm:justify-end">
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-[var(--text-secondary)]">
                         {booking.bookingDate}
                       </span>
 
-                      <span className="text-xs text-slate-600">
+                      <span className="text-xs text-[var(--text-muted)]">
                         {booking.startTime}
                       </span>
 
@@ -782,19 +782,19 @@ export default function ManagerDashboard() {
 
         {/* Charger Status */}
 
-        <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between border-b border-white/10 px-4 py-4 sm:px-5">
+        <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
             <div>
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">
                 Charger Status
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Current charger availability.
               </p>
             </div>
 
-            <Zap className="h-5 w-5 !text-white" />
+            <Zap className="h-5 w-5 text-[var(--text-primary)]" />
           </div>
 
           <div className="grid grid-cols-2 gap-3 p-4 sm:p-5">
@@ -883,22 +883,22 @@ export default function ManagerDashboard() {
           MAINTENANCE SUMMARY
       =================================================== */}
 
-      <section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Maintenance Overview
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Maintenance activity for your assigned station.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <Settings className="h-4 w-4 !text-white" />
+            <Settings className="h-4 w-4 text-[var(--text-primary)]" />
 
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-[var(--text-secondary)]">
               {stationMaintenance.length} records
             </span>
           </div>
@@ -965,18 +965,18 @@ function DashboardStatCard({
   iconBg: string;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 transition hover:border-white/15 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 transition hover:border-[var(--border-secondary)] sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium text-slate-500">
+          <p className="truncate text-xs font-medium text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 truncate text-2xl font-bold tracking-tight text-white">
+          <p className="mt-2 truncate text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-[11px] text-slate-500">
+          <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -1005,12 +1005,12 @@ function MiniInfo({
   value: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.025] px-3 py-2">
-      <p className="text-[9px] font-semibold uppercase tracking-wider text-slate-600">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-2">
+      <p className="text-[9px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-1 text-xs font-medium text-white">
+      <p className="mt-1 text-xs font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -1033,9 +1033,9 @@ function ChargerStatusCard({
   bgClass: string;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.025] p-3">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
       <div className="flex items-center justify-between gap-2">
-        <span className="truncate text-xs text-slate-400">
+        <span className="truncate text-xs text-[var(--text-secondary)]">
           {label}
         </span>
 
@@ -1061,12 +1061,12 @@ function MaintenanceMetric({
   value: number;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.025] p-4">
-      <p className="text-xs text-slate-500">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-xs text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 text-2xl font-bold text-white">
+      <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
         {value}
       </p>
     </div>

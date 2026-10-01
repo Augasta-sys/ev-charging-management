@@ -131,14 +131,17 @@ function Slots() {
   ======================================================= */
 
   useEffect(() => {
-    if (showModal || deleteId) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!showModal && !deleteId) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, [showModal, deleteId]);
 
@@ -766,7 +769,7 @@ const handleSubmit = async (
         return "border-red-400/20 bg-red-400/10 text-red-300";
 
       default:
-        return "border-white/10 bg-white/5 text-slate-300";
+        return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
     }
   };
 
@@ -822,7 +825,7 @@ const handleSubmit = async (
             <CalendarDays className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading charging slots...
           </p>
         </div>
@@ -847,11 +850,11 @@ const handleSubmit = async (
             Slot Management
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Charging Slots
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Manage charger availability and booking time slots.
           </p>
         </div>
@@ -935,14 +938,14 @@ const handleSubmit = async (
      {/* ===================================================
     FILTERS
 =================================================== */}
-<section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+<section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
   <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
     <div>
-      <h2 className="text-sm font-semibold text-white">
+      <h2 className="text-sm font-semibold text-[var(--text-primary)]">
         Search & Filters
       </h2>
 
-      <p className="mt-1 text-xs text-slate-500">
+      <p className="mt-1 text-xs text-[var(--text-muted)]">
         Find slots by station, charger, date or status.
       </p>
     </div>
@@ -955,7 +958,7 @@ const handleSubmit = async (
       <button
         type="button"
         onClick={clearFilters}
-        className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+        className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
       >
         <X className="h-3.5 w-3.5" />
         Clear filters
@@ -967,7 +970,7 @@ const handleSubmit = async (
     {/* Search */}
     <div className="relative min-w-0">
       <Search
-        className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white"
+        className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]"
       />
 
       <input
@@ -1058,13 +1061,13 @@ const handleSubmit = async (
           RESULT COUNT
       =================================================== */}
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--text-muted)]">
           Showing{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {filteredSlots.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {slots.length}
           </span>{" "}
           slots
@@ -1074,36 +1077,36 @@ const handleSubmit = async (
      {/* ===================================================
     DESKTOP TABLE
 =================================================== */}
-<section className="mt-4 hidden w-full min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] lg:block">
+<section className="mt-4 hidden w-full min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] lg:block">
   <div className="w-full min-w-0">
     <table className="w-full table-fixed border-separate border-spacing-0">
      <thead>
-  <tr className="border-b border-white/10 text-left">
-    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+  <tr className="border-b border-[var(--border-primary)] text-left">
+    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Slot
     </th>
 
-    <th className="w-[20%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+    <th className="w-[20%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Station
     </th>
 
-    <th className="w-[14%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+    <th className="w-[14%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Charger
     </th>
 
-    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Date
     </th>
 
-    <th className="w-[14%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+    <th className="w-[14%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Time
     </th>
 
-    <th className="w-[17%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+    <th className="w-[17%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
       Status
     </th>
 
-    <th className="w-[12%] px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+    <th className="w-[12%] px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
       Actions
     </th>
   </tr>
@@ -1116,15 +1119,15 @@ const handleSubmit = async (
               colSpan={7}
               className="px-5 py-16 text-center"
             >
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-                <CalendarDays className="h-6 w-6 text-white" />
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-tertiary)]">
+                <CalendarDays className="h-6 w-6 text-[var(--text-primary)]" />
               </div>
 
-              <p className="mt-4 text-sm font-medium text-slate-400">
+              <p className="mt-4 text-sm font-medium text-[var(--text-secondary)]">
                 No slots found
               </p>
 
-              <p className="mt-1 text-xs text-slate-600">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing your search or filters.
               </p>
             </td>
@@ -1133,11 +1136,11 @@ const handleSubmit = async (
           filteredSlots.map((slot) => (
             <tr
               key={slot.id}
-              className="border-b border-white/5 last:border-0 transition hover:bg-white/[0.025]"
+              className="border-b border-[var(--border-primary)] last:border-0 transition hover:bg-[var(--bg-tertiary)]"
             >
               {/* Slot */}
               <td className="min-w-0 px-4 py-5 xl:px-5">
-                <p className="truncate text-sm font-bold text-white">
+                <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                   {slot.slotId}
                 </p>
               </td>
@@ -1145,11 +1148,11 @@ const handleSubmit = async (
               {/* Station */}
               <td className="min-w-0 px-4 py-5 xl:px-5">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-medium text-white">
+                  <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                     {getStationName(slot.stationId)}
                   </p>
 
-                  <p className="mt-1 truncate text-xs text-slate-500">
+                  <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                     {getStation(slot.stationId)?.city ??
                       slot.stationId}
                   </p>
@@ -1159,9 +1162,9 @@ const handleSubmit = async (
               {/* Charger */}
               <td className="min-w-0 px-4 py-5 xl:px-5">
                 <div className="flex min-w-0 items-center gap-2.5">
-                  <Zap className="h-4 w-4 shrink-0 text-white" />
+                  <Zap className="h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
-                  <span className="truncate text-sm text-slate-300">
+                  <span className="truncate text-sm text-[var(--text-secondary)]">
                     {getChargerNumber(slot.chargerId)}
                   </span>
                 </div>
@@ -1170,9 +1173,9 @@ const handleSubmit = async (
               {/* Date */}
              <td className="px-4 py-5 xl:px-5">
   <div className="flex min-w-0 items-center gap-2.5">
-    <CalendarDays className="h-4 w-4 shrink-0 !text-white" />
+    <CalendarDays className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-    <span className="truncate text-sm text-slate-200">
+    <span className="truncate text-sm text-[var(--text-secondary)]">
       {slot.date}
     </span>
   </div>
@@ -1181,9 +1184,9 @@ const handleSubmit = async (
               {/* Time */}
              <td className="px-4 py-5 xl:px-5">
   <div className="flex min-w-0 items-center gap-2.5">
-    <Clock3 className="h-4 w-4 shrink-0 !text-white" />
+    <Clock3 className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-    <span className="truncate text-sm text-slate-200">
+    <span className="truncate text-sm text-[var(--text-secondary)]">
       {slot.startTime} - {slot.endTime}
     </span>
   </div>
@@ -1207,9 +1210,9 @@ const handleSubmit = async (
                   <ActionButton
                     label="Edit slot"
                     onClick={() => openEditModal(slot)}
-                    className="border-white/10 bg-white/5 text-white hover:border-cyan-400/40 hover:bg-cyan-400 hover:text-slate-950"
+                    className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:border-cyan-400/40 hover:bg-cyan-400 hover:text-slate-950"
                   >
-                    <Edit3 className="h-4 w-4 text-white" />
+                    <Edit3 className="h-4 w-4 text-[var(--text-primary)]" />
                   </ActionButton>
 
                   {/* Block */}
@@ -1222,9 +1225,9 @@ const handleSubmit = async (
                           "Blocked"
                         )
                       }
-                      className="border-white/10 bg-white/5 text-white hover:border-amber-400/40 hover:bg-amber-400 hover:text-slate-950"
+                      className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:border-amber-400/40 hover:bg-amber-400 hover:text-slate-950"
                     >
-                      <Ban className="h-4 w-4 text-white" />
+                      <Ban className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1238,9 +1241,9 @@ const handleSubmit = async (
                           "Available"
                         )
                       }
-                      className="border-white/10 bg-white/5 text-white hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
+                      className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-white" />
+                      <CheckCircle2 className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1254,9 +1257,9 @@ const handleSubmit = async (
                           "Available"
                         )
                       }
-                      className="border-white/10 bg-white/5 text-white hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
+                      className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-white" />
+                      <CheckCircle2 className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1266,9 +1269,9 @@ const handleSubmit = async (
                     onClick={() =>
                       setDeleteId(slot.id)
                     }
-                    className="border-white/10 bg-white/5 text-white hover:border-red-400/40 hover:bg-red-400 hover:text-white"
+                    className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:border-red-400/40 hover:bg-red-400 hover:text-white"
                   >
-                    <Trash2 className="h-4 w-4 text-white" />
+                    <Trash2 className="h-4 w-4 text-[var(--text-primary)]" />
                   </ActionButton>
                 </div>
               </td>
@@ -1285,14 +1288,14 @@ const handleSubmit = async (
       =================================================== */}
       <section className="mt-4 grid gap-4 lg:hidden">
         {filteredSlots.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] px-5 py-14 text-center">
-            <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-5 py-14 text-center">
+            <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-            <p className="mt-3 text-sm font-medium text-slate-400">
+            <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">
               No slots found
             </p>
 
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Try changing your search or filters.
             </p>
           </div>
@@ -1301,21 +1304,21 @@ const handleSubmit = async (
             (slot) => (
               <div
                 key={slot.id}
-                className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 transition hover:border-cyan-400/20"
+                className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 transition hover:border-cyan-400/20"
               >
                 {/* Card Header */}
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
-                      <CalendarDays className="h-5 w-5 text-white" />
+                      <CalendarDays className="h-5 w-5 text-[var(--text-primary)]" />
                     </div>
 
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-bold text-white">
+                      <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                         {slot.slotId}
                       </p>
 
-                      <p className="mt-1 truncate text-xs text-slate-500">
+                      <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                         {getChargerNumber(
                           slot.chargerId
                         )}
@@ -1354,7 +1357,7 @@ const handleSubmit = async (
                     label="Date"
                     value={slot.date}
                     icon={
-                      <CalendarDays className="h-3.5 w-3.5 text-white" />
+                      <CalendarDays className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1362,13 +1365,13 @@ const handleSubmit = async (
                     label="Time"
                     value={`${slot.startTime} - ${slot.endTime}`}
                     icon={
-                      <Clock3 className="h-3.5 w-3.5 text-white" />
+                      <Clock3 className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
                 </div>
 
                 {/* Card Actions */}
-                <div className="mt-5 flex items-center justify-end gap-2 border-t border-white/5 pt-4">
+                <div className="mt-5 flex items-center justify-end gap-2 border-t border-[var(--border-primary)] pt-4">
                   {/* Edit */}
                   <ActionButton
                     label="Edit slot"
@@ -1393,7 +1396,7 @@ const handleSubmit = async (
                       }
                       className="hover:border-amber-400/40 hover:bg-amber-400 hover:text-slate-950"
                     >
-                      <Ban className="h-4 w-4 text-white" />
+                      <Ban className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1410,7 +1413,7 @@ const handleSubmit = async (
                       }
                       className="hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-white" />
+                      <CheckCircle2 className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1427,7 +1430,7 @@ const handleSubmit = async (
                       }
                       className="hover:border-emerald-400/40 hover:bg-emerald-400 hover:text-slate-950"
                     >
-                      <CheckCircle2 className="h-4 w-4 text-white" />
+                      <CheckCircle2 className="h-4 w-4 text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1455,17 +1458,17 @@ const handleSubmit = async (
       =================================================== */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-5">
-          <div className="flex max-h-[calc(100vh-24px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
+          <div className="flex max-h-[calc(100vh-24px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
             {/* Modal Header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-bold text-white">
+                <h2 className="text-lg font-bold text-[var(--text-primary)]">
                   {editingSlot
                     ? "Edit Charging Slot"
                     : "Add Charging Slot"}
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   Configure the station, charger and booking time.
                 </p>
               </div>
@@ -1475,7 +1478,7 @@ const handleSubmit = async (
                 onClick={closeModal}
                 disabled={saving}
                 aria-label="Close"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-slate-950 disabled:opacity-50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950 disabled:opacity-50"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1484,7 +1487,7 @@ const handleSubmit = async (
             {/* Modal Form */}
             <form
               onSubmit={handleSubmit}
-              className="min-h-0 flex-1 px-5 py-5 sm:px-6"
+              className="scrollbar-hidden min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-6"
             >
               {error && (
                 <div className="mb-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm leading-5 text-red-300">
@@ -1663,12 +1666,12 @@ const handleSubmit = async (
               </div>
 
               {/* Modal Footer */}
-              <div className="mt-5 flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:justify-end">
+              <div className="mt-5 flex shrink-0 flex-col-reverse gap-3 border-t border-[var(--border-primary)] pt-5 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={closeModal}
                   disabled={saving}
-                  className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950 disabled:opacity-50"
+                  className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950 disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -1695,16 +1698,16 @@ const handleSubmit = async (
       =================================================== */}
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-6 shadow-2xl shadow-black/60">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-6 shadow-2xl shadow-black/60">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-400/10">
               <Trash2 className="h-5 w-5 text-red-400" />
             </div>
 
-            <h2 className="mt-5 text-lg font-bold text-white">
+            <h2 className="mt-5 text-lg font-bold text-[var(--text-primary)]">
               Delete Charging Slot?
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               This slot will be permanently removed from
               the system. This action cannot be undone.
             </p>
@@ -1715,7 +1718,7 @@ const handleSubmit = async (
                 onClick={() =>
                   setDeleteId(null)
                 }
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Cancel
               </button>
@@ -1743,17 +1746,17 @@ const handleSubmit = async (
     height: 44px;
     min-width: 0;
     border-radius: 0.75rem;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: #101f31;
+    border: 1px solid var(--border-primary);
+    background: var(--input-bg);
     padding: 0 0.875rem;
     font-size: 0.875rem;
-    color: white;
+    color: var(--input-text);
     outline: none;
     transition: all 0.2s ease;
   }
 
   .input-field::placeholder {
-    color: rgb(71 85 105);
+    color: var(--text-muted);
   }
 
   .input-field:focus {
@@ -1763,7 +1766,7 @@ const handleSubmit = async (
 
   .input-field option {
     background: #101f31;
-    color: white;
+    color: var(--input-text);
   }
 
   /* =========================================
@@ -1772,26 +1775,14 @@ const handleSubmit = async (
 
   input[type="date"].input-field,
   input[type="time"].input-field {
-    color-scheme: dark;
+    color-scheme: inherit;
   }
 
-  input[type="date"].input-field::-webkit-calendar-picker-indicator,
-  input[type="time"].input-field::-webkit-calendar-picker-indicator {
-    filter: brightness(0) invert(1) !important;
-    opacity: 1 !important;
-    cursor: pointer;
-  }
-
-  input[type="date"].input-field::-webkit-inner-spin-button,
-  input[type="time"].input-field::-webkit-inner-spin-button {
-    filter: brightness(0) invert(1) !important;
-  }
-
-  /* Keep native controls dark while icons stay white */
-  input[type="date"],
-  input[type="time"],
+  /* Native date/time controls follow the active theme */
+  input[type="date"].input-field,
+  input[type="time"].input-field,
   select {
-    color-scheme: dark;
+    color-scheme: inherit;
   }
 
   /* Prevent horizontal overflow */
@@ -1825,18 +1816,18 @@ function StatCard({
   iconBg,
 }: StatCardProps) {
   return (
-    <div className="group min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[#102236]">
+    <div className="group min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[var(--bg-tertiary)]">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium uppercase tracking-wider text-slate-500">
+          <p className="truncate text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-600">
+          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -1928,9 +1919,9 @@ function ActionButton({
         justify-center
         rounded-lg
         border
-        border-white/10
-        bg-white/5
-        text-white
+        border-[var(--border-primary)]
+        bg-[var(--bg-tertiary)]
+        text-[var(--text-primary)]
         transition
         ${className}
       `}
@@ -1956,15 +1947,15 @@ function InfoItem({
   icon,
 }: InfoItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-3">
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
       <div className="mt-1 flex min-w-0 items-center gap-1.5">
         {icon}
 
-        <p className="truncate text-xs font-medium text-slate-300">
+        <p className="truncate text-xs font-medium text-[var(--text-secondary)]">
           {value}
         </p>
       </div>
@@ -1987,7 +1978,7 @@ function FormField({
 }: FormFieldProps) {
   return (
     <div className="min-w-0">
-      <label className="mb-2 block text-xs font-medium text-slate-400">
+      <label className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
         {label}
       </label>
 
@@ -1997,3 +1988,4 @@ function FormField({
 }
 
 export default Slots;
+

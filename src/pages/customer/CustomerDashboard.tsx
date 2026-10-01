@@ -201,7 +201,7 @@ function getBookingStatusClasses(status?: string) {
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -223,7 +223,7 @@ function getSessionStatusClasses(status?: string) {
       return "border-blue-400/20 bg-blue-400/10 text-blue-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -239,18 +239,18 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 break-words text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 break-words text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -271,12 +271,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -513,7 +513,7 @@ export default function CustomerDashboard() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading your dashboard...
           </p>
         </div>
@@ -524,19 +524,19 @@ export default function CustomerDashboard() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 dark:bg-gradient-to-br dark:from-[#0D1B2A] dark:via-[#0B1726] dark:to-[#111A35] sm:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
               Customer Portal
             </span>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Welcome
               {user?.name ? `, ${user.name}` : ""}
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Manage your EV charging bookings, sessions,
               payments and charging history.
             </p>
@@ -559,7 +559,7 @@ export default function CustomerDashboard() {
               onClick={() =>
                 void fetchDashboardData()
               }
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -582,7 +582,7 @@ export default function CustomerDashboard() {
           <button
             type="button"
             onClick={() => setError("")}
-            className="shrink-0 text-red-300 transition hover:text-white"
+            className="shrink-0 text-red-300 transition hover:text-[var(--text-primary)]"
           >
             ×
           </button>
@@ -623,14 +623,14 @@ export default function CustomerDashboard() {
       {/* Upcoming booking + active session */}
       <section className="grid min-w-0 gap-4 xl:grid-cols-2">
         {/* Upcoming booking */}
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Upcoming Booking
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Your next charging reservation
               </p>
             </div>
@@ -642,13 +642,13 @@ export default function CustomerDashboard() {
             <div className="p-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                  <p className="text-lg font-semibold text-white">
+                  <p className="text-lg font-semibold text-[var(--text-primary)]">
                     {getStation(
                       upcomingBooking.stationId
                     )?.name || "Charging Station"}
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                     {upcomingBooking.bookingId}
                   </p>
                 </div>
@@ -710,14 +710,14 @@ export default function CustomerDashboard() {
             </div>
           ) : (
             <div className="p-5">
-              <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-                <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+              <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+                <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                <p className="mt-3 text-sm font-medium text-white">
+                <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                   No upcoming booking
                 </p>
 
-                <p className="mt-1 text-xs leading-5 text-slate-500">
+                <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
                   Find an available charging station and
                   reserve your next charging slot.
                 </p>
@@ -738,14 +738,14 @@ export default function CustomerDashboard() {
         </div>
 
         {/* Active session */}
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Active Session
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Current charging activity
               </p>
             </div>
@@ -757,11 +757,11 @@ export default function CustomerDashboard() {
             <div className="p-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <p className="text-lg font-semibold text-white">
+                  <p className="text-lg font-semibold text-[var(--text-primary)]">
                     {activeSession.sessionId}
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                     {getStation(
                       activeSession.stationId
                     )?.name || "Charging Station"}
@@ -827,14 +827,14 @@ export default function CustomerDashboard() {
             </div>
           ) : (
             <div className="p-5">
-              <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-                <Zap className="mx-auto h-8 w-8 text-slate-600" />
+              <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+                <Zap className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                <p className="mt-3 text-sm font-medium text-white">
+                <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                   No active charging session
                 </p>
 
-                <p className="mt-1 text-xs leading-5 text-slate-500">
+                <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
                   Your active charging session will appear
                   here after charging begins.
                 </p>
@@ -845,13 +845,13 @@ export default function CustomerDashboard() {
       </section>
 
       {/* Quick actions */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
         <div>
-          <h2 className="text-base font-semibold text-white">
+          <h2 className="text-base font-semibold text-[var(--text-primary)]">
             Quick Actions
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             Quickly access your EV charging services.
           </p>
         </div>
@@ -862,15 +862,15 @@ export default function CustomerDashboard() {
             onClick={() =>
               navigate("/customer/stations")
             }
-            className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
+            className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
           >
             <MapPin className="h-5 w-5 text-cyan-400" />
 
-            <p className="mt-3 text-sm font-semibold text-white">
+            <p className="mt-3 text-sm font-semibold text-[var(--text-primary)]">
               Find Stations
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Search charging stations and slots.
             </p>
           </button>
@@ -880,15 +880,15 @@ export default function CustomerDashboard() {
             onClick={() =>
               navigate("/customer/bookings")
             }
-            className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
+            className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
           >
             <CalendarDays className="h-5 w-5 text-cyan-400" />
 
-            <p className="mt-3 text-sm font-semibold text-white">
+            <p className="mt-3 text-sm font-semibold text-[var(--text-primary)]">
               My Bookings
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               View and manage charging bookings.
             </p>
           </button>
@@ -898,15 +898,15 @@ export default function CustomerDashboard() {
             onClick={() =>
               navigate("/customer/sessions")
             }
-            className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
+            className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
           >
             <Activity className="h-5 w-5 text-cyan-400" />
 
-            <p className="mt-3 text-sm font-semibold text-white">
+            <p className="mt-3 text-sm font-semibold text-[var(--text-primary)]">
               Charging History
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Review your charging sessions.
             </p>
           </button>
@@ -916,15 +916,15 @@ export default function CustomerDashboard() {
             onClick={() =>
               navigate("/customer/payments")
             }
-            className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
+            className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/30 hover:bg-cyan-400/[0.06]"
           >
             <CreditCard className="h-5 w-5 text-cyan-400" />
 
-            <p className="mt-3 text-sm font-semibold text-white">
+            <p className="mt-3 text-sm font-semibold text-[var(--text-primary)]">
               Payments
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               View payment status and history.
             </p>
           </button>
@@ -932,14 +932,14 @@ export default function CustomerDashboard() {
       </section>
 
       {/* Recent charging history */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Recent Charging History
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Your recently completed charging sessions.
             </p>
           </div>
@@ -949,14 +949,14 @@ export default function CustomerDashboard() {
 
         {recentChargingHistory.length === 0 ? (
           <div className="p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <Activity className="mx-auto h-8 w-8 text-slate-600" />
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+              <Activity className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 No charging history yet
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Completed charging sessions will appear
                 here.
               </p>
@@ -977,48 +977,48 @@ export default function CustomerDashboard() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border-primary)]">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Session
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Station
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Charger
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Energy
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Cost
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Status
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {recentChargingHistory.map(
                     (session) => (
                       <tr
                         key={session.id}
-                        className="transition hover:bg-white/[0.02]"
+                        className="transition hover:bg-[var(--bg-tertiary)]"
                       >
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {session.sessionId}
                           </p>
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {getStation(
                               session.stationId
                             )?.name || "—"}
@@ -1026,7 +1026,7 @@ export default function CustomerDashboard() {
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {getCharger(
                               session.chargerId
                             )?.chargerId ||
@@ -1036,7 +1036,7 @@ export default function CustomerDashboard() {
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {Number(
                               session.energyConsumed ??
                                 session.unitsConsumed ??
@@ -1047,7 +1047,7 @@ export default function CustomerDashboard() {
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {formatAmount(
                               session.cost ??
                                 session.chargingCost ??
@@ -1078,15 +1078,15 @@ export default function CustomerDashboard() {
                 (session) => (
                   <div
                     key={session.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {session.sessionId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {getStation(
                             session.stationId
                           )?.name || "—"}
@@ -1149,13 +1149,13 @@ export default function CustomerDashboard() {
         )}
 
         {recentChargingHistory.length > 0 && (
-          <div className="border-t border-white/10 p-4 text-center">
+          <div className="border-t border-[var(--border-primary)] p-4 text-center">
             <button
               type="button"
               onClick={() =>
                 navigate("/customer/sessions")
               }
-              className="text-sm font-medium text-cyan-400 transition hover:text-white"
+              className="text-sm font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               View All Charging Sessions
             </button>

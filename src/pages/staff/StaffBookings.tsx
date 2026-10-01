@@ -179,26 +179,26 @@ function formatAmount(value?: number) {
 function getStatusClasses(status: BookingStatus) {
   switch (status) {
     case "Pending":
-      return "border-amber-400/20 bg-amber-400/10 text-amber-300";
+      return "border-amber-400/20 bg-amber-400/10 text-amber-700 dark:text-amber-300";
 
     case "Confirmed":
-      return "border-blue-400/20 bg-blue-400/10 text-blue-300";
+      return "border-blue-400/20 bg-blue-400/10 text-blue-700 dark:text-blue-300";
 
     case "Checked In":
-      return "border-violet-400/20 bg-violet-400/10 text-violet-300";
+      return "border-violet-400/20 bg-violet-400/10 text-violet-700 dark:text-violet-300";
 
     case "Charging":
-      return "border-cyan-400/20 bg-cyan-400/10 text-cyan-300";
+      return "border-cyan-400/20 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300";
 
     case "Completed":
-      return "border-emerald-400/20 bg-emerald-400/10 text-emerald-300";
+      return "border-emerald-400/20 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300";
 
     case "Cancelled":
     case "No Show":
-      return "border-red-400/20 bg-red-400/10 text-red-300";
+      return "border-red-400/20 bg-red-400/10 text-red-700 dark:text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-black/5 dark:bg-white/5 text-[var(--text-secondary)]";
   }
 }
 
@@ -214,23 +214,23 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
 
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300">
           {icon}
         </div>
       </div>
@@ -253,7 +253,7 @@ function ActionButton({
       onClick={onClick}
       title={label}
       aria-label={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-black/5 dark:bg-white/5 text-[var(--text-primary)] transition hover:bg-white hover:text-black"
     >
       {children}
     </button>
@@ -276,13 +276,13 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        className="h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-4 pr-11 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
       >
         {options.map((option) => (
           <option
             key={option}
             value={option}
-            className="bg-[#0D1B2A] text-white"
+            className="bg-[#0D1B2A] text-[var(--text-primary)]"
           >
             {option === "All" ? placeholder : option}
           </option>
@@ -290,7 +290,7 @@ function FilterSelect({
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -313,12 +313,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-white/10 bg-[var(--bg-secondary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -612,7 +612,7 @@ export default function StaffBookings() {
                 "Confirmed"
               )
             }
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-4 text-xs font-semibold text-blue-300 transition hover:bg-blue-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-blue-400/20 bg-blue-400/10 px-4 text-xs font-semibold text-blue-700 dark:text-blue-300 transition hover:bg-blue-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             Confirm
@@ -629,7 +629,7 @@ export default function StaffBookings() {
                 "Checked In"
               )
             }
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-violet-400/20 bg-violet-400/10 px-4 text-xs font-semibold text-violet-300 transition hover:bg-violet-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-violet-400/20 bg-violet-400/10 px-4 text-xs font-semibold text-violet-700 dark:text-violet-300 transition hover:bg-violet-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
           >
             <UserCheck className="h-4 w-4" />
             Check In
@@ -646,7 +646,7 @@ export default function StaffBookings() {
                 "Charging"
               )
             }
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 text-xs font-semibold text-cyan-300 transition hover:bg-cyan-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 text-xs font-semibold text-cyan-700 dark:text-cyan-300 transition hover:bg-cyan-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
           >
             <Zap className="h-4 w-4" />
             Start Charging
@@ -663,7 +663,7 @@ export default function StaffBookings() {
                 "Completed"
               )
             }
-            className="inline-flex h-10 items-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 text-xs font-semibold text-emerald-300 transition hover:bg-emerald-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 text-xs font-semibold text-emerald-700 dark:text-emerald-300 transition hover:bg-emerald-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
           >
             <CheckCircle2 className="h-4 w-4" />
             Complete
@@ -683,7 +683,7 @@ export default function StaffBookings() {
                   "No Show"
                 )
               }
-              className="inline-flex h-10 items-center gap-2 rounded-xl border border-orange-400/20 bg-orange-400/10 px-4 text-xs font-semibold text-orange-300 transition hover:bg-orange-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center gap-2 rounded-xl border border-orange-400/20 bg-orange-400/10 px-4 text-xs font-semibold text-orange-700 dark:text-orange-300 transition hover:bg-orange-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             >
               <Clock3 className="h-4 w-4" />
               No Show
@@ -698,7 +698,7 @@ export default function StaffBookings() {
                   "Cancelled"
                 )
               }
-              className="inline-flex h-10 items-center gap-2 rounded-xl border border-red-400/20 bg-red-400/10 px-4 text-xs font-semibold text-red-300 transition hover:bg-red-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex h-10 items-center gap-2 rounded-xl border border-red-400/20 bg-red-400/10 px-4 text-xs font-semibold text-red-700 dark:text-red-300 transition hover:bg-red-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             >
               <XCircle className="h-4 w-4" />
               Cancel
@@ -715,7 +715,7 @@ export default function StaffBookings() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading staff bookings...
           </p>
         </div>
@@ -726,32 +726,32 @@ export default function StaffBookings() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-white/10 bg-white dark:bg-gradient-to-br dark:from-[#0D1B2A] dark:via-[#0B1726] dark:to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
+              <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-700 dark:text-cyan-300">
                 Staff Operations
               </span>
 
               {station && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
+                <span className="rounded-full border border-[var(--border-primary)] bg-black/5 dark:bg-white/5 px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
                   {station.stationId}
                 </span>
               )}
             </div>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Booking Management
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Manage customer check-ins and booking
               operations for your assigned station.
             </p>
 
             {station && (
-              <p className="mt-2 text-sm font-medium text-cyan-300">
+              <p className="mt-2 text-sm font-medium text-cyan-700 dark:text-cyan-300">
                 {station.name}
               </p>
             )}
@@ -760,7 +760,7 @@ export default function StaffBookings() {
           <button
             type="button"
             onClick={() => void fetchBookings()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-black/5 dark:bg-white/5 px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -771,17 +771,17 @@ export default function StaffBookings() {
       {/* Error */}
       {error && (
         <div className="flex items-start gap-3 rounded-xl border border-red-400/20 bg-red-400/10 p-4">
-          <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+          <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-700 dark:text-red-300" />
 
           <div>
-            <p className="text-sm font-medium text-red-200">
+            <p className="text-sm font-medium text-red-700 dark:text-red-200">
               {error}
             </p>
 
             <button
               type="button"
               onClick={() => setError("")}
-              className="mt-1 text-xs text-red-300 underline underline-offset-2 hover:text-white"
+              className="mt-1 text-xs text-red-700 dark:text-red-300 underline underline-offset-2 hover:text-[var(--text-primary)]"
             >
               Dismiss
             </button>
@@ -821,14 +821,14 @@ export default function StaffBookings() {
       </section>
 
       {/* Filters */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find bookings by ID, customer, charger or
               vehicle.
             </p>
@@ -840,7 +840,7 @@ export default function StaffBookings() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -850,7 +850,7 @@ export default function StaffBookings() {
 
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-3">
           <div className="relative min-w-0">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -859,7 +859,7 @@ export default function StaffBookings() {
                 setSearch(event.target.value)
               }
               placeholder="Search bookings..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -875,7 +875,7 @@ export default function StaffBookings() {
           />
 
           <div className="relative min-w-0">
-            <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="date"
@@ -883,21 +883,21 @@ export default function StaffBookings() {
               onChange={(event) =>
                 setDateFilter(event.target.value)
               }
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
         </div>
       </section>
 
       {/* Booking list */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
         <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Bookings
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Showing {filteredBookings.length} of{" "}
               {bookings.length} bookings
             </p>
@@ -908,14 +908,14 @@ export default function StaffBookings() {
 
         {filteredBookings.length === 0 ? (
           <div className="p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+            <div className="rounded-xl border border-white/10 bg-[var(--bg-secondary)] p-8 text-center">
+              <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 No bookings found
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing the search or filters.
               </p>
             </div>
@@ -937,37 +937,37 @@ export default function StaffBookings() {
 
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Booking
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Customer
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Date
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Charger
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Time
                     </th>
 
-                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Status
                     </th>
 
-                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Action
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {filteredBookings.map((booking) => {
                     const customer =
                       getCustomer(booking);
@@ -978,27 +978,27 @@ export default function StaffBookings() {
                     return (
                       <tr
                         key={booking.id}
-                        className="transition hover:bg-white/[0.02]"
+                        className="transition hover:bg-[var(--bg-secondary)]"
                       >
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {booking.bookingId}
                           </p>
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm font-medium text-white">
+                          <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                             {customer?.name ||
                               "Customer"}
                           </p>
 
-                          <p className="mt-1 truncate text-xs text-slate-500">
+                          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                             {customer?.email || "—"}
                           </p>
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {formatDate(
                               booking.bookingDate
                             )}
@@ -1006,7 +1006,7 @@ export default function StaffBookings() {
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {charger?.chargerId ||
                               booking.chargerId ||
                               "—"}
@@ -1014,13 +1014,13 @@ export default function StaffBookings() {
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {formatTime(
                               booking.startTime
                             )}
                           </p>
 
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--text-muted)]">
                             to{" "}
                             {formatTime(
                               booking.endTime
@@ -1071,15 +1071,15 @@ export default function StaffBookings() {
                 return (
                   <div
                     key={booking.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="rounded-xl border border-white/10 bg-[var(--bg-secondary)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {booking.bookingId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {customer?.name ||
                             "Customer"}
                         </p>
@@ -1147,15 +1147,15 @@ export default function StaffBookings() {
       {/* View booking popup */}
       {viewBooking && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-white dark:bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Header */}
             <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
               <div className="min-w-0">
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Booking Details
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {viewBooking.bookingId}
                 </p>
               </div>
@@ -1166,7 +1166,7 @@ export default function StaffBookings() {
                 onClick={() =>
                   setViewBooking(null)
                 }
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-black/5 dark:bg-white/5 text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1285,7 +1285,7 @@ export default function StaffBookings() {
             </div>
 
             {/* Footer */}
-            <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-white dark:bg-[#0D1A2A] px-4 py-4 sm:px-6">
               {renderStatusActions(viewBooking)}
 
               <div className="flex justify-end">
@@ -1295,7 +1295,7 @@ export default function StaffBookings() {
                   onClick={() =>
                     setViewBooking(null)
                   }
-                  className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-10 rounded-xl border border-[var(--border-primary)] bg-black/5 dark:bg-white/5 px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Close
                 </button>

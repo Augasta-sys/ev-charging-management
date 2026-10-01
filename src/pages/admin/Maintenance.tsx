@@ -120,7 +120,7 @@ function getStatusClass(status: MaintenanceStatus) {
     case "Cancelled":
       return "border-red-400/20 bg-red-400/10 text-red-300";
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -129,7 +129,7 @@ function getPriorityClass(
 ) {
   switch (priority) {
     case "Low":
-      return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+      return "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]";
     case "Medium":
       return "border-blue-400/20 bg-blue-400/10 text-blue-300";
     case "High":
@@ -137,7 +137,7 @@ function getPriorityClass(
     case "Critical":
       return "border-red-400/20 bg-red-400/10 text-red-300";
     default:
-      return "border-white/10 bg-white/5 text-slate-400";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -158,7 +158,7 @@ function ActionButton({
       title={label}
       aria-label={label}
       onClick={onClick}
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:border-white/20 hover:bg-white/10 ${className}`}
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:border-white/20 hover:bg-[var(--bg-tertiary)] ${className}`}
     >
       {children}
     </button>
@@ -175,12 +175,12 @@ function DetailItem({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.025] p-3.5">
-      <p className="mb-1.5 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3.5">
+      <p className="mb-1.5 flex items-center gap-2 text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {icon}
         {label}
       </p>
-      <p className="break-words text-sm font-medium text-white">{value}</p>
+      <p className="break-words text-sm font-medium text-[var(--text-primary)]">{value}</p>
     </div>
   );
 }
@@ -219,12 +219,15 @@ export default function Maintenance() {
 
     if (modalOpen) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [showModal, viewMaintenance, deleteId]);
 
@@ -602,11 +605,11 @@ export default function Maintenance() {
             Admin / Maintenance
           </div>
 
-          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h1 className="text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
             Maintenance Management
           </h1>
 
-          <p className="mt-1.5 text-sm text-slate-400">
+          <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
             Monitor charger maintenance, service issues and repair progress.
           </p>
         </div>
@@ -660,17 +663,17 @@ export default function Maintenance() {
       </section>
 
       {/* Filters */}
-      <section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <Filter className="h-4 w-4 text-cyan-400" />
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">
                 Search & Filters
               </h2>
             </div>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find maintenance records by issue, station, status or priority.
             </p>
           </div>
@@ -682,7 +685,7 @@ export default function Maintenance() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -692,7 +695,7 @@ export default function Maintenance() {
 
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <div className="relative min-w-0">
-            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -745,13 +748,13 @@ export default function Maintenance() {
       </section>
 
       {/* Table */}
-      <section className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex flex-col gap-1 border-b border-white/10 px-4 py-4 sm:px-5">
-          <h2 className="text-sm font-semibold text-white">
+      <section className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="flex flex-col gap-1 border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)]">
             Maintenance Records
           </h2>
 
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-[var(--text-muted)]">
             Showing {filteredMaintenance.length} of {maintenance.length}{" "}
             records
           </p>
@@ -759,22 +762,22 @@ export default function Maintenance() {
 
         {loading ? (
           <div className="flex min-h-[280px] items-center justify-center">
-            <div className="flex items-center gap-3 text-sm text-slate-400">
+            <div className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
               <Loader2 className="h-5 w-5 animate-spin text-cyan-400" />
               Loading maintenance records...
             </div>
           </div>
         ) : filteredMaintenance.length === 0 ? (
           <div className="flex min-h-[280px] flex-col items-center justify-center px-6 text-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5">
-              <Wrench className="h-5 w-5 text-slate-500" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)]">
+              <Wrench className="h-5 w-5 text-[var(--text-muted)]" />
             </div>
 
-            <h3 className="mt-4 text-sm font-semibold text-white">
+            <h3 className="mt-4 text-sm font-semibold text-[var(--text-primary)]">
               No maintenance records found
             </h3>
 
-            <p className="mt-1 max-w-md text-xs leading-5 text-slate-500">
+            <p className="mt-1 max-w-md text-xs leading-5 text-[var(--text-muted)]">
               Try changing your filters or add a new maintenance record.
             </p>
           </div>
@@ -794,29 +797,29 @@ export default function Maintenance() {
   <col className="w-[18%]" />
 </colgroup>
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                  <tr className="border-b border-[var(--border-primary)] text-left">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Maintenance ID
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Station
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Charger
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Issue
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Reported
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Priority
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Status
                     </th>
-                    <th className="px-4 py-4 text-xs font-semibold text-slate-400">
+                    <th className="px-4 py-4 text-xs font-semibold text-[var(--text-secondary)]">
                       Actions
                     </th>
                   </tr>
@@ -829,7 +832,7 @@ export default function Maintenance() {
                     return (
                       <tr
                         key={item.id}
-                        className="border-b border-white/[0.06] transition hover:bg-white/[0.025]"
+                        className="border-b border-[var(--border-primary)] transition hover:bg-[var(--bg-tertiary)]"
                       >
                         <td className="px-4 py-5 align-middle">
                           <span className="font-mono text-xs font-semibold text-cyan-300">
@@ -839,29 +842,29 @@ export default function Maintenance() {
 
                         <td className="px-4 py-5 align-middle">
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-medium text-white">
+                            <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                               {getStationName(item.stationId)}
                             </p>
-                            <p className="mt-1 truncate text-[11px] text-slate-500">
+                            <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
                               {getStationCode(item.stationId)}
                             </p>
                           </div>
                         </td>
 
                         <td className="px-4 py-5 align-middle">
-                          <span className="font-mono text-xs text-slate-300">
+                          <span className="font-mono text-xs text-[var(--text-secondary)]">
                             {getChargerCode(item.chargerId)}
                           </span>
                         </td>
 
                         <td className="px-4 py-5 align-middle">
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-medium text-white">
+                            <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                               {item.issue}
                             </p>
 
                             {item.description && (
-                              <p className="mt-1 truncate text-[11px] text-slate-500">
+                              <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
                                 {item.description}
                               </p>
                             )}
@@ -869,15 +872,15 @@ export default function Maintenance() {
                         </td>
 
                         <td className="px-4 py-5 align-middle">
-                          <div className="flex items-center gap-2 text-xs text-slate-300">
-                            <CalendarDays className="h-4 w-4 shrink-0 !text-white" />
+                          <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+                            <CalendarDays className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
                             <span>{formatDate(item.reportedDate)}</span>
                           </div>
                         </td>
 
                         <td className="px-4 py-5 align-middle">
                           <span
-                            className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getPriorityClass(
+                            className={`maintenance-priority-badge inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getPriorityClass(
                               item.priority,
                             )}`}
                           >
@@ -887,7 +890,7 @@ export default function Maintenance() {
 
                         <td className="px-4 py-5 align-middle">
                           <span
-                            className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
+                            className={`maintenance-status-badge inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
                               item.status,
                             )}`}
                           >
@@ -901,14 +904,14 @@ export default function Maintenance() {
       label="View maintenance"
       onClick={() => setViewMaintenance(item)}
     >
-      <Eye className="h-4 w-4 !text-white" />
+      <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
     </ActionButton>
 
     <ActionButton
       label="Edit maintenance"
       onClick={() => openEditModal(item)}
     >
-      <Edit3 className="h-4 w-4 !text-white" />
+      <Edit3 className="h-4 w-4 !text-[var(--text-primary)]" />
     </ActionButton>
 
     {nextStatus && (
@@ -917,7 +920,7 @@ export default function Maintenance() {
         onClick={() => updateStatus(item, nextStatus)}
         className="hover:border-cyan-400/30 hover:bg-cyan-400/10"
       >
-        <Check className="h-4 w-4 !text-white" />
+        <Check className="h-4 w-4 !text-[var(--text-primary)]" />
       </ActionButton>
     )}
 
@@ -926,7 +929,7 @@ export default function Maintenance() {
       onClick={() => setDeleteId(item.id)}
       className="hover:border-red-400/30 hover:bg-red-400/10"
     >
-      <Trash2 className="h-4 w-4 !text-white" />
+      <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
     </ActionButton>
   </div>
 </td>
@@ -945,7 +948,7 @@ export default function Maintenance() {
                 return (
                   <div
                     key={item.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
+                    className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
@@ -953,7 +956,7 @@ export default function Maintenance() {
                           {item.maintenanceId}
                         </p>
 
-                        <h3 className="mt-1 truncate text-sm font-semibold text-white">
+                        <h3 className="mt-1 truncate text-sm font-semibold text-[var(--text-primary)]">
                           {item.issue}
                         </h3>
                       </div>
@@ -1001,19 +1004,19 @@ export default function Maintenance() {
                       />
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-3">
+                    <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-[var(--border-primary)] pt-3">
                       <ActionButton
                         label="View maintenance"
                         onClick={() => setViewMaintenance(item)}
                       >
-                        <Eye className="h-4 w-4 !text-white" />
+                        <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
 
                       <ActionButton
                         label="Edit maintenance"
                         onClick={() => openEditModal(item)}
                       >
-                        <Edit3 className="h-4 w-4 !text-white" />
+                        <Edit3 className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
 
                       {nextStatus && (
@@ -1032,7 +1035,7 @@ export default function Maintenance() {
                         onClick={() => setDeleteId(item.id)}
                         className="hover:border-red-400/30 hover:bg-red-400/10"
                       >
-                        <Trash2 className="h-4 w-4 !text-white" />
+                        <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
                     </div>
                   </div>
@@ -1046,16 +1049,16 @@ export default function Maintenance() {
       {/* Add / Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex min-h-0 items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-5">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
               <div>
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-[var(--text-primary)]">
                   {editingMaintenance
                     ? "Edit Maintenance"
                     : "Add Maintenance"}
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {editingMaintenance
                     ? `Update ${editingMaintenance.maintenanceId}`
                     : "Create a new charger maintenance record"}
@@ -1065,7 +1068,7 @@ export default function Maintenance() {
               <button
                 type="button"
                 onClick={() => setShowModal(false)}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1148,7 +1151,7 @@ export default function Maintenance() {
                 {/* Reported date */}
                 <Field label="Reported Date" required>
                   <div className="relative">
-                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
                     <input
                       type="date"
@@ -1164,7 +1167,7 @@ export default function Maintenance() {
                 {/* Scheduled date */}
                 <Field label="Scheduled Date">
                   <div className="relative">
-                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
                     <input
                       type="date"
@@ -1180,7 +1183,7 @@ export default function Maintenance() {
                 {/* Completed date */}
                 <Field label="Completed Date">
                   <div className="relative">
-                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+                    <CalendarDays className="pointer-events-none absolute left-3.5 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
                     <input
                       type="date"
@@ -1266,11 +1269,11 @@ export default function Maintenance() {
                 )}
               </div>
 
-              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-white/10 bg-[#0D1A2A] px-4 py-3 sm:flex-row sm:justify-end sm:px-5">
+              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-3 sm:flex-row sm:justify-end sm:px-5">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="h-10 rounded-lg border border-white/10 bg-white/5 px-4 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+                  className="h-10 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
                 >
                   Cancel
                 </button>
@@ -1297,17 +1300,17 @@ export default function Maintenance() {
       {/* View Modal */}
       {viewMaintenance && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-5">
+          <div className="flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
               <div>
                 <div className="flex items-center gap-2">
                   <Wrench className="h-4 w-4 text-cyan-400" />
-                  <h2 className="text-base font-semibold text-white">
+                  <h2 className="text-base font-semibold text-[var(--text-primary)]">
                     Maintenance Details
                   </h2>
                 </div>
 
-                <p className="mt-1 font-mono text-xs text-cyan-300">
+                <p className="mt-1 font-mono text-xs text-cyan-800">
                   {viewMaintenance.maintenanceId}
                 </p>
               </div>
@@ -1315,7 +1318,7 @@ export default function Maintenance() {
               <button
                 type="button"
                 onClick={() => setViewMaintenance(null)}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1332,7 +1335,7 @@ export default function Maintenance() {
                   label="Status"
                   value={
                     <span
-                      className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
+                      className={`maintenance-status-badge inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClass(
                         viewMaintenance.status,
                       )}`}
                     >
@@ -1362,7 +1365,7 @@ export default function Maintenance() {
                   label="Priority"
                   value={
                     <span
-                      className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getPriorityClass(
+                      className={`maintenance-priority-badge inline-flex rounded-full border px-2.5 py-1 text-[11px] font-medium ${getPriorityClass(
                         viewMaintenance.priority,
                       )}`}
                     >
@@ -1410,11 +1413,11 @@ export default function Maintenance() {
               </div>
             </div>
 
-            <div className="flex shrink-0 justify-end border-t border-white/10 px-4 py-3 sm:px-5">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] px-4 py-3 sm:px-5">
               <button
                 type="button"
                 onClick={() => setViewMaintenance(null)}
-                className="h-10 rounded-lg border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white/10"
+                className="h-10 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)]"
               >
                 Close
               </button>
@@ -1426,16 +1429,16 @@ export default function Maintenance() {
       {/* Delete Modal */}
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-5 shadow-2xl shadow-black/60 sm:p-6">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-2xl shadow-black/60 sm:p-6">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-400/20 bg-red-400/10">
               <Trash2 className="h-5 w-5 text-red-300" />
             </div>
 
-            <h2 className="mt-4 text-lg font-semibold text-white">
+            <h2 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
               Delete Maintenance Record?
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               This action will permanently remove the maintenance record.
               This cannot be undone.
             </p>
@@ -1453,7 +1456,7 @@ export default function Maintenance() {
                   setDeleteId(null);
                   setError("");
                 }}
-                className="h-10 rounded-lg border border-white/10 bg-white/5 px-4 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+                className="h-10 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
               >
                 Cancel
               </button>
@@ -1480,50 +1483,66 @@ export default function Maintenance() {
           min-width: 0;
           height: 42px;
           border-radius: 10px;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: rgba(255,255,255,0.04);
+          border: 1px solid var(--border-primary);
+          background: var(--input-bg);
           padding: 0 14px;
-          color: #ffffff;
+          color: var(--input-text);
           outline: none;
           transition: border-color 150ms ease, background 150ms ease;
         }
 
         .input-field::placeholder {
-          color: #64748b;
+          color: var(--text-muted);
         }
 
         .input-field:focus {
           border-color: rgba(34,211,238,0.55);
-          background: rgba(255,255,255,0.055);
+          background: var(--input-bg);
         }
 
         select.input-field {
-          color-scheme: dark;
+          color-scheme: inherit;
         }
 
         input[type="date"].input-field,
         input[type="time"].input-field {
-          color-scheme: dark;
+          color-scheme: inherit;
         }
 
-        input[type="date"].input-field::-webkit-calendar-picker-indicator,
-        input[type="time"].input-field::-webkit-calendar-picker-indicator {
+        html.dark input[type="date"].input-field::-webkit-calendar-picker-indicator,
+        html.dark input[type="time"].input-field::-webkit-calendar-picker-indicator {
           filter: brightness(0) invert(1) !important;
           opacity: 1 !important;
           cursor: pointer;
         }
 
-        input[type="date"].input-field::-webkit-inner-spin-button,
-        input[type="time"].input-field::-webkit-inner-spin-button {
+        html.light input[type="date"].input-field::-webkit-calendar-picker-indicator,
+        html.light input[type="time"].input-field::-webkit-calendar-picker-indicator {
+          filter: none !important;
+          opacity: 1 !important;
+          cursor: pointer;
+        }
+
+        html.dark input[type="date"].input-field::-webkit-inner-spin-button,
+        html.dark input[type="time"].input-field::-webkit-inner-spin-button {
           filter: brightness(0) invert(1) !important;
         }
 
         .input-field option {
-          background: #0D1A2A;
-          color: #ffffff;
+          background: var(--input-bg);
+          color: var(--input-text);
         }
 
-        .hide-scrollbar {
+
+
+        html.light .maintenance-status-badge {
+          color: #334155 !important;
+        }
+
+        html.light .maintenance-priority-badge {
+          color: #334155 !important;
+        }
+\n        .hide-scrollbar {
           scrollbar-width: none;
           -ms-overflow-style: none;
           overscroll-behavior: contain;
@@ -1551,11 +1570,11 @@ function StatCard({
   iconClass: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+    <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium text-slate-500">{label}</p>
-          <p className="mt-2 text-2xl font-bold tracking-tight text-white">
+          <p className="text-xs font-medium text-[var(--text-muted)]">{label}</p>
+          <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             {value}
           </p>
         </div>
@@ -1583,7 +1602,7 @@ function Field({
 }) {
   return (
     <div className={full ? "sm:col-span-2" : ""}>
-      <label className="mb-1.5 block text-xs font-medium text-slate-300">
+      <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
         {label}
         {required && <span className="ml-1 text-cyan-400">*</span>}
       </label>
@@ -1602,10 +1621,10 @@ function MobileDetail({
 }) {
   return (
     <div>
-      <p className="text-[10px] font-medium uppercase tracking-wide text-slate-500">
+      <p className="text-[10px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
-      <p className="mt-1 break-words text-xs font-medium text-slate-200">
+      <p className="mt-1 break-words text-xs font-medium text-[var(--text-secondary)]">
         {value}
       </p>
     </div>

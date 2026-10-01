@@ -100,12 +100,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -127,7 +127,7 @@ function ActionButton({
       onClick={onClick}
       title={label}
       aria-label={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
     >
       {children}
     </button>
@@ -555,7 +555,7 @@ export default function CustomerVehicles() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading your vehicles...
           </p>
         </div>
@@ -564,20 +564,20 @@ export default function CustomerVehicles() {
   }
 
   return (
-    <div className="w-full min-w-0 space-y-6">
+    <div className="w-full min-w-0 space-y-6">\n      <style>{`\n        .customer-vehicles-input {\n          border-color: var(--border-primary);\n          background: var(--input-bg);\n          color: var(--input-text);\n        }\n        .customer-vehicles-input::placeholder {\n          color: var(--text-muted);\n          opacity: 1;\n        }\n        .customer-vehicles-input option {\n          background: var(--input-bg);\n          color: var(--input-text);\n        }\n        html.dark .customer-vehicles-input { color-scheme: dark; }\n        html.light .customer-vehicles-input { color-scheme: light; }\n        .customer-vehicles-banner {\n          background: #ffffff;\n        }\n        html.dark .customer-vehicles-banner {\n          background: linear-gradient(135deg, #0D1B2A, #0B1726, #111A35);\n        }\n      `}</style>\n
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] customer-vehicles-banner p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
               Customer Vehicles
             </span>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               My Vehicles
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Manage the EVs you use for charging
               reservations.
             </p>
@@ -587,7 +587,7 @@ export default function CustomerVehicles() {
             <button
               type="button"
               onClick={() => void fetchVehicles()}
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -619,7 +619,7 @@ export default function CustomerVehicles() {
           <button
             type="button"
             onClick={() => setSuccess("")}
-            className="shrink-0 text-emerald-300 transition hover:text-white"
+            className="shrink-0 text-emerald-300 transition hover:text-[var(--text-primary)]"
             aria-label="Close success message"
           >
             <X className="h-4 w-4" />
@@ -641,7 +641,7 @@ export default function CustomerVehicles() {
           <button
             type="button"
             onClick={() => setError("")}
-            className="shrink-0 text-red-300 transition hover:text-white"
+            className="shrink-0 text-red-300 transition hover:text-[var(--text-primary)]"
             aria-label="Close error message"
           >
             <X className="h-4 w-4" />
@@ -651,18 +651,18 @@ export default function CustomerVehicles() {
 
       {/* Summary */}
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Total Vehicles
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {vehicles.length}
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Vehicles added to your account
               </p>
             </div>
@@ -673,18 +673,18 @@ export default function CustomerVehicles() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Default Vehicle
               </p>
 
-              <p className="mt-2 truncate text-xl font-bold text-white">
+              <p className="mt-2 truncate text-xl font-bold text-[var(--text-primary)]">
                 {defaultVehicle?.vehicleNumber || "Not Set"}
               </p>
 
-              <p className="mt-1 truncate text-xs text-slate-500">
+              <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                 {defaultVehicle
                   ? `${defaultVehicle.brand} ${defaultVehicle.model}`
                   : "Choose a default vehicle"}
@@ -697,14 +697,14 @@ export default function CustomerVehicles() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 sm:col-span-2 xl:col-span-1">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 sm:col-span-2 xl:col-span-1">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Connector Types
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {
                   new Set(
                     vehicles.map(
@@ -715,7 +715,7 @@ export default function CustomerVehicles() {
                 }
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Charging connectors in your vehicles
               </p>
             </div>
@@ -728,9 +728,9 @@ export default function CustomerVehicles() {
       </section>
 
       {/* Search */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="relative">
-          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
           <input
             type="text"
@@ -739,20 +739,20 @@ export default function CustomerVehicles() {
               setSearch(event.target.value)
             }
             placeholder="Search vehicle number, brand, model, type or connector..."
-            className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+            className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
           />
         </div>
       </section>
 
       {/* Vehicles */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Vehicle List
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               {filteredVehicles.length} vehicle
               {filteredVehicles.length === 1 ? "" : "s"}{" "}
               found
@@ -764,16 +764,16 @@ export default function CustomerVehicles() {
 
         {filteredVehicles.length === 0 ? (
           <div className="p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <Car className="mx-auto h-9 w-9 text-slate-600" />
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+              <Car className="mx-auto h-9 w-9 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 {vehicles.length === 0
                   ? "No vehicles added"
                   : "No matching vehicles"}
               </p>
 
-              <p className="mt-1 text-xs leading-5 text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
                 {vehicles.length === 0
                   ? "Add your EV before creating a charging booking."
                   : "Try changing your search."}
@@ -807,32 +807,32 @@ export default function CustomerVehicles() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border-primary)]">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       ID
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Vehicle
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Brand / Model
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Type
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Battery
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Connector
                     </th>
 
-                    <th className="px-3 py-4 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-right text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Actions
                     </th>
                   </tr>
@@ -843,17 +843,17 @@ export default function CustomerVehicles() {
                     (vehicle) => (
                       <tr
                         key={vehicle.id}
-                        className="transition hover:bg-white/[0.02]"
+                        className="transition hover:bg-[var(--bg-tertiary)]"
                       >
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {vehicle.vehicleId}
                           </p>
                         </td>
 
                         <td className="px-3 py-5">
                           <div className="flex min-w-0 items-center gap-2">
-                            <p className="truncate text-sm font-medium text-white">
+                            <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                               {vehicle.vehicleNumber}
                             </p>
 
@@ -873,20 +873,20 @@ export default function CustomerVehicles() {
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {vehicle.brand}
                           </p>
 
-                          <p className="mt-1 truncate text-xs text-slate-500">
+                          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                             {vehicle.model}
                           </p>
                         </td>
 
-                        <td className="px-3 py-5 text-sm text-slate-300">
+                        <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                           {vehicle.vehicleType}
                         </td>
 
-                        <td className="px-3 py-5 text-sm text-slate-300">
+                        <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                           {vehicle.batteryCapacity} kWh
                         </td>
 
@@ -952,12 +952,12 @@ export default function CustomerVehicles() {
                 (vehicle) => (
                   <div
                     key={vehicle.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {vehicle.vehicleNumber}
                           </p>
 
@@ -969,7 +969,7 @@ export default function CustomerVehicles() {
                           )}
                         </div>
 
-                        <p className="mt-1 text-xs text-slate-500">
+                        <p className="mt-1 text-xs text-[var(--text-muted)]">
                           {vehicle.vehicleId}
                         </p>
                       </div>
@@ -1055,16 +1055,16 @@ export default function CustomerVehicles() {
       {/* Add / Edit Modal */}
       {showFormModal && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
-            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   {editingVehicle
                     ? "Edit Vehicle"
                     : "Add Vehicle"}
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {editingVehicle
                     ? editingVehicle.vehicleId
                     : "Add an EV to your account"}
@@ -1075,7 +1075,7 @@ export default function CustomerVehicles() {
                 type="button"
                 disabled={saving}
                 onClick={closeFormModal}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:opacity-50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:opacity-50"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1098,7 +1098,7 @@ export default function CustomerVehicles() {
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="sm:col-span-2">
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Vehicle Number *
                     </span>
 
@@ -1113,12 +1113,12 @@ export default function CustomerVehicles() {
                         }))
                       }
                       placeholder="TN01AB1234"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm uppercase text-white outline-none placeholder:normal-case placeholder:text-slate-600 focus:border-cyan-400/50"
+                      className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm uppercase text-[var(--text-primary)] outline-none placeholder:normal-case placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 customer-vehicles-input"
                     />
                   </label>
 
                   <label>
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Brand *
                     </span>
 
@@ -1132,12 +1132,12 @@ export default function CustomerVehicles() {
                         }))
                       }
                       placeholder="Tata"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                      className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 customer-vehicles-input"
                     />
                   </label>
 
                   <label>
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Model *
                     </span>
 
@@ -1151,17 +1151,17 @@ export default function CustomerVehicles() {
                         }))
                       }
                       placeholder="Nexon EV"
-                      className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                      className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 customer-vehicles-input"
                     />
                   </label>
 
                   <label>
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Battery Capacity (kWh) *
                     </span>
 
                     <div className="relative">
-                      <Battery className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                      <Battery className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
                       <input
                         type="number"
@@ -1176,13 +1176,13 @@ export default function CustomerVehicles() {
                           }))
                         }
                         placeholder="40.5"
-                        className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+                        className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 customer-vehicles-input"
                       />
                     </div>
                   </label>
 
                   <label>
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Vehicle Type *
                     </span>
 
@@ -1196,7 +1196,7 @@ export default function CustomerVehicles() {
                               .value as VehicleType,
                         }))
                       }
-                      className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none focus:border-cyan-400/50"
+                      className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50 customer-vehicles-input"
                     >
                       <option value="Car">Car</option>
                       <option value="Bike">Bike</option>
@@ -1210,7 +1210,7 @@ export default function CustomerVehicles() {
                   </label>
 
                   <label>
-                    <span className="mb-2 block text-xs font-medium text-slate-400">
+                    <span className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
                       Connector Type *
                     </span>
 
@@ -1224,7 +1224,7 @@ export default function CustomerVehicles() {
                               .value as ConnectorType,
                         }))
                       }
-                      className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none focus:border-cyan-400/50"
+                      className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50 customer-vehicles-input"
                     >
                       <option value="Type 1">
                         Type 1
@@ -1240,7 +1240,7 @@ export default function CustomerVehicles() {
                   </label>
 
                   <div className="flex items-end">
-                    <label className="flex h-11 w-full cursor-pointer items-center gap-3 rounded-xl border border-white/10 bg-[#07111F] px-4">
+                    <label className="flex h-11 w-full cursor-pointer items-center gap-3 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4">
                       <input
                         type="checkbox"
                         checked={form.isDefault}
@@ -1254,7 +1254,7 @@ export default function CustomerVehicles() {
                         className="h-4 w-4 accent-cyan-400"
                       />
 
-                      <span className="text-sm text-white">
+                      <span className="text-sm text-[var(--text-primary)]">
                         Set as default vehicle
                       </span>
                     </label>
@@ -1262,12 +1262,12 @@ export default function CustomerVehicles() {
                 </div>
               </div>
 
-              <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+              <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-[var(--border-primary)] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
                 <button
                   type="button"
                   disabled={saving}
                   onClick={closeFormModal}
-                  className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:opacity-50"
+                  className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -1303,11 +1303,11 @@ export default function CustomerVehicles() {
       {/* View Modal */}
       {viewVehicle && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60">
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60">
+            <div className="flex items-center justify-between gap-4 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-lg font-semibold text-white">
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                     Vehicle Details
                   </h2>
 
@@ -1319,7 +1319,7 @@ export default function CustomerVehicles() {
                   )}
                 </div>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {viewVehicle.vehicleId}
                 </p>
               </div>
@@ -1329,7 +1329,7 @@ export default function CustomerVehicles() {
                 onClick={() =>
                   setViewVehicle(null)
                 }
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1390,13 +1390,13 @@ export default function CustomerVehicles() {
               </div>
             </div>
 
-            <div className="flex flex-col-reverse gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+            <div className="flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
               <button
                 type="button"
                 onClick={() =>
                   setViewVehicle(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 Close
               </button>
@@ -1428,19 +1428,19 @@ export default function CustomerVehicles() {
       {/* Delete Modal */}
       {deleteVehicle && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60">
+          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60">
             <div className="p-5 sm:p-6">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-400/20 bg-red-400/10 text-red-300">
                 <Trash2 className="h-5 w-5" />
               </div>
 
-              <h2 className="mt-4 text-lg font-semibold text-white">
+              <h2 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
                 Delete Vehicle?
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-slate-400">
+              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
                 Are you sure you want to delete{" "}
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-[var(--text-primary)]">
                   {deleteVehicle.vehicleNumber}
                 </span>
                 ? This action cannot be undone.
@@ -1455,14 +1455,14 @@ export default function CustomerVehicles() {
               )}
             </div>
 
-            <div className="flex flex-col-reverse gap-3 border-t border-white/10 px-5 py-4 sm:flex-row sm:justify-end">
+            <div className="flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] px-5 py-4 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 disabled={saving}
                 onClick={() =>
                   setDeleteVehicle(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:opacity-50"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:opacity-50"
               >
                 Cancel
               </button>
@@ -1473,7 +1473,7 @@ export default function CustomerVehicles() {
                 onClick={() =>
                   void handleDelete()
                 }
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-red-400/20 bg-red-400/10 px-5 text-sm font-semibold text-red-300 transition hover:bg-red-400 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-red-400/20 bg-red-400/10 px-5 text-sm font-semibold text-red-300 transition hover:bg-red-400 hover:text-[var(--text-primary)] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {saving ? (
                   <RefreshCw className="h-4 w-4 animate-spin" />

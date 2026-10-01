@@ -174,26 +174,26 @@ function formatTime(value?: string) {
 function getStatusClasses(status: BookingStatus) {
   switch (status) {
     case "Pending":
-      return "border-amber-400/20 bg-amber-400/10 text-amber-300";
+      return "border-amber-400/20 bg-amber-400/10 text-amber-700 dark:text-amber-300";
 
     case "Confirmed":
-      return "border-blue-400/20 bg-blue-400/10 text-blue-300";
+      return "border-blue-400/20 bg-blue-400/10 text-blue-700 dark:text-blue-300";
 
     case "Checked In":
-      return "border-violet-400/20 bg-violet-400/10 text-violet-300";
+      return "border-violet-400/20 bg-violet-400/10 text-violet-700 dark:text-violet-300";
 
     case "Charging":
-      return "border-cyan-400/20 bg-cyan-400/10 text-cyan-300";
+      return "border-cyan-400/20 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300";
 
     case "Completed":
-      return "border-emerald-400/20 bg-emerald-400/10 text-emerald-300";
+      return "border-emerald-400/20 bg-emerald-400/10 text-emerald-700 dark:text-emerald-300";
 
     case "Cancelled":
     case "No Show":
-      return "border-red-400/20 bg-red-400/10 text-red-300";
+      return "border-red-400/20 bg-red-400/10 text-red-700 dark:text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 text-[var(--text-secondary)]";
   }
 }
 
@@ -209,23 +209,23 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] dark:border-white/10 dark:bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
             {description}
           </p>
         </div>
 
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300">
           {icon}
         </div>
       </div>
@@ -241,12 +241,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] dark:border-white/10 dark:bg-white/[0.02] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -268,7 +268,7 @@ function ActionButton({
       onClick={onClick}
       title={label}
       aria-label={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 text-[var(--text-primary)] transition hover:bg-white hover:text-black"
     >
       {children}
     </button>
@@ -639,7 +639,7 @@ export default function StaffCheckIn() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading check-in data...
           </p>
         </div>
@@ -650,33 +650,33 @@ export default function StaffCheckIn() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-white/10 bg-white dark:bg-gradient-to-br dark:from-[#0D1B2A] dark:via-[#0B1726] dark:to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
+              <span className="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-700 dark:text-cyan-300">
                 Staff Operations
               </span>
 
               {station && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
+                <span className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
                   {station.stationId}
                 </span>
               )}
             </div>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Customer Check-In
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Verify confirmed bookings, customer details,
               vehicles and charging information before
               check-in.
             </p>
 
             {station && (
-              <p className="mt-2 text-sm font-medium text-cyan-300">
+              <p className="mt-2 text-sm font-medium text-cyan-700 dark:text-cyan-300">
                 {station.name}
               </p>
             )}
@@ -685,7 +685,7 @@ export default function StaffCheckIn() {
           <button
             type="button"
             onClick={() => void fetchData()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -697,7 +697,7 @@ export default function StaffCheckIn() {
       {success && (
         <div className="flex items-start justify-between gap-4 rounded-xl border border-emerald-400/20 bg-emerald-400/10 p-4">
           <div className="flex min-w-0 items-start gap-3">
-            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-300" />
+            <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-700 dark:text-emerald-300" />
 
             <p className="text-sm font-medium text-emerald-200">
               {success}
@@ -707,7 +707,7 @@ export default function StaffCheckIn() {
           <button
             type="button"
             onClick={() => setSuccess("")}
-            className="shrink-0 text-emerald-300 transition hover:text-white"
+            className="shrink-0 text-emerald-700 dark:text-emerald-300 transition hover:text-[var(--text-primary)]"
             aria-label="Close success message"
           >
             <X className="h-4 w-4" />
@@ -719,7 +719,7 @@ export default function StaffCheckIn() {
       {error && (
         <div className="flex items-start justify-between gap-4 rounded-xl border border-red-400/20 bg-red-400/10 p-4">
           <div className="flex min-w-0 items-start gap-3">
-            <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" />
+            <XCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-700 dark:text-red-300" />
 
             <p className="text-sm font-medium text-red-200">
               {error}
@@ -729,7 +729,7 @@ export default function StaffCheckIn() {
           <button
             type="button"
             onClick={() => setError("")}
-            className="shrink-0 text-red-300 transition hover:text-white"
+            className="shrink-0 text-red-700 dark:text-red-300 transition hover:text-[var(--text-primary)]"
             aria-label="Close error message"
           >
             <X className="h-4 w-4" />
@@ -769,13 +769,13 @@ export default function StaffCheckIn() {
       </section>
 
       {/* Search */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] dark:border-white/10 dark:bg-[#0D1B2A] p-4 sm:p-5">
         <div className="mb-4">
-          <h2 className="text-sm font-semibold text-white">
+          <h2 className="text-sm font-semibold text-[var(--text-primary)]">
             Find Booking
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             Search by booking ID, customer, vehicle,
             charger or slot.
           </p>
@@ -783,7 +783,7 @@ export default function StaffCheckIn() {
 
         <div className="flex flex-col gap-3 lg:flex-row">
           <div className="relative min-w-0 flex-1">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -792,7 +792,7 @@ export default function StaffCheckIn() {
                 setSearch(event.target.value)
               }
               placeholder="Search booking ID, customer, vehicle..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--card-bg)] dark:border-white/10 dark:bg-[var(--input-bg)] pl-11 pr-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -803,8 +803,8 @@ export default function StaffCheckIn() {
             }
             className={`inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border px-4 text-sm font-medium transition ${
               showTodayOnly
-                ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-300"
-                : "border-white/10 bg-white/5 text-white hover:bg-white hover:text-black"
+                ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-700 dark:text-cyan-300"
+                : "border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 text-[var(--text-primary)] hover:bg-white hover:text-black"
             }`}
           >
             <CalendarDays className="h-4 w-4" />
@@ -818,7 +818,7 @@ export default function StaffCheckIn() {
                 setSearch("");
                 setShowTodayOnly(false);
               }}
-              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+              className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
             >
               <X className="h-4 w-4" />
               Clear
@@ -828,14 +828,14 @@ export default function StaffCheckIn() {
       </section>
 
       {/* Check-in bookings */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] dark:border-white/10 dark:bg-[#0D1B2A]">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] dark:border-white/10 p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Check-In Bookings
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               {checkInBookings.length} booking
               {checkInBookings.length === 1 ? "" : "s"}{" "}
               available
@@ -847,14 +847,14 @@ export default function StaffCheckIn() {
 
         {checkInBookings.length === 0 ? (
           <div className="p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] dark:border-white/10 dark:bg-white/[0.02] p-8 text-center">
               <UserCheck className="mx-auto h-9 w-9 text-slate-600" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 No check-in bookings found
               </p>
 
-              <p className="mt-1 text-xs leading-5 text-slate-500">
+              <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
                 Confirmed bookings waiting for check-in
                 will appear here.
               </p>
@@ -877,42 +877,42 @@ export default function StaffCheckIn() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border-primary)] dark:border-white/10">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Booking
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Customer
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Vehicle
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Charger
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Date
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Time
                     </th>
 
-                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-left text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Status
                     </th>
 
-                    <th className="px-3 py-4 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-3 py-4 text-right text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Action
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)] dark:divide-white/5">
                   {checkInBookings.map((booking) => {
                     const customer =
                       getCustomer(booking);
@@ -926,28 +926,28 @@ export default function StaffCheckIn() {
                     return (
                       <tr
                         key={booking.id}
-                        className="transition hover:bg-white/[0.02]"
+                        className="transition hover:bg-slate-100 dark:hover:bg-white/[0.02]"
                       >
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {booking.bookingId}
                           </p>
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm font-medium text-white">
+                          <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                             {customer?.name ||
                               booking.customerName ||
                               "Customer"}
                           </p>
 
-                          <p className="mt-1 truncate text-xs text-slate-500">
+                          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                             {customer?.email || "—"}
                           </p>
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {vehicle?.vehicleNumber ||
                               vehicle?.registrationNumber ||
                               booking.vehicleId ||
@@ -956,7 +956,7 @@ export default function StaffCheckIn() {
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="truncate text-sm text-slate-300">
+                          <p className="truncate text-sm text-[var(--text-secondary)]">
                             {charger?.chargerId ||
                               booking.chargerId ||
                               "—"}
@@ -964,7 +964,7 @@ export default function StaffCheckIn() {
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {formatDate(
                               booking.bookingDate
                             )}
@@ -972,13 +972,13 @@ export default function StaffCheckIn() {
                         </td>
 
                         <td className="px-3 py-5">
-                          <p className="text-sm text-slate-300">
+                          <p className="text-sm text-[var(--text-secondary)]">
                             {formatTime(
                               booking.startTime
                             )}
                           </p>
 
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--text-muted)]">
                             to{" "}
                             {formatTime(
                               booking.endTime
@@ -1032,15 +1032,15 @@ export default function StaffCheckIn() {
                 return (
                   <div
                     key={booking.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] dark:border-white/10 dark:bg-white/[0.02] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {booking.bookingId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {customer?.name ||
                             booking.customerName ||
                             "Customer"}
@@ -1099,7 +1099,7 @@ export default function StaffCheckIn() {
                             booking
                           )
                         }
-                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 text-xs font-semibold text-cyan-300 transition hover:bg-cyan-400 hover:text-black"
+                        className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 text-xs font-semibold text-cyan-700 dark:text-cyan-300 transition hover:bg-cyan-400 hover:text-black"
                       >
                         <Eye className="h-4 w-4" />
                         Verify
@@ -1116,19 +1116,19 @@ export default function StaffCheckIn() {
       {/* Verification popup */}
       {selectedBooking && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[var(--card-bg)] dark:bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Popup header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] dark:border-white/10 px-4 py-4 sm:px-6">
               <div className="min-w-0">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5 text-cyan-400" />
 
-                  <h2 className="text-lg font-semibold text-white">
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                     Verify Customer Check-In
                   </h2>
                 </div>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {selectedBooking.bookingId}
                 </p>
               </div>
@@ -1139,7 +1139,7 @@ export default function StaffCheckIn() {
                 onClick={() =>
                   setSelectedBooking(null)
                 }
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1152,11 +1152,11 @@ export default function StaffCheckIn() {
                 {/* Status */}
                 <div className="mb-5 flex flex-col gap-3 rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-slate-500">
+                    <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                       Booking Status
                     </p>
 
-                    <p className="mt-1 text-sm font-semibold text-white">
+                    <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
                       {selectedBooking.status}
                     </p>
                   </div>
@@ -1308,18 +1308,18 @@ export default function StaffCheckIn() {
                 </div>
 
                 {/* Verification checklist */}
-                <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <h3 className="text-sm font-semibold text-white">
+                <div className="mt-5 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] dark:border-white/10 dark:bg-white/[0.02] p-4">
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">
                     Check-In Verification
                   </h3>
 
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
+                    <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                       <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
                       Booking verified
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
+                    <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                       {getCustomer(
                         selectedBooking
                       ) ? (
@@ -1330,7 +1330,7 @@ export default function StaffCheckIn() {
                       Customer verified
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
+                    <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                       {getVehicle(
                         selectedBooking
                       ) ? (
@@ -1341,7 +1341,7 @@ export default function StaffCheckIn() {
                       Vehicle verified
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm text-slate-300">
+                    <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
                       {getCharger(
                         selectedBooking
                       ) ? (
@@ -1357,14 +1357,14 @@ export default function StaffCheckIn() {
             </div>
 
             {/* Popup footer */}
-            <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:flex-row sm:items-center sm:justify-end sm:px-6">
+            <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 bg-[var(--card-bg)] dark:bg-[#0D1A2A] px-4 py-4 sm:flex-row sm:items-center sm:justify-end sm:px-6">
               <button
                 type="button"
                 disabled={checkingIn}
                 onClick={() =>
                   setSelectedBooking(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] dark:border-white/10 dark:bg-white/5 px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Close
               </button>
@@ -1379,7 +1379,7 @@ export default function StaffCheckIn() {
                       selectedBooking
                     )
                   }
-                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-5 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-5 text-sm font-semibold text-cyan-700 dark:text-cyan-300 transition hover:bg-cyan-400 hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {checkingIn ? (
                     <>
@@ -1397,7 +1397,7 @@ export default function StaffCheckIn() {
 
               {selectedBooking.status ===
                 "Checked In" && (
-                <span className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-5 text-sm font-semibold text-emerald-300">
+                <span className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-5 text-sm font-semibold text-emerald-700 dark:text-emerald-300">
                   <CheckCircle2 className="h-4 w-4" />
                   Already Checked In
                 </span>
@@ -1405,7 +1405,7 @@ export default function StaffCheckIn() {
 
               {selectedBooking.status ===
                 "Charging" && (
-                <span className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-5 text-sm font-semibold text-cyan-300">
+                <span className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-5 text-sm font-semibold text-cyan-700 dark:text-cyan-300">
                   <Zap className="h-4 w-4" />
                   Charging Started
                 </span>

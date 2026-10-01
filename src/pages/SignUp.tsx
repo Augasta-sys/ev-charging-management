@@ -179,7 +179,7 @@ function SignUp() {
       {/* Main screen */}
       <div className="relative flex h-full items-center justify-center px-3 pb-3 pt-16 sm:px-5 sm:pb-4">
         <div className="grid h-full max-h-[calc(100vh-4.5rem)] w-full max-w-6xl items-center gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-          {/* Left 3D visual */}
+         {/* Left 3D visual */}
           <div className="relative hidden h-full min-h-0 lg:flex lg:items-center lg:justify-center">
             {/* Rings */}
             <div className="absolute h-[390px] w-[390px] rounded-full border border-[#22D3EE]/10" />
@@ -226,8 +226,6 @@ function SignUp() {
                 </div>
               </div>
 
-              {/* Cable */}
-              <div className="absolute -bottom-12 -right-12 h-32 w-32 rounded-full border-[12px] border-[#16263D] border-b-transparent border-l-transparent" />
             </div>
 
             {/* Floating card 1 */}
@@ -253,7 +251,7 @@ function SignUp() {
             </div>
 
             {/* Floating card 2 */}
-            <div className="absolute bottom-[18%] right-0 rounded-2xl border border-[#1E334D] bg-[#0B1628]/90 p-3 shadow-xl backdrop-blur-xl">
+            <div className="absolute bottom-[18%] right-0 rounded-2xl border border-[#1E334D] bg-[#0B1628]/90 p-3 shadow-xl z-50 backdrop-blur-xl">
               <div className="flex items-center gap-2.5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#8B5CF6]/10">
                   <CheckCircle2

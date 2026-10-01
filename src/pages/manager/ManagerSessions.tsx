@@ -80,7 +80,7 @@ const sessionStatuses: SessionStatus[] = [
 function getStatusClasses(status: SessionStatus) {
   switch (status) {
     case "Not Started":
-      return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+      return "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]";
     case "Charging":
       return "border-violet-400/20 bg-violet-400/10 text-violet-300";
     case "Paused":
@@ -90,7 +90,7 @@ function getStatusClasses(status: SessionStatus) {
     case "Cancelled":
       return "border-red-400/20 bg-red-400/10 text-red-300";
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -172,7 +172,7 @@ function ActionButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-[var(--text-primary)] hover:text-black"
     >
       {children}
     </button>
@@ -191,18 +191,18 @@ function StatCard({
   description: string;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {label}
           </p>
 
-          <p className="mt-2 truncate text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -231,14 +231,13 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-        style={{ colorScheme: "dark" }}
+        className="h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 pr-11 text-sm text-[var(--input-text)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
       >
         {options.map((option) => (
           <option
             key={option}
             value={option}
-            className="bg-[#0D1B2A] text-white"
+            className="bg-[var(--input-bg)] text-[var(--input-text)]"
           >
             {option === "All" ? placeholder : option}
           </option>
@@ -246,7 +245,7 @@ function FilterSelect({
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -269,12 +268,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -289,12 +288,12 @@ function MobileDetail({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3">
-      <p className="text-[10px] uppercase tracking-wide text-slate-500">
+    <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+      <p className="text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-1 break-words text-xs font-medium text-slate-200">
+      <p className="mt-1 break-words text-xs font-medium text-[var(--text-secondary)]">
         {value}
       </p>
     </div>
@@ -601,7 +600,7 @@ const totalEnergy = sessions.reduce(
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading charging sessions...
           </p>
         </div>
@@ -612,7 +611,7 @@ const totalEnergy = sessions.reduce(
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -621,17 +620,17 @@ const totalEnergy = sessions.reduce(
               </span>
 
               {station && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
+                <span className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
                   {station.stationId}
                 </span>
               )}
             </div>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Charging Sessions
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Monitor and manage charging sessions for your assigned
               station.
             </p>
@@ -646,7 +645,7 @@ const totalEnergy = sessions.reduce(
           <button
             type="button"
             onClick={() => void fetchSessions()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--text-primary)] hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -667,7 +666,7 @@ const totalEnergy = sessions.reduce(
             <button
               type="button"
               onClick={() => setError("")}
-              className="mt-1 text-xs text-red-300 underline underline-offset-2 hover:text-white"
+              className="mt-1 text-xs text-red-300 underline underline-offset-2 hover:text-[var(--text-primary)]"
             >
               Dismiss
             </button>
@@ -708,58 +707,58 @@ const totalEnergy = sessions.reduce(
 
       {/* Secondary stats */}
       <section className="grid min-w-0 gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             Total Sessions
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {sessions.length}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             All sessions for this station
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             Energy Consumed
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {formatEnergy(totalEnergy)}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             Across recorded sessions
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             Session Revenue
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {formatAmount(totalRevenue)}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             Total charging session amount
           </p>
         </div>
       </section>
 
       {/* Search & Filters */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find sessions by session ID, customer, booking or charger.
             </p>
           </div>
@@ -768,7 +767,7 @@ const totalEnergy = sessions.reduce(
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -778,14 +777,14 @@ const totalEnergy = sessions.reduce(
 
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           <div className="relative min-w-0">
-            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
             <input
               type="text"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search sessions..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-11 pr-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -799,28 +798,27 @@ const totalEnergy = sessions.reduce(
           />
 
           <div className="relative min-w-0">
-            <CalendarDays className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+            <CalendarDays className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
             <input
               type="date"
               value={dateFilter}
               onChange={(event) => setDateFilter(event.target.value)}
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pl-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-              style={{ colorScheme: "dark" }}
-            />
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 pl-11 text-sm text-[var(--input-text)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                  />
           </div>
         </div>
       </section>
 
       {/* Sessions table */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-lg shadow-black/10">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-lg shadow-black/10">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Charging Sessions
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Showing {filteredSessions.length} of {sessions.length} sessions
             </p>
           </div>
@@ -830,14 +828,14 @@ const totalEnergy = sessions.reduce(
 
         {filteredSessions.length === 0 ? (
           <div className="p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <Zap className="mx-auto h-8 w-8 text-slate-600" />
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+              <Zap className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 No charging sessions found
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing your search or filter selections.
               </p>
             </div>
@@ -858,38 +856,38 @@ const totalEnergy = sessions.reduce(
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <tr className="border-b border-[var(--border-primary)] text-left">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Session ID
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Customer
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Charger
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Date & Time
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Energy
                     </th>
 
-                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Status
                     </th>
 
-                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                       Actions
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {filteredSessions.map((session) => {
                     const customer = getCustomer(session);
                     const charger = getCharger(session);
@@ -897,14 +895,14 @@ const totalEnergy = sessions.reduce(
                     return (
                       <tr
                         key={session.id}
-                        className="transition hover:bg-white/[0.02]"
+                        className="transition hover:bg-[var(--bg-tertiary)]"
                       >
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {session.sessionId}
                           </p>
 
-                          <p className="mt-1 truncate text-xs text-slate-500">
+                          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                             {session.bookingId || "No booking"}
                           </p>
                         </td>
@@ -916,11 +914,11 @@ const totalEnergy = sessions.reduce(
                             </div>
 
                             <div className="min-w-0">
-                              <p className="truncate text-sm font-medium text-white">
+                              <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                                 {customer?.name || "Unknown customer"}
                               </p>
 
-                              <p className="truncate text-xs text-slate-500">
+                              <p className="truncate text-xs text-[var(--text-muted)]">
                                 {customer?.email || "—"}
                               </p>
                             </div>
@@ -928,7 +926,7 @@ const totalEnergy = sessions.reduce(
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="truncate text-sm font-medium text-white">
+                          <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                             {charger?.chargerId ||
                               session.chargerId ||
                               "—"}
@@ -937,14 +935,14 @@ const totalEnergy = sessions.reduce(
 
                         <td className="px-4 py-5">
                           <div className="flex items-start gap-2">
-                            <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-white" />
+                            <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
                             <div className="min-w-0">
-                              <p className="truncate text-sm text-slate-200">
+                              <p className="truncate text-sm text-[var(--text-secondary)]">
                                 {formatDate(getSessionDate(session))}
                               </p>
 
-                              <p className="mt-1 text-xs text-slate-500">
+                              <p className="mt-1 text-xs text-[var(--text-muted)]">
                                 {formatTime(session.startTime)} -{" "}
                                 {formatTime(session.endTime)}
                               </p>
@@ -953,18 +951,18 @@ const totalEnergy = sessions.reduce(
                         </td>
 
                         <td className="px-4 py-5">
-                          <p className="text-sm font-medium text-white">
+                          <p className="text-sm font-medium text-[var(--text-primary)]">
                             {formatEnergy(getEnergy(session))}
                           </p>
 
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--text-muted)]">
                             {formatAmount(getCost(session))}
                           </p>
                         </td>
 
                         <td className="px-4 py-5">
                           <span
-                            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClasses(
+                            className={`manager-session-status inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-medium ${getStatusClasses(
                               session.status
                             )}`}
                           >
@@ -999,21 +997,21 @@ const totalEnergy = sessions.reduce(
                 return (
                   <div
                     key={session.id}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-white">
+                        <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                           {session.sessionId}
                         </p>
 
-                        <p className="mt-1 truncate text-xs text-slate-500">
+                        <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                           {customer?.name || "Unknown customer"}
                         </p>
                       </div>
 
                       <span
-                        className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
+                        className={`manager-session-status inline-flex shrink-0 items-center gap-1 rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
                           session.status
                         )}`}
                       >
@@ -1066,15 +1064,15 @@ const totalEnergy = sessions.reduce(
       {/* View session popup */}
       {viewSession && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex h-auto max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex h-auto max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Popup header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div className="min-w-0">
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Charging Session Details
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {viewSession.sessionId}
                 </p>
               </div>
@@ -1083,7 +1081,7 @@ const totalEnergy = sessions.reduce(
                 type="button"
                 onClick={() => setViewSession(null)}
                 disabled={savingStatus}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-[var(--text-primary)] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1191,7 +1189,7 @@ const totalEnergy = sessions.reduce(
             </div>
 
             {/* Popup actions */}
-            <div className="flex shrink-0 flex-col gap-3 border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+            <div className="flex shrink-0 flex-col gap-3 border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
               <div className="flex flex-wrap gap-2">
                 {viewSession.status === "Not Started" && (
                   <button
@@ -1285,7 +1283,7 @@ const totalEnergy = sessions.reduce(
                 type="button"
                 disabled={savingStatus}
                 onClick={() => setViewSession(null)}
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--text-primary)] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Close
               </button>

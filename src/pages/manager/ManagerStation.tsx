@@ -161,7 +161,7 @@ function getChargerStatusClasses(status: ChargerStatus) {
     case "Maintenance":
       return "border-amber-400/20 bg-amber-400/10 text-amber-300";
     default:
-      return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+      return "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]";
   }
 }
 
@@ -177,18 +177,18 @@ function StatCard({
   description: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {label}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-slate-500">{description}</p>
+          <p className="mt-1 text-xs text-[var(--text-muted)]">{description}</p>
         </div>
 
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-300">
@@ -209,16 +209,16 @@ function InfoItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
       <div className="flex items-center gap-2 text-cyan-400">
         {icon}
 
-        <span className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+        <span className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
           {label}
         </span>
       </div>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -235,16 +235,16 @@ function OverviewRow({
   value: number;
 }) {
   return (
-    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+    <div className="flex items-center justify-between rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-3">
       <div className="flex min-w-0 items-center gap-3">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-300">
           {icon}
         </div>
 
-        <span className="truncate text-sm text-slate-300">{label}</span>
+        <span className="truncate text-sm text-[var(--text-secondary)]">{label}</span>
       </div>
 
-      <span className="shrink-0 text-base font-bold text-white">
+      <span className="shrink-0 text-base font-bold text-[var(--text-primary)]">
         {value}
       </span>
     </div>
@@ -254,8 +254,8 @@ function OverviewRow({
 function EmptyState({ message }: { message: string }) {
   return (
     <div className="p-5">
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center">
-        <p className="text-sm text-slate-500">{message}</p>
+      <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-6 text-center">
+        <p className="text-sm text-[var(--text-muted)]">{message}</p>
       </div>
     </div>
   );
@@ -570,7 +570,7 @@ useEffect(() => {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading station information...
           </p>
         </div>
@@ -585,23 +585,23 @@ useEffect(() => {
   if (error || !station) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="w-full max-w-lg rounded-2xl border border-red-400/20 bg-[#0D1B2A] p-6 text-center shadow-xl">
+        <div className="w-full max-w-lg rounded-2xl border border-red-400/20 bg-[var(--card-bg)] p-6 text-center shadow-xl">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-400/10 text-red-300">
             <MapPin className="h-6 w-6" />
           </div>
 
-          <h2 className="mt-4 text-lg font-semibold text-white">
+          <h2 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
             Station Not Available
           </h2>
 
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-[var(--text-secondary)]">
             {error || "The assigned station could not be found."}
           </p>
 
           <button
             type="button"
             onClick={() => void fetchStationData()}
-            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-sm font-medium text-cyan-300 transition hover:bg-cyan-400/20 hover:text-white"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-2.5 text-sm font-medium text-cyan-300 transition hover:bg-cyan-400/20 hover:text-[var(--text-primary)]"
           >
             <RefreshCw className="h-4 w-4" />
             Try Again
@@ -614,7 +614,7 @@ useEffect(() => {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6 lg:p-7">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6 lg:p-7">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -633,7 +633,7 @@ useEffect(() => {
               </span>
             </div>
 
-            <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 break-words text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               {station.name}
             </h1>
 
@@ -641,7 +641,7 @@ useEffect(() => {
               {station.stationId}
             </p>
 
-            <div className="mt-4 flex items-start gap-2 text-sm text-slate-400">
+            <div className="mt-4 flex items-start gap-2 text-sm text-[var(--text-secondary)]">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
               <span>{stationAddress}</span>
             </div>
@@ -651,7 +651,7 @@ useEffect(() => {
             <button
               type="button"
               onClick={() => void fetchStationData()}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -702,14 +702,14 @@ useEffect(() => {
 
       {/* Station information */}
       <section className="grid min-w-0 gap-5 lg:grid-cols-3">
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10 lg:col-span-2">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10 lg:col-span-2">
           <div className="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Station Information
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Details of your assigned charging station.
               </p>
             </div>
@@ -756,12 +756,12 @@ useEffect(() => {
           </div>
 
           {station.description && (
-            <div className="mt-4 rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            <div className="mt-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+              <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
                 Description
               </p>
 
-              <p className="mt-2 text-sm leading-6 text-slate-300">
+              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
                 {station.description}
               </p>
             </div>
@@ -769,14 +769,14 @@ useEffect(() => {
         </div>
 
         {/* Today's overview */}
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10">
           <div className="mb-5 flex items-center justify-between">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Today's Overview
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Current station activity.
               </p>
             </div>
@@ -815,14 +815,14 @@ useEffect(() => {
       {/* Chargers + Bookings */}
       <section className="grid min-w-0 gap-5 xl:grid-cols-2">
         {/* Chargers */}
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-lg shadow-black/10">
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-lg shadow-black/10">
+          <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Charger Status
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Chargers currently assigned to this station.
               </p>
             </div>
@@ -833,11 +833,11 @@ useEffect(() => {
           {chargers.length === 0 ? (
             <EmptyState message="No chargers are assigned to this station." />
           ) : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--border-primary)]">
               {chargers.map((charger) => (
                 <div
                   key={charger.id}
-                  className="flex min-w-0 items-center justify-between gap-4 p-4 transition hover:bg-white/[0.02]"
+                  className="flex min-w-0 items-center justify-between gap-4 p-4 transition hover:bg-[var(--bg-tertiary)]"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-cyan-400/10 text-cyan-300">
@@ -845,11 +845,11 @@ useEffect(() => {
                     </div>
 
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-semibold text-white">
+                      <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                         {charger.chargerId}
                       </p>
 
-                      <p className="mt-1 truncate text-xs text-slate-500">
+                      <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                         {charger.chargerType || "Charger"}{" "}
                         {charger.connectorType
                           ? `• ${charger.connectorType}`
@@ -868,7 +868,7 @@ useEffect(() => {
                     </span>
 
                     {(charger.powerOutput || charger.power) && (
-                      <p className="mt-1 text-[11px] text-slate-500">
+                      <p className="mt-1 text-[11px] text-[var(--text-muted)]">
                         {charger.powerOutput || charger.power} kW
                       </p>
                     )}
@@ -880,14 +880,14 @@ useEffect(() => {
         </div>
 
         {/* Today's bookings */}
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-lg shadow-black/10">
-          <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-lg shadow-black/10">
+          <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Today's Bookings
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Latest bookings for your station.
               </p>
             </div>
@@ -898,18 +898,18 @@ useEffect(() => {
           {recentBookings.length === 0 ? (
             <EmptyState message="No bookings scheduled for today." />
           ) : (
-            <div className="divide-y divide-white/5">
+            <div className="divide-y divide-[var(--border-primary)]">
               {recentBookings.map((booking) => (
                 <div
                   key={booking.id}
-                  className="flex min-w-0 items-center justify-between gap-4 p-4 transition hover:bg-white/[0.02]"
+                  className="flex min-w-0 items-center justify-between gap-4 p-4 transition hover:bg-[var(--bg-tertiary)]"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-white">
+                    <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                       {booking.bookingId}
                     </p>
 
-                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-muted)]">
                       <span>{formatTime(booking.startTime)}</span>
                       <span>→</span>
                       <span>{formatTime(booking.endTime)}</span>
@@ -929,14 +929,14 @@ useEffect(() => {
       </section>
 
       {/* Maintenance */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-lg shadow-black/10">
-        <div className="flex items-center justify-between gap-3 border-b border-white/10 p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-lg shadow-black/10">
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--border-primary)] p-5">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Maintenance Overview
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Maintenance records associated with your station.
             </p>
           </div>
@@ -951,11 +951,11 @@ useEffect(() => {
                 <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-300" />
 
                 <div>
-                  <p className="text-sm font-medium text-white">
+                  <p className="text-sm font-medium text-[var(--text-primary)]">
                     No maintenance records
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                     There are currently no maintenance issues for this
                     station.
                   </p>
@@ -968,15 +968,15 @@ useEffect(() => {
             {maintenance.map((item) => (
               <div
                 key={item.id}
-                className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-semibold text-white">
+                    <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                       {item.maintenanceId}
                     </p>
 
-                    <p className="mt-1 truncate text-xs text-slate-500">
+                    <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                       {item.chargerId || "Station maintenance"}
                     </p>
                   </div>
@@ -988,14 +988,14 @@ useEffect(() => {
                   )}
                 </div>
 
-                <p className="mt-3 text-sm leading-5 text-slate-300">
+                <p className="mt-3 text-sm leading-5 text-[var(--text-secondary)]">
                   {item.issue || "Maintenance issue recorded."}
                 </p>
 
                 {item.status && (
-                  <p className="mt-3 text-xs text-slate-500">
+                  <p className="mt-3 text-xs text-[var(--text-muted)]">
                     Status:{" "}
-                    <span className="text-slate-300">{item.status}</span>
+                    <span className="text-[var(--text-secondary)]">{item.status}</span>
                   </p>
                 )}
               </div>
@@ -1009,15 +1009,15 @@ useEffect(() => {
        <div
   className="fixed inset-0 z-[100] h-screen w-screen overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4"
 >
-  <div className="mx-auto flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+  <div className="mx-auto flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Modal Header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Edit Station
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   Update details for {station.stationId}
                 </p>
               </div>
@@ -1026,7 +1026,7 @@ useEffect(() => {
                 type="button"
                 onClick={closeEditModal}
                 disabled={saving}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1042,7 +1042,7 @@ useEffect(() => {
               <div className="grid gap-4 p-4 sm:grid-cols-2 sm:p-6">
                 {/* Station ID */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Station ID
                   </label>
 
@@ -1050,13 +1050,13 @@ useEffect(() => {
                     type="text"
                     value={station.stationId}
                     disabled
-                    className="h-11 w-full rounded-xl border border-white/10 bg-black/20 px-4 text-sm text-slate-500 outline-none"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm text-[var(--text-muted)] outline-none"
                   />
                 </div>
 
                 {/* Station Name */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Station Name
                   </label>
 
@@ -1066,14 +1066,14 @@ useEffect(() => {
                     onChange={(event) =>
                       handleEditChange("name", event.target.value)
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter station name"
                   />
                 </div>
 
                 {/* Address */}
                 <div className="sm:col-span-2">
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Address
                   </label>
 
@@ -1083,14 +1083,14 @@ useEffect(() => {
                     onChange={(event) =>
                       handleEditChange("address", event.target.value)
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter station address"
                   />
                 </div>
 
                 {/* City */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     City
                   </label>
 
@@ -1100,14 +1100,14 @@ useEffect(() => {
                     onChange={(event) =>
                       handleEditChange("city", event.target.value)
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter city"
                   />
                 </div>
 
                 {/* State */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     State
                   </label>
 
@@ -1117,14 +1117,14 @@ useEffect(() => {
                     onChange={(event) =>
                       handleEditChange("state", event.target.value)
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter state"
                   />
                 </div>
 
                 {/* Pincode */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Pincode
                   </label>
 
@@ -1134,14 +1134,14 @@ useEffect(() => {
                     onChange={(event) =>
                       handleEditChange("pincode", event.target.value)
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter pincode"
                   />
                 </div>
 
                 {/* Contact */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Contact Number
                   </label>
 
@@ -1154,14 +1154,14 @@ useEffect(() => {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter contact number"
                   />
                 </div>
 
                 {/* Operating Hours */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Operating Hours
                   </label>
 
@@ -1174,14 +1174,14 @@ useEffect(() => {
                         event.target.value
                       )
                     }
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Example: 24 Hours"
                   />
                 </div>
 
                 {/* Status */}
                 <div>
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Station Status
                   </label>
 
@@ -1194,40 +1194,40 @@ useEffect(() => {
                           event.target.value
                         )
                       }
-                      className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-10 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-                      style={{ colorScheme: "dark" }}
+                      className="h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 pr-10 text-sm text-[var(--input-text)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                      
                     >
                       <option
                         value="Active"
-                        className="bg-[#0D1B2A] text-white"
+                        className="bg-[var(--card-bg)] text-[var(--text-primary)]"
                       >
                         Active
                       </option>
 
                       <option
                         value="Inactive"
-                        className="bg-[#0D1B2A] text-white"
+                        className="bg-[var(--card-bg)] text-[var(--text-primary)]"
                       >
                         Inactive
                       </option>
 
                       <option
                         value="Under Maintenance"
-                        className="bg-[#0D1B2A] text-white"
+                        className="bg-[var(--card-bg)] text-[var(--text-primary)]"
                       >
                         Under Maintenance
                       </option>
 
                       <option
                         value="Temporarily Closed"
-                        className="bg-[#0D1B2A] text-white"
+                        className="bg-[var(--card-bg)] text-[var(--text-primary)]"
                       >
                         Temporarily Closed
                       </option>
                     </select>
 
                     <svg
-                      className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                      className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
@@ -1243,7 +1243,7 @@ useEffect(() => {
 
                 {/* Description */}
                 <div className="sm:col-span-2">
-                  <label className="mb-1.5 block text-xs font-medium text-slate-400">
+                  <label className="mb-1.5 block text-xs font-medium text-[var(--text-secondary)]">
                     Description
                   </label>
 
@@ -1256,19 +1256,19 @@ useEffect(() => {
                       )
                     }
                     rows={4}
-                    className="w-full resize-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+                    className="w-full resize-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 py-3 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
                     placeholder="Enter station description"
                   />
                 </div>
               </div>
 
               {/* Modal Footer */}
-              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+              <div className="flex shrink-0 flex-col-reverse gap-2 border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
                 <button
                   type="button"
                   onClick={closeEditModal}
                   disabled={saving}
-                  className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Cancel
                 </button>

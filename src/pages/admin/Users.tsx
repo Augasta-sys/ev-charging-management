@@ -96,7 +96,7 @@ const getRoleClasses = (role: UserRole) => {
       return "border-emerald-400/20 bg-emerald-400/10 text-emerald-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)]";
   }
 };
 
@@ -142,20 +142,28 @@ function Users() {
     });
 
   useEffect(() => {
-    fetchUsers();
+    void fetchUsers();
   }, []);
 
   /* Lock background scrolling when menu/modal is open */
   useEffect(() => {
     if (!showModal && !openMenu) {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
       return;
     }
 
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow =
+      document.documentElement.style.overflow;
+
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow =
+        originalHtmlOverflow;
     };
   }, [showModal, openMenu]);
 
@@ -168,14 +176,14 @@ function Users() {
     if (openMenu) {
       document.addEventListener(
         "click",
-        handleClickOutside
+        handleClickOutside,
       );
     }
 
     return () => {
       document.removeEventListener(
         "click",
-        handleClickOutside
+        handleClickOutside,
       );
     };
   }, [openMenu]);
@@ -191,7 +199,7 @@ function Users() {
     } catch (error) {
       console.error(
         "Failed to fetch users:",
-        error
+        error,
       );
 
       alert("Unable to load users.");
@@ -241,19 +249,19 @@ function Users() {
   const totalUsers = users.length;
 
   const activeUsers = users.filter(
-    (user) => user.status === "Active"
+    (user) => user.status === "Active",
   ).length;
 
   const inactiveUsers = users.filter(
-    (user) => user.status === "Inactive"
+    (user) => user.status === "Inactive",
   ).length;
 
   const adminCount = users.filter(
-    (user) => user.role === "admin"
+    (user) => user.role === "admin",
   ).length;
 
   const customerCount = users.filter(
-    (user) => user.role === "customer"
+    (user) => user.role === "customer",
   ).length;
 
   const resetForm = () => {
@@ -301,7 +309,7 @@ function Users() {
 
   const handleChange = (
     field: keyof UserFormData,
-    value: string
+    value: string,
   ) => {
     let updatedValue = value;
 
@@ -326,7 +334,7 @@ function Users() {
   };
 
   const handleSubmit = async (
-    event: SyntheticEvent<HTMLFormElement>
+    event: SyntheticEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
 
@@ -344,7 +352,7 @@ function Users() {
 
     if (!nameRegex.test(name)) {
       alert(
-        "Name can contain only letters and spaces."
+        "Name can contain only letters and spaces.",
       );
       return;
     }
@@ -356,7 +364,7 @@ function Users() {
 
     if (!emailRegex.test(email)) {
       alert(
-        "Please enter a valid lowercase email address."
+        "Please enter a valid lowercase email address.",
       );
       return;
     }
@@ -368,7 +376,7 @@ function Users() {
 
     if (!phoneRegex.test(phone)) {
       alert(
-        "Phone number must contain exactly 10 digits."
+        "Phone number must contain exactly 10 digits.",
       );
       return;
     }
@@ -380,7 +388,7 @@ function Users() {
 
     if (!editingUser && password.length < 8) {
       alert(
-        "Password must contain at least 8 characters."
+        "Password must contain at least 8 characters.",
       );
       return;
     }
@@ -389,16 +397,15 @@ function Users() {
       setSaving(true);
 
       if (editingUser) {
-        const updateData: Partial<UserFormData> =
-          {
-            name,
-            email,
-            phone,
-            role: formData.role,
-            status: formData.status,
-            assignedStationId:
-              formData.assignedStationId.trim(),
-          };
+        const updateData: Partial<UserFormData> = {
+          name,
+          email,
+          phone,
+          role: formData.role,
+          status: formData.status,
+          assignedStationId:
+            formData.assignedStationId.trim(),
+        };
 
         if (password) {
           updateData.password = password;
@@ -407,26 +414,26 @@ function Users() {
         const response =
           await api.patch<User>(
             `/users/${editingUser.id}`,
-            updateData
+            updateData,
           );
 
         setUsers((previous) =>
           previous.map((user) =>
             user.id === editingUser.id
               ? response.data
-              : user
-          )
+              : user,
+          ),
         );
       } else {
         const emailExists = users.some(
           (user) =>
             user.email.toLowerCase() ===
-            email
+            email,
         );
 
         if (emailExists) {
           alert(
-            "A user with this email already exists."
+            "A user with this email already exists.",
           );
           return;
         }
@@ -459,7 +466,7 @@ function Users() {
     } catch (error) {
       console.error(
         "Failed to save user:",
-        error
+        error,
       );
 
       alert("Unable to save the user.");
@@ -469,7 +476,7 @@ function Users() {
   };
 
   const toggleUserStatus = async (
-    user: User
+    user: User,
   ) => {
     const newStatus: UserStatus =
       user.status === "Active"
@@ -482,26 +489,26 @@ function Users() {
           `/users/${user.id}`,
           {
             status: newStatus,
-          }
+          },
         );
 
       setUsers((previous) =>
         previous.map((item) =>
           item.id === user.id
             ? response.data
-            : item
-        )
+            : item,
+        ),
       );
 
       setOpenMenu(null);
     } catch (error) {
       console.error(
         "Failed to update user status:",
-        error
+        error,
       );
 
       alert(
-        "Unable to update user status."
+        "Unable to update user status.",
       );
     }
   };
@@ -509,7 +516,7 @@ function Users() {
   const deleteUser = async (user: User) => {
     const confirmed =
       window.confirm(
-        `Are you sure you want to delete ${user.name}?`
+        `Are you sure you want to delete ${user.name}?`,
       );
 
     if (!confirmed) {
@@ -518,21 +525,21 @@ function Users() {
 
     try {
       await api.delete(
-        `/users/${user.id}`
+        `/users/${user.id}`,
       );
 
       setUsers((previous) =>
         previous.filter(
           (item) =>
-            item.id !== user.id
-        )
+            item.id !== user.id,
+        ),
       );
 
       setOpenMenu(null);
     } catch (error) {
       console.error(
         "Failed to delete user:",
-        error
+        error,
       );
 
       alert("Unable to delete the user.");
@@ -548,7 +555,18 @@ function Users() {
   return (
     <div className="w-full min-w-0 max-w-full space-y-5 overflow-x-hidden sm:space-y-6">
       {/* HEADER */}
-      <section className="relative w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0A1726] to-[#10152A] p-4 shadow-xl shadow-black/20 sm:p-6 lg:p-7">
+      <section
+        className="
+          relative w-full max-w-full overflow-hidden rounded-2xl
+          border border-[var(--border-primary)]
+          bg-gradient-to-br
+          from-[var(--card-bg)]
+          via-[var(--bg-secondary)]
+          to-[var(--bg-tertiary)]
+          p-4 shadow-xl shadow-black/20
+          sm:p-6 lg:p-7
+        "
+      >
         <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl" />
 
         <div className="pointer-events-none absolute -bottom-24 left-1/3 h-56 w-56 rounded-full bg-violet-500/10 blur-3xl" />
@@ -565,13 +583,13 @@ function Users() {
                   Administration
                 </p>
 
-                <h1 className="mt-1 truncate text-xl font-bold tracking-tight text-white sm:text-3xl">
+                <h1 className="mt-1 truncate text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
                   User Management
                 </h1>
               </div>
             </div>
 
-            <p className="max-w-2xl text-xs leading-5 text-slate-400 sm:text-sm sm:leading-6">
+            <p className="max-w-2xl text-xs leading-5 text-[var(--text-primary)] sm:text-sm sm:leading-6">
               Manage system users, roles, account
               status and access permissions from
               one place.
@@ -629,21 +647,31 @@ function Users() {
       </section>
 
       {/* FILTERS */}
-      <section className="w-full min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-3 shadow-xl shadow-black/10 sm:p-5">
+      <section className="w-full min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-3 shadow-xl shadow-black/10 sm:p-5">
         <div className="flex min-w-0 flex-col gap-3 xl:flex-row xl:items-center">
           <div className="relative min-w-0 flex-1">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
               value={searchTerm}
               onChange={(event) =>
                 setSearchTerm(
-                  event.target.value
+                  event.target.value,
                 )
               }
               placeholder="Search by name, email or user ID..."
-              className="h-11 w-full min-w-0 rounded-xl border border-white/10 bg-[#091522] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-600 transition focus:border-cyan-400/40"
+              className="
+                h-11 w-full min-w-0 rounded-xl
+                border border-[var(--border-primary)]
+                bg-[var(--bg-secondary)]
+                pl-11 pr-4 text-sm
+                text-[var(--text-primary)]
+                outline-none
+                placeholder:text-[var(--text-primary)]
+                transition
+                focus:border-cyan-400/40
+              "
             />
           </div>
 
@@ -654,7 +682,7 @@ function Users() {
                 setRoleFilter(
                   value as
                     | "all"
-                    | UserRole
+                    | UserRole,
                 )
               }
               options={[
@@ -687,7 +715,7 @@ function Users() {
                 setStatusFilter(
                   value as
                     | "all"
-                    | UserStatus
+                    | UserStatus,
                 )
               }
               options={[
@@ -712,7 +740,20 @@ function Users() {
               <button
                 type="button"
                 onClick={clearFilters}
-                className="col-span-2 inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 text-sm font-medium text-slate-300 transition hover:border-cyan-400/20 hover:bg-cyan-400/5 hover:text-cyan-300 xl:col-span-1"
+                className="
+                  col-span-2 inline-flex h-11
+                  items-center justify-center gap-2
+                  rounded-xl
+                  border border-[var(--border-primary)]
+                  bg-[var(--bg-tertiary)]
+                  px-4 text-sm font-medium
+                  text-[var(--text-primary)]
+                  transition
+                  hover:border-cyan-400/20
+                  hover:bg-cyan-400/5
+                  hover:text-cyan-400
+                  xl:col-span-1
+                "
               >
                 <X className="h-4 w-4" />
                 Clear
@@ -723,21 +764,21 @@ function Users() {
       </section>
 
       {/* USER LIST */}
-      <section className="w-full min-w-0 max-w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-xl shadow-black/10">
-        <div className="flex min-w-0 flex-col gap-2 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+      <section className="w-full min-w-0 max-w-full overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-xl shadow-black/10">
+        <div className="flex min-w-0 flex-col gap-2 border-b border-[var(--border-primary)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div className="min-w-0">
-            <h2 className="text-base font-bold text-white">
+            <h2 className="text-base font-bold text-[var(--text-primary)]">
               All Users
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-primary)]">
               Showing{" "}
               {filteredUsers.length} of{" "}
               {users.length} users
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-slate-400">
+          <div className="inline-flex w-fit items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-2 text-xs text-[var(--text-primary)]">
             <Activity className="h-3.5 w-3.5 text-cyan-400" />
             Live user data
           </div>
@@ -761,34 +802,34 @@ function Users() {
             <div className="hidden w-full min-w-0 overflow-hidden md:block">
               <table className="w-full table-fixed">
                 <thead>
-                  <tr className="border-b border-white/10 bg-white/[0.02] text-left">
-                    <th className="w-[23%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                  <tr className="border-b border-[var(--border-primary)] bg-[var(--bg-secondary)] text-left">
+                    <th className="w-[23%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       User
                     </th>
 
-                    <th className="w-[25%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                    <th className="w-[25%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       Contact
                     </th>
 
-                    <th className="w-[18%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                    <th className="w-[18%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       Role
                     </th>
 
-                    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       Station
                     </th>
 
-                    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                    <th className="w-[13%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       Status
                     </th>
 
-                    <th className="w-[8%] px-3 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                    <th className="w-[8%] px-3 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)] lg:px-5">
                       Actions
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/[0.06]">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {filteredUsers.map((user) => (
                     <DesktopUserRow
                       key={user.id}
@@ -809,7 +850,7 @@ function Users() {
             </div>
 
             {/* MOBILE CARDS */}
-            <div className="block divide-y divide-white/[0.06] md:hidden">
+            <div className="block divide-y divide-[var(--border-primary)] md:hidden">
               {filteredUsers.map((user) => (
                 <MobileUserCard
                   key={user.id}
@@ -837,13 +878,23 @@ function Users() {
           onClick={closeModal}
         >
           <div
-            className="max-h-[calc(100dvh-24px)] w-full max-w-2xl overflow-y-auto overflow-x-hidden rounded-2xl border border-white/10 bg-[#0D1B2A] shadow-2xl shadow-black/50 sm:max-h-[calc(100dvh-32px)]"
+            className="
+              scrollbar-hidden
+              max-h-[calc(100dvh-24px)]
+              w-full max-w-2xl
+              overflow-y-auto overflow-x-hidden
+              rounded-2xl
+              border border-[var(--border-primary)]
+              bg-[var(--card-bg)]
+              shadow-2xl shadow-black/50
+              sm:max-h-[calc(100dvh-32px)]
+            "
             onClick={(event) =>
               event.stopPropagation()
             }
           >
             {/* MODAL HEADER */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-white/10 bg-[#0D1B2A] px-4 py-4 sm:px-5">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:px-5">
               <div className="flex min-w-0 items-center gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
                   {editingUser ? (
@@ -854,13 +905,13 @@ function Users() {
                 </div>
 
                 <div className="min-w-0">
-                  <h2 className="truncate text-base font-bold text-white sm:text-lg">
+                  <h2 className="truncate text-base font-bold text-[var(--text-primary)] sm:text-lg">
                     {editingUser
                       ? "Edit User"
                       : "Add New User"}
                   </h2>
 
-                  <p className="truncate text-xs text-slate-500">
+                  <p className="truncate text-xs text-[var(--text-primary)]">
                     {editingUser
                       ? "Update user information and access"
                       : "Create a new system user"}
@@ -871,7 +922,15 @@ function Users() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 transition hover:bg-white/[0.06] hover:text-white"
+                className="
+                  flex h-9 w-9 shrink-0
+                  items-center justify-center
+                  rounded-lg
+                  text-[var(--text-primary)]
+                  transition
+                  hover:bg-[var(--bg-tertiary)]
+                  hover:text-cyan-400
+                "
               >
                 <X className="h-5 w-5" />
               </button>
@@ -890,12 +949,21 @@ function Users() {
                     onChange={(event) =>
                       handleChange(
                         "name",
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     placeholder="Enter full name"
                     autoComplete="name"
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#091522] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/40"
+                    className="
+                      h-11 w-full rounded-xl
+                      border border-[var(--border-primary)]
+                      bg-[var(--input-bg)]
+                      px-4 text-sm
+                      text-[var(--input-text)]
+                      outline-none
+                      placeholder:text-[var(--text-primary)]
+                      focus:border-cyan-400/40
+                    "
                   />
                 </FormField>
 
@@ -910,12 +978,21 @@ function Users() {
                     onChange={(event) =>
                       handleChange(
                         "email",
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     placeholder="name@example.com"
                     autoComplete="email"
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#091522] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/40"
+                    className="
+                      h-11 w-full rounded-xl
+                      border border-[var(--border-primary)]
+                      bg-[var(--input-bg)]
+                      px-4 text-sm
+                      text-[var(--input-text)]
+                      outline-none
+                      placeholder:text-[var(--text-primary)]
+                      focus:border-cyan-400/40
+                    "
                   />
                 </FormField>
 
@@ -932,12 +1009,21 @@ function Users() {
                     onChange={(event) =>
                       handleChange(
                         "phone",
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     placeholder="10-digit phone number"
                     autoComplete="tel"
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#091522] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/40"
+                    className="
+                      h-11 w-full rounded-xl
+                      border border-[var(--border-primary)]
+                      bg-[var(--input-bg)]
+                      px-4 text-sm
+                      text-[var(--input-text)]
+                      outline-none
+                      placeholder:text-[var(--text-primary)]
+                      focus:border-cyan-400/40
+                    "
                   />
                 </FormField>
 
@@ -956,7 +1042,7 @@ function Users() {
                     onChange={(event) =>
                       handleChange(
                         "password",
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     placeholder={
@@ -965,7 +1051,16 @@ function Users() {
                         : "Minimum 8 characters"
                     }
                     autoComplete="new-password"
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#091522] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/40"
+                    className="
+                      h-11 w-full rounded-xl
+                      border border-[var(--border-primary)]
+                      bg-[var(--input-bg)]
+                      px-4 text-sm
+                      text-[var(--input-text)]
+                      outline-none
+                      placeholder:text-[var(--text-primary)]
+                      focus:border-cyan-400/40
+                    "
                   />
                 </FormField>
 
@@ -976,7 +1071,7 @@ function Users() {
                     onChange={(value) =>
                       handleChange(
                         "role",
-                        value
+                        value,
                       )
                     }
                     options={[
@@ -1010,7 +1105,7 @@ function Users() {
                     onChange={(value) =>
                       handleChange(
                         "status",
-                        value
+                        value,
                       )
                     }
                     options={[
@@ -1036,11 +1131,20 @@ function Users() {
                     onChange={(event) =>
                       handleChange(
                         "assignedStationId",
-                        event.target.value
+                        event.target.value,
                       )
                     }
                     placeholder="Example: ST001"
-                    className="h-11 w-full rounded-xl border border-white/10 bg-[#091522] px-4 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/40"
+                    className="
+                      h-11 w-full rounded-xl
+                      border border-[var(--border-primary)]
+                      bg-[var(--input-bg)]
+                      px-4 text-sm
+                      text-[var(--input-text)]
+                      outline-none
+                      placeholder:text-[var(--text-primary)]
+                      focus:border-cyan-400/40
+                    "
                   />
                 </FormField>
 
@@ -1048,7 +1152,7 @@ function Users() {
                 <div className="flex items-start gap-3 rounded-xl border border-cyan-400/10 bg-cyan-400/[0.04] p-3">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
 
-                  <p className="text-xs leading-5 text-slate-400">
+                  <p className="text-xs leading-5 text-[var(--text-primary)]">
                     User permissions are determined
                     by the selected role. Admin users
                     have full system access.
@@ -1057,12 +1161,22 @@ function Users() {
               </div>
 
               {/* FOOTER */}
-              <div className="sticky bottom-0 flex flex-col-reverse gap-3 border-t border-white/10 bg-[#0D1B2A] px-4 py-4 sm:flex-row sm:justify-end sm:px-5">
+              <div className="sticky bottom-0 flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:flex-row sm:justify-end sm:px-5">
                 <button
                   type="button"
                   onClick={closeModal}
                   disabled={saving}
-                  className="h-11 rounded-xl border border-white/10 bg-white/[0.03] px-5 text-sm font-semibold text-slate-300 transition hover:bg-white/[0.06] hover:text-white disabled:opacity-50"
+                  className="
+                    h-11 rounded-xl
+                    border border-[var(--border-primary)]
+                    bg-[var(--bg-tertiary)]
+                    px-5 text-sm font-semibold
+                    text-[var(--text-primary)]
+                    transition
+                    hover:bg-[var(--bg-secondary)]
+                    hover:text-cyan-400
+                    disabled:opacity-50
+                  "
                 >
                   Cancel
                 </button>
@@ -1103,7 +1217,7 @@ interface UserActionProps {
   user: User;
   openMenu: string | null;
   setOpenMenu: (
-    value: string | null
+    value: string | null,
   ) => void;
   openEditModal: (user: User) => void;
   toggleUserStatus: (user: User) => void;
@@ -1119,23 +1233,23 @@ function DesktopUserRow({
   deleteUser,
 }: UserActionProps) {
   return (
-    <tr className="transition hover:bg-white/[0.025]">
+    <tr className="transition hover:bg-[var(--bg-secondary)]">
       {/* USER */}
       <td className="max-w-0 px-4 py-4 lg:px-5">
         <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 text-sm font-bold text-cyan-300">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 text-sm font-bold text-cyan-400">
             {getInitials(user.name)}
           </div>
 
           <div className="min-w-0 flex-1">
             <p
-              className="truncate text-sm font-semibold text-white"
+              className="truncate text-sm font-semibold text-[var(--text-primary)]"
               title={user.name}
             >
               {user.name}
             </p>
 
-            <p className="mt-1 truncate text-xs text-slate-500">
+            <p className="mt-1 truncate text-xs text-[var(--text-primary)]">
               {user.id}
             </p>
           </div>
@@ -1146,10 +1260,10 @@ function DesktopUserRow({
       <td className="max-w-0 px-4 py-4 lg:px-5">
         <div className="min-w-0">
           <div className="flex min-w-0 items-center gap-2">
-            <Mail className="h-3.5 w-3.5 shrink-0 text-slate-500" />
+            <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--text-primary)]" />
 
             <span
-              className="min-w-0 truncate text-sm text-slate-300"
+              className="min-w-0 truncate text-sm text-[var(--text-primary)]"
               title={user.email}
             >
               {user.email}
@@ -1157,9 +1271,9 @@ function DesktopUserRow({
           </div>
 
           <div className="mt-1.5 flex items-center gap-2">
-            <Phone className="h-3.5 w-3.5 shrink-0 text-slate-500" />
+            <Phone className="h-3.5 w-3.5 shrink-0 text-[var(--text-primary)]" />
 
-            <span className="truncate text-xs text-slate-500">
+            <span className="truncate text-xs text-[var(--text-primary)]">
               {user.phone || "No phone"}
             </span>
           </div>
@@ -1170,7 +1284,7 @@ function DesktopUserRow({
       <td className="max-w-0 px-4 py-4 lg:px-5">
         <span
           className={`inline-flex max-w-full truncate whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-semibold ${getRoleClasses(
-            user.role
+            user.role,
           )}`}
           title={getRoleLabel(user.role)}
         >
@@ -1181,7 +1295,7 @@ function DesktopUserRow({
       {/* STATION */}
       <td className="max-w-0 px-4 py-4 lg:px-5">
         <span
-          className="block truncate text-sm text-slate-400"
+          className="block truncate text-sm text-[var(--text-primary)]"
           title={
             user.assignedStationId ||
             "All stations"
@@ -1196,7 +1310,7 @@ function DesktopUserRow({
       <td className="px-4 py-4 lg:px-5">
         <span
           className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-semibold ${getStatusClasses(
-            user.status
+            user.status,
           )}`}
         >
           <span
@@ -1245,31 +1359,31 @@ function MobileUserCard({
   return (
     <div className="relative p-4">
       <div className="flex min-w-0 items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 text-sm font-bold text-cyan-300">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-cyan-400/10 bg-gradient-to-br from-cyan-400/10 to-violet-500/10 text-sm font-bold text-cyan-400">
           {getInitials(user.name)}
         </div>
 
         <div className="min-w-0 flex-1 pr-8">
-          <p className="truncate text-sm font-semibold text-white">
+          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
             {user.name}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-500">
+          <p className="mt-1 truncate text-xs text-[var(--text-primary)]">
             {user.id}
           </p>
 
           <div className="mt-3 flex min-w-0 items-center gap-2">
-            <Mail className="h-3.5 w-3.5 shrink-0 text-slate-500" />
+            <Mail className="h-3.5 w-3.5 shrink-0 text-[var(--text-primary)]" />
 
-            <span className="truncate text-xs text-slate-400">
+            <span className="truncate text-xs text-[var(--text-primary)]">
               {user.email}
             </span>
           </div>
 
           <div className="mt-1.5 flex items-center gap-2">
-            <Phone className="h-3.5 w-3.5 shrink-0 text-slate-500" />
+            <Phone className="h-3.5 w-3.5 shrink-0 text-[var(--text-primary)]" />
 
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-[var(--text-primary)]">
               {user.phone || "No phone"}
             </span>
           </div>
@@ -1292,7 +1406,7 @@ function MobileUserCard({
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <span
           className={`inline-flex rounded-full border px-3 py-1 text-[10px] font-semibold ${getRoleClasses(
-            user.role
+            user.role,
           )}`}
         >
           {getRoleLabel(user.role)}
@@ -1300,7 +1414,7 @@ function MobileUserCard({
 
         <span
           className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-semibold ${getStatusClasses(
-            user.status
+            user.status,
           )}`}
         >
           <span
@@ -1314,7 +1428,7 @@ function MobileUserCard({
           {user.status}
         </span>
 
-        <span className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[10px] text-slate-500">
+        <span className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-1 text-[10px] text-[var(--text-primary)]">
           {user.assignedStationId ||
             "All stations"}
         </span>
@@ -1341,7 +1455,7 @@ function ActionMenu({
   } | null>(null);
 
   const handleMenuToggle = (
-    event: MouseEvent<HTMLButtonElement>
+    event: MouseEvent<HTMLButtonElement>,
   ) => {
     event.stopPropagation();
 
@@ -1391,7 +1505,18 @@ function ActionMenu({
         type="button"
         aria-label={`Actions for ${user.name}`}
         onClick={handleMenuToggle}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-slate-400 transition hover:border-cyan-400/20 hover:bg-cyan-400/10 hover:text-cyan-300"
+        className="
+          inline-flex h-9 w-9
+          items-center justify-center
+          rounded-lg
+          border border-[var(--border-primary)]
+          bg-[var(--bg-tertiary)]
+          text-[var(--text-primary)]
+          transition
+          hover:border-cyan-400/20
+          hover:bg-cyan-400/10
+          hover:text-cyan-400
+        "
       >
         <MoreVertical className="h-4 w-4" />
       </button>
@@ -1407,14 +1532,29 @@ function ActionMenu({
               top: `${menuPosition.top}px`,
               right: `${menuPosition.right}px`,
             }}
-            className="z-[9999] w-44 overflow-hidden rounded-xl border border-white/10 bg-[#101D2C] p-1.5 shadow-2xl shadow-black/60"
+            className="
+              z-[9999] w-44 overflow-hidden
+              rounded-xl
+              border border-[var(--border-primary)]
+              bg-[var(--card-bg)]
+              p-1.5
+              shadow-2xl shadow-black/60
+            "
           >
             <button
               type="button"
               onClick={() =>
                 openEditModal(user)
               }
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+              className="
+                flex w-full items-center gap-3
+                rounded-lg px-3 py-2.5
+                text-left text-sm
+                text-[var(--text-primary)]
+                transition
+                hover:bg-[var(--bg-tertiary)]
+                hover:text-cyan-400
+              "
             >
               <Edit3 className="h-4 w-4 text-cyan-400" />
               Edit User
@@ -1425,7 +1565,15 @@ function ActionMenu({
               onClick={() =>
                 toggleUserStatus(user)
               }
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-slate-300 transition hover:bg-white/[0.06] hover:text-white"
+              className="
+                flex w-full items-center gap-3
+                rounded-lg px-3 py-2.5
+                text-left text-sm
+                text-[var(--text-primary)]
+                transition
+                hover:bg-[var(--bg-tertiary)]
+                hover:text-cyan-400
+              "
             >
               {user.status === "Active" ? (
                 <>
@@ -1440,14 +1588,14 @@ function ActionMenu({
               )}
             </button>
 
-            <div className="my-1 border-t border-white/10" />
+            <div className="my-1 border-t border-[var(--border-primary)]" />
 
             <button
               type="button"
               onClick={() =>
                 deleteUser(user)
               }
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-red-300 transition hover:bg-red-400/10 hover:text-red-200"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm text-red-400 transition hover:bg-red-400/10 hover:text-red-300"
             >
               <Trash2 className="h-4 w-4" />
               Delete User
@@ -1457,6 +1605,7 @@ function ActionMenu({
     </>
   );
 }
+
 /* -------------------------------------------------------------------------- */
 /* SUMMARY CARD                                                               */
 /* -------------------------------------------------------------------------- */
@@ -1479,18 +1628,28 @@ function SummaryCard({
   iconBg,
 }: SummaryCardProps) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-3 shadow-lg shadow-black/10 transition hover:border-white/15 sm:p-5">
+    <div
+      className="
+        min-w-0 rounded-2xl
+        border border-[var(--border-primary)]
+        bg-[var(--card-bg)]
+        p-3 shadow-lg shadow-black/10
+        transition
+        hover:border-[var(--border-secondary)]
+        sm:p-5
+      "
+    >
       <div className="flex min-w-0 items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="truncate text-[9px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">
+          <p className="truncate text-[9px] font-semibold uppercase tracking-wider text-[var(--text-primary)] sm:text-xs">
             {label}
           </p>
 
-          <p className="mt-2 text-xl font-bold text-white sm:text-2xl">
+          <p className="mt-2 text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-[9px] text-slate-500 sm:text-xs">
+          <p className="mt-1 truncate text-[9px] text-[var(--text-primary)] sm:text-xs">
             {description}
           </p>
         </div>
@@ -1534,7 +1693,17 @@ function FilterSelect({
         onChange={(event) =>
           onChange(event.target.value)
         }
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#091522] px-3 pr-9 text-xs text-slate-300 outline-none focus:border-cyan-400/40 sm:px-4 sm:text-sm"
+        className="
+          h-11 w-full appearance-none
+          rounded-xl
+          border border-[var(--border-primary)]
+          bg-[var(--input-bg)]
+          px-3 pr-9
+          text-xs text-[var(--input-text)]
+          outline-none
+          focus:border-cyan-400/40
+          sm:px-4 sm:text-sm
+        "
       >
         {options.map((option) => (
           <option
@@ -1546,7 +1715,7 @@ function FilterSelect({
         ))}
       </select>
 
-      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
     </div>
   );
 }
@@ -1568,7 +1737,7 @@ function FormField({
 }: FormFieldProps) {
   return (
     <label className="block min-w-0">
-      <span className="mb-1.5 block text-xs font-semibold text-slate-400">
+      <span className="mb-1.5 block text-xs font-semibold text-[var(--text-primary)]">
         {label}
 
         {required && (
@@ -1605,7 +1774,16 @@ function SelectField({
         onChange={(event) =>
           onChange(event.target.value)
         }
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#091522] px-4 pr-10 text-sm text-white outline-none focus:border-cyan-400/40"
+        className="
+          h-11 w-full appearance-none
+          rounded-xl
+          border border-[var(--border-primary)]
+          bg-[var(--input-bg)]
+          px-4 pr-10
+          text-sm text-[var(--input-text)]
+          outline-none
+          focus:border-cyan-400/40
+        "
       >
         {options.map((option) => (
           <option
@@ -1617,7 +1795,7 @@ function SelectField({
         ))}
       </select>
 
-      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+      <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
     </div>
   );
 }
@@ -1630,9 +1808,9 @@ function LoadingState() {
   return (
     <div className="flex min-h-[280px] items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-        <div className="h-9 w-9 animate-spin rounded-full border-2 border-white/10 border-t-cyan-400" />
+        <div className="h-9 w-9 animate-spin rounded-full border-2 border-[var(--border-primary)] border-t-cyan-400" />
 
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-[var(--text-primary)]">
           Loading users...
         </p>
       </div>
@@ -1657,17 +1835,17 @@ function EmptyState({
 }: EmptyStateProps) {
   return (
     <div className="flex min-h-[280px] flex-col items-center justify-center px-5 py-12 text-center">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03]">
-        <UsersIcon className="h-6 w-6 text-slate-500" />
+      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)]">
+        <UsersIcon className="h-6 w-6 text-[var(--text-primary)]" />
       </div>
 
-      <h3 className="mt-4 text-base font-semibold text-white">
+      <h3 className="mt-4 text-base font-semibold text-[var(--text-primary)]">
         {hasFilters
           ? "No users found"
           : "No users available"}
       </h3>
 
-      <p className="mt-2 max-w-sm text-sm leading-6 text-slate-500">
+      <p className="mt-2 max-w-sm text-sm leading-6 text-[var(--text-primary)]">
         {hasFilters
           ? "Try changing your search or filter criteria."
           : "Create your first user to get started."}
@@ -1678,7 +1856,14 @@ function EmptyState({
           <button
             type="button"
             onClick={onClear}
-            className="h-10 rounded-xl border border-white/10 px-4 text-sm font-semibold text-slate-300 hover:bg-white/[0.05] hover:text-white"
+            className="
+              h-10 rounded-xl
+              border border-[var(--border-primary)]
+              px-4 text-sm font-semibold
+              text-[var(--text-primary)]
+              hover:bg-[var(--bg-tertiary)]
+              hover:text-cyan-400
+            "
           >
             Clear Filters
           </button>

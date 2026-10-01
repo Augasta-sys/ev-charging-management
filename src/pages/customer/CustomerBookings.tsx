@@ -279,7 +279,7 @@ function getStatusClasses(status?: string) {
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -318,12 +318,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -1572,7 +1572,7 @@ const availableSlots = useMemo(() => {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading bookings...
           </p>
         </div>
@@ -1585,21 +1585,70 @@ const availableSlots = useMemo(() => {
   ========================= */
 
   return (
+    <>
+      <style>{`
+        .customer-bookings-input,
+        .customer-bookings-select,
+        .customer-bookings-date {
+          border-color: var(--border-primary);
+          background-color: var(--input-bg);
+          color: var(--input-text);
+        }
+
+        .customer-bookings-input::placeholder {
+          color: var(--text-muted);
+        }
+
+        .customer-bookings-select option {
+          background-color: var(--input-bg);
+          color: var(--input-text);
+        }
+
+        html.dark .customer-bookings-date {
+          color-scheme: dark;
+        }
+
+        html.light .customer-bookings-date {
+          color-scheme: light;
+        }
+
+        html.dark .customer-bookings-date::-webkit-calendar-picker-indicator {
+          filter: brightness(0) invert(1);
+          opacity: 1;
+        }
+
+        html.light .customer-bookings-date::-webkit-calendar-picker-indicator {
+          filter: none;
+          opacity: 1;
+        }
+
+        html.dark .customer-bookings-banner {
+          background: linear-gradient(135deg, #0D1B2A, #0B1726, #111A35);
+        }
+
+        html.light .customer-bookings-banner {
+          background: #ffffff;
+        }
+
+        html.light .customer-bookings-status {
+          color: #334155 !important;
+        }
+      `}</style>
     <div className="w-full min-w-0 space-y-6">
       {/* HEADER */}
 
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 sm:p-6">
+      <section className="customer-bookings-banner rounded-2xl border border-[var(--border-primary)] bg-white p-5 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
               Customer Bookings
             </span>
 
-            <h1 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
               My Bookings
             </h1>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">
               Reserve charging slots and manage your
               charging bookings.
             </p>
@@ -1611,7 +1660,7 @@ const availableSlots = useMemo(() => {
               onClick={() =>
                 void fetchData()
               }
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
             >
               <RefreshCw className="h-4 w-4" />
               Refresh
@@ -1700,13 +1749,13 @@ const availableSlots = useMemo(() => {
         ].map((item) => (
           <div
             key={item.label}
-            className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5"
+            className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5"
           >
-            <p className="text-xs uppercase tracking-wide text-slate-500">
+            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
               {item.label}
             </p>
 
-            <p className="mt-2 text-3xl font-bold text-white">
+            <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
               {item.value}
             </p>
           </div>
@@ -1715,10 +1764,10 @@ const availableSlots = useMemo(() => {
 
       {/* FILTERS */}
 
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="grid gap-3 md:grid-cols-[1fr_220px]">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -1729,7 +1778,7 @@ const availableSlots = useMemo(() => {
                 )
               }
               placeholder="Search booking, station, charger or vehicle..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/50"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-primary)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-slate-500 focus:border-cyan-400/50"
             />
           </div>
 
@@ -1740,7 +1789,7 @@ const availableSlots = useMemo(() => {
                 event.target.value
               )
             }
-            className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none"
+            className="customer-bookings-select h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none"
           >
             <option value="All">
               All Statuses
@@ -1779,13 +1828,13 @@ const availableSlots = useMemo(() => {
 
       {/* BOOKING HISTORY */}
 
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="border-b border-white/10 p-5">
-          <h2 className="font-semibold text-white">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="border-b border-[var(--border-primary)] p-5">
+          <h2 className="font-semibold text-[var(--text-primary)]">
             Booking History
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {filteredBookings.length} booking
             {filteredBookings.length === 1
               ? ""
@@ -1796,13 +1845,13 @@ const availableSlots = useMemo(() => {
 
         {filteredBookings.length === 0 ? (
           <div className="p-8 text-center">
-            <CalendarDays className="mx-auto h-9 w-9 text-slate-600" />
+            <CalendarDays className="mx-auto h-9 w-9 text-[var(--text-muted)]" />
 
-            <p className="mt-3 text-sm font-medium text-white">
+            <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
               No bookings found
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Create a charging reservation to get
               started.
             </p>
@@ -1835,7 +1884,7 @@ const availableSlots = useMemo(() => {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10">
+                  <tr className="border-b border-[var(--border-primary)]">
                     {[
                       "Booking",
                       "Station",
@@ -1847,7 +1896,7 @@ const availableSlots = useMemo(() => {
                     ].map((heading) => (
                       <th
                         key={heading}
-                        className="px-3 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500"
+                        className="px-3 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-[var(--text-muted)]"
                       >
                         {heading}
                       </th>
@@ -1855,7 +1904,7 @@ const availableSlots = useMemo(() => {
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-[var(--border-primary)]">
                   {filteredBookings.map(
                     (booking) => {
                       const station =
@@ -1871,32 +1920,32 @@ const availableSlots = useMemo(() => {
                       return (
                         <tr
                           key={booking.id}
-                          className="transition hover:bg-white/[0.02]"
+                          className="transition hover:bg-[var(--bg-tertiary)]"
                         >
-                          <td className="px-3 py-5 text-sm font-semibold text-white">
+                          <td className="px-3 py-5 text-sm font-semibold text-[var(--text-primary)]">
                             {booking.bookingId ||
                               booking.id}
                           </td>
 
                           <td className="px-3 py-5">
-                            <p className="truncate text-sm text-white">
+                            <p className="truncate text-sm text-[var(--text-primary)]">
                              {station?.stationName || "—"}
                             </p>
                           </td>
 
-                          <td className="px-3 py-5 text-sm text-slate-300">
+                          <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                             {vehicle?.vehicleNumber ||
                               "—"}
                           </td>
 
-                          <td className="px-3 py-5 text-sm text-slate-300">
+                          <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                             {formatDate(
                               booking.bookingDate ||
                                 booking.date
                             )}
                           </td>
 
-                          <td className="px-3 py-5 text-sm text-slate-300">
+                          <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                             {formatTime(
                               booking.startTime
                             )}
@@ -1908,7 +1957,7 @@ const availableSlots = useMemo(() => {
 
                           <td className="px-3 py-5">
                             <span
-                              className={`inline-flex rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
+                              className={`customer-bookings-status inline-flex rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
                                 booking.status
                               )}`}
                             >
@@ -1927,7 +1976,7 @@ const availableSlots = useMemo(() => {
                                     booking
                                   )
                                 }
-                                className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                                className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                               >
                                 <Eye className="h-3.5 w-3.5" />
                               </button>
@@ -1976,22 +2025,22 @@ const availableSlots = useMemo(() => {
                   return (
                     <div
                       key={booking.id}
-                      className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                      className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-sm font-semibold text-white">
+                          <p className="text-sm font-semibold text-[var(--text-primary)]">
                             {booking.bookingId ||
                               booking.id}
                           </p>
 
-                          <p className="mt-1 text-xs text-slate-500">
+                          <p className="mt-1 text-xs text-[var(--text-muted)]">
                             {station?.stationName || "—"}
                           </p>
                         </div>
 
                         <span
-                          className={`rounded-full border px-2 py-1 text-[10px] ${getStatusClasses(
+                          className={`customer-bookings-status rounded-full border px-2 py-1 text-[10px] ${getStatusClasses(
                             booking.status
                           )}`}
                         >
@@ -2039,7 +2088,7 @@ const availableSlots = useMemo(() => {
                               booking
                             )
                           }
-                          className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white"
+                          className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
                         >
                           <Eye className="h-4 w-4" />
                         </button>
@@ -2076,16 +2125,16 @@ const availableSlots = useMemo(() => {
 
       {showBookingModal && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/75 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* POPUP HEADER */}
 
-            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Book Charging Slot
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   Complete each step to reserve your
                   charger.
                 </p>
@@ -2100,7 +2149,7 @@ const availableSlots = useMemo(() => {
                   );
                   resetBooking();
                 }}
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -2108,7 +2157,7 @@ const availableSlots = useMemo(() => {
 
             {/* STEP NAVIGATION */}
 
-            <div className="shrink-0 border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="shrink-0 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
                 {STEPS.map(
                   (step, index) => {
@@ -2143,8 +2192,8 @@ const availableSlots = useMemo(() => {
                             : completed
                               ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-300 hover:border-emerald-400/50"
                               : allowed
-                                ? "border-white/10 bg-white/[0.02] text-slate-300 hover:border-cyan-400/40 hover:text-cyan-300"
-                                : "cursor-not-allowed border-white/5 bg-white/[0.01] text-slate-600"
+                                ? "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:border-cyan-400/40 hover:text-cyan-300"
+                                : "cursor-not-allowed border-[var(--border-primary)] bg-[var(--bg-secondary)] text-[var(--text-muted)]"
                         }`}
                       >
                         {completed && (
@@ -2190,20 +2239,20 @@ const availableSlots = useMemo(() => {
               {currentStep ===
                 "station" && (
                 <div>
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                     Select Station
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
                     Choose an active charging station.
                   </p>
 
                   {availableStations.length ===
                   0 ? (
-                    <div className="mt-5 rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-                      <MapPin className="mx-auto h-8 w-8 text-slate-600" />
+                    <div className="mt-5 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+                      <MapPin className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                      <p className="mt-3 text-sm font-medium text-white">
+                      <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                         No active stations found
                       </p>
                     </div>
@@ -2219,7 +2268,7 @@ const availableSlots = useMemo(() => {
                                 station
                               )
                             }
-                            className="group w-full cursor-pointer rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
+                            className="group w-full cursor-pointer rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
                           >
                             <div className="flex items-start gap-3">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
@@ -2229,7 +2278,7 @@ const availableSlots = useMemo(() => {
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-start justify-between gap-3">
                                   <div className="min-w-0">
-                                    <p className="truncate text-sm font-semibold text-white">
+                                    <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
   {station.stationName}
 </p>
 
@@ -2245,7 +2294,7 @@ const availableSlots = useMemo(() => {
                                   </span>
                                 </div>
 
-                                <p className="mt-3 text-xs leading-5 text-slate-500">
+                                <p className="mt-3 text-xs leading-5 text-[var(--text-muted)]">
                                   {[
                                     station.address,
                                     station.city,
@@ -2258,8 +2307,8 @@ const availableSlots = useMemo(() => {
                                     "Address unavailable"}
                                 </p>
 
-                                <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-                                  <span className="text-xs text-slate-400">
+                                <div className="mt-4 flex items-center justify-between border-t border-[var(--border-primary)] pt-3">
+                                  <span className="text-xs text-[var(--text-secondary)]">
                                     Select station
                                   </span>
 
@@ -2296,11 +2345,11 @@ const availableSlots = useMemo(() => {
                     ← Change Station
                   </button>
 
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                     Select Charger
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
   {selectedStation?.stationName || "Selected station"}
 </p>
 
@@ -2309,7 +2358,7 @@ const availableSlots = useMemo(() => {
                     <div className="mt-5 rounded-xl border border-amber-400/20 bg-amber-400/10 p-8 text-center">
                       <Zap className="mx-auto h-8 w-8 text-amber-300" />
 
-                      <p className="mt-3 text-sm font-medium text-white">
+                      <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                         No bookable chargers found
                       </p>
 
@@ -2330,7 +2379,7 @@ const availableSlots = useMemo(() => {
                                 charger
                               )
                             }
-                            className="group w-full cursor-pointer rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
+                            className="group w-full cursor-pointer rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <div className="flex min-w-0 gap-3">
@@ -2339,14 +2388,14 @@ const availableSlots = useMemo(() => {
                                 </div>
 
                                 <div className="min-w-0">
-                                  <p className="truncate text-sm font-semibold text-white">
+                                  <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                                     {charger.chargerNumber
                                       ? `Charger ${charger.chargerNumber}`
                                       : charger.chargerId ||
                                         charger.id}
                                   </p>
 
-                                  <p className="mt-1 text-xs text-slate-500">
+                                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                                     {charger.chargerType ||
                                       "Charger"}
                                     {" • "}
@@ -2382,8 +2431,8 @@ const availableSlots = useMemo(() => {
                               />
                             </div>
 
-                            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-                              <span className="text-xs text-slate-400">
+                            <div className="mt-4 flex items-center justify-between border-t border-[var(--border-primary)] pt-3">
+                              <span className="text-xs text-[var(--text-secondary)]">
                                 Select charger
                               </span>
 
@@ -2418,22 +2467,22 @@ const availableSlots = useMemo(() => {
                     ← Change Charger
                   </button>
 
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                     Select Booking Date
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
                     Choose today or a future date.
                   </p>
 
-                  <div className="mt-6 max-w-md rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                  <div className="mt-6 max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-5">
                     <label>
-                      <span className="mb-2 block text-xs font-medium uppercase tracking-wide text-slate-500">
+                      <span className="mb-2 block text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
                         Booking Date
                       </span>
 
                       <div className="relative">
-                        <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+                        <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
                         <input
                           type="date"
@@ -2455,18 +2504,18 @@ const availableSlots = useMemo(() => {
                               ""
                             );
                           }}
-                          className="h-12 w-full rounded-xl border border-white/10 bg-[#07111F] pl-11 pr-4 text-sm text-white outline-none focus:border-cyan-400/50"
+                          className="h-12 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--bg-primary)] pl-11 pr-4 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
                         />
                       </div>
                     </label>
 
                     {selectedDate && (
                       <div className="mt-4 rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] p-4">
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-[var(--text-muted)]">
                           Selected Date
                         </p>
 
-                        <p className="mt-1 text-sm font-semibold text-white">
+                        <p className="mt-1 text-sm font-semibold text-[var(--text-primary)]">
                           {formatDate(
                             selectedDate
                           )}
@@ -2510,11 +2559,11 @@ const availableSlots = useMemo(() => {
                     ← Change Date
                   </button>
 
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                     Select Slot
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
                     Available slots for{" "}
                     {formatDate(
                       selectedDate
@@ -2526,7 +2575,7 @@ const availableSlots = useMemo(() => {
                     <div className="mt-5 rounded-xl border border-amber-400/20 bg-amber-400/10 p-8 text-center">
                       <Clock3 className="mx-auto h-8 w-8 text-amber-300" />
 
-                      <p className="mt-3 text-sm font-semibold text-white">
+                      <p className="mt-3 text-sm font-semibold text-[var(--text-primary)]">
                         No available slots
                       </p>
 
@@ -2562,7 +2611,7 @@ const availableSlots = useMemo(() => {
                             onClick={() =>
                               selectSlot(slot)
                             }
-                            className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
+                            className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06]"
                           >
                             <div className="flex items-center justify-between">
                               <Clock3 className="h-5 w-5 text-cyan-400" />
@@ -2572,7 +2621,7 @@ const availableSlots = useMemo(() => {
                               </span>
                             </div>
 
-                            <p className="mt-4 text-sm font-semibold text-white">
+                            <p className="mt-4 text-sm font-semibold text-[var(--text-primary)]">
                               {formatTime(
                                 slot.startTime
                               )}
@@ -2582,13 +2631,13 @@ const availableSlots = useMemo(() => {
                               )}
                             </p>
 
-                            <p className="mt-2 text-xs text-slate-500">
+                            <p className="mt-2 text-xs text-[var(--text-muted)]">
                               {slot.slotId ||
                                 slot.id}
                             </p>
 
-                            <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-                              <span className="text-xs text-slate-400">
+                            <div className="mt-4 flex items-center justify-between border-t border-[var(--border-primary)] pt-3">
+                              <span className="text-xs text-[var(--text-secondary)]">
                                 Select slot
                               </span>
 
@@ -2623,18 +2672,18 @@ const availableSlots = useMemo(() => {
                     ← Change Slot
                   </button>
 
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                     Select Vehicle
                   </h3>
 
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-1 text-sm text-[var(--text-muted)]">
                     Choose the vehicle you will
                     charge.
                   </p>
 
                   {vehicles.length === 0 ? (
                     <div className="mt-5 rounded-xl border border-amber-400/20 bg-amber-400/10 p-6">
-                      <p className="text-sm font-semibold text-white">
+                      <p className="text-sm font-semibold text-[var(--text-primary)]">
                         No vehicles found
                       </p>
 
@@ -2668,17 +2717,17 @@ const availableSlots = useMemo(() => {
                                   vehicle
                                 )
                               }
-                              className="group rounded-xl border border-white/10 bg-white/[0.02] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06] disabled:cursor-not-allowed disabled:opacity-40"
+                              className="group rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 text-left transition hover:border-cyan-400/50 hover:bg-cyan-400/[0.06] disabled:cursor-not-allowed disabled:opacity-40"
                             >
                               <div className="flex items-start justify-between gap-3">
                                 <div>
-                                  <p className="text-sm font-semibold text-white">
+                                  <p className="text-sm font-semibold text-[var(--text-primary)]">
                                     {
                                       vehicle.vehicleNumber
                                     }
                                   </p>
 
-                                  <p className="mt-1 text-xs text-slate-500">
+                                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                                     {
                                       vehicle.brand
                                     }{" "}
@@ -2723,8 +2772,8 @@ const availableSlots = useMemo(() => {
                               )}
 
                               {compatible && (
-                                <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3">
-                                  <span className="text-xs text-slate-400">
+                                <div className="mt-4 flex items-center justify-between border-t border-[var(--border-primary)] pt-3">
+                                  <span className="text-xs text-[var(--text-secondary)]">
                                     Select vehicle
                                   </span>
 
@@ -2767,11 +2816,11 @@ const availableSlots = useMemo(() => {
                     </div>
 
                     <div>
-                      <h3 className="text-lg font-semibold text-white">
+                      <h3 className="text-lg font-semibold text-[var(--text-primary)]">
                         Review Booking
                       </h3>
 
-                      <p className="mt-1 text-sm text-slate-500">
+                      <p className="mt-1 text-sm text-[var(--text-muted)]">
                         Verify the details before
                         confirming.
                       </p>
@@ -2879,7 +2928,7 @@ const availableSlots = useMemo(() => {
                   </div>
 
                   <div className="mt-5 rounded-xl border border-cyan-400/20 bg-cyan-400/[0.06] p-4">
-                    <p className="text-xs leading-5 text-slate-300">
+                    <p className="text-xs leading-5 text-[var(--text-secondary)]">
                       The estimated cost is for
                       reference. The final charging
                       amount will be based on actual
@@ -2893,7 +2942,7 @@ const availableSlots = useMemo(() => {
 
             {/* POPUP FOOTER */}
 
-            <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
+            <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-[var(--border-primary)] px-4 py-4 sm:flex-row sm:justify-end sm:px-6">
               <button
                 type="button"
                 disabled={saving}
@@ -2904,7 +2953,7 @@ const availableSlots = useMemo(() => {
 
                   resetBooking();
                 }}
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 Close
               </button>
@@ -2941,10 +2990,10 @@ const availableSlots = useMemo(() => {
 
       {viewBooking && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/75 p-3 backdrop-blur-sm">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A]">
-            <div className="flex items-center justify-between border-b border-white/10 p-4 sm:px-6">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+            <div className="flex items-center justify-between border-b border-[var(--border-primary)] p-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-[var(--text-primary)]">
                   Booking Details
                 </h2>
 
@@ -2959,7 +3008,7 @@ const availableSlots = useMemo(() => {
                 onClick={() =>
                   setViewBooking(null)
                 }
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -3052,7 +3101,7 @@ const availableSlots = useMemo(() => {
               </div>
             </div>
 
-            <div className="flex flex-col-reverse gap-3 border-t border-white/10 p-4 sm:flex-row sm:justify-end sm:px-6">
+            <div className="flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] p-4 sm:flex-row sm:justify-end sm:px-6">
               {canCancel(
                 viewBooking
               ) && (
@@ -3079,7 +3128,7 @@ const availableSlots = useMemo(() => {
                 onClick={() =>
                   setViewBooking(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 Close
               </button>
@@ -3094,19 +3143,19 @@ const availableSlots = useMemo(() => {
 
       {cancelBooking && (
         <div className="fixed inset-0 z-[110] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/75 p-3 backdrop-blur-sm">
-          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl">
+          <div className="w-full max-w-md overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl">
             <div className="p-5 sm:p-6">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-red-400/20 bg-red-400/10 text-red-300">
                 <XCircle className="h-5 w-5" />
               </div>
 
-              <h2 className="mt-4 text-lg font-semibold text-white">
+              <h2 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
                 Cancel Booking?
               </h2>
 
-              <p className="mt-2 text-sm leading-6 text-slate-400">
+              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
                 Booking{" "}
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-[var(--text-primary)]">
                   {cancelBooking.bookingId ||
                     cancelBooking.id}
                 </span>{" "}
@@ -3115,14 +3164,14 @@ const availableSlots = useMemo(() => {
               </p>
             </div>
 
-            <div className="flex flex-col-reverse gap-3 border-t border-white/10 p-4 sm:flex-row sm:justify-end">
+            <div className="flex flex-col-reverse gap-3 border-t border-[var(--border-primary)] p-4 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 disabled={saving}
                 onClick={() =>
                   setCancelBooking(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm text-white"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm text-[var(--text-primary)]"
               >
                 Keep Booking
               </button>
@@ -3148,5 +3197,6 @@ const availableSlots = useMemo(() => {
         </div>
       )}
     </div>
+    </>
   );
 }

@@ -113,14 +113,17 @@ function Chargers() {
   }, []);
 
   useEffect(() => {
-    if (showModal || deleteId) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!showModal && !deleteId) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, [showModal, deleteId]);
 
@@ -525,7 +528,7 @@ function Chargers() {
         return "border-red-400/20 bg-red-400/10 text-red-300";
 
       default:
-        return "border-white/10 bg-white/5 text-slate-300";
+        return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
     }
   };
 
@@ -574,7 +577,7 @@ function Chargers() {
             <Zap className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading chargers...
           </p>
         </div>
@@ -592,11 +595,11 @@ function Chargers() {
             Charger Management
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Chargers
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Manage charging equipment across all stations.
           </p>
         </div>
@@ -673,14 +676,14 @@ function Chargers() {
       </div>
 
       {/* Filters */}
-      <section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find chargers by station, type, connector or status.
             </p>
           </div>
@@ -693,7 +696,7 @@ function Chargers() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -704,7 +707,7 @@ function Chargers() {
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {/* Search */}
           <div className="relative min-w-0">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-muted)]" />
 
             <input
               type="text"
@@ -713,7 +716,7 @@ function Chargers() {
                 setSearch(event.target.value)
               }
               placeholder="Search chargers..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#101F31] pl-10 pr-4 text-sm text-white outline-none placeholder:text-slate-600 transition focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/10"
+              className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-10 pr-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] transition focus:border-cyan-400/40 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -723,7 +726,7 @@ function Chargers() {
             onChange={(event) =>
               setStationFilter(event.target.value)
             }
-            className="h-11 min-w-0 rounded-xl border border-white/10 bg-[#101F31] px-3 text-sm text-white outline-none transition focus:border-cyan-400/40"
+            className="h-11 min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/40"
           >
             <option value="">All Stations</option>
 
@@ -743,7 +746,7 @@ function Chargers() {
             onChange={(event) =>
               setTypeFilter(event.target.value)
             }
-            className="h-11 min-w-0 rounded-xl border border-white/10 bg-[#101F31] px-3 text-sm text-white outline-none transition focus:border-cyan-400/40"
+            className="h-11 min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/40"
           >
             <option value="">
               All Charger Types
@@ -762,7 +765,7 @@ function Chargers() {
             onChange={(event) =>
               setConnectorFilter(event.target.value)
             }
-            className="h-11 min-w-0 rounded-xl border border-white/10 bg-[#101F31] px-3 text-sm text-white outline-none transition focus:border-cyan-400/40"
+            className="h-11 min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/40"
           >
             <option value="">
               All Connectors
@@ -784,7 +787,7 @@ function Chargers() {
             onChange={(event) =>
               setStatusFilter(event.target.value)
             }
-            className="h-11 min-w-0 rounded-xl border border-white/10 bg-[#101F31] px-3 text-sm text-white outline-none transition focus:border-cyan-400/40"
+            className="h-11 min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none transition focus:border-cyan-400/40"
           >
             <option value="">All Statuses</option>
 
@@ -799,13 +802,13 @@ function Chargers() {
 
       {/* Results */}
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--text-muted)]">
           Showing{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {filteredChargers.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {chargers.length}
           </span>{" "}
           chargers
@@ -813,40 +816,40 @@ function Chargers() {
       </div>
 
       {/* Desktop Table */}
-<section className="mt-4 hidden w-full min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] lg:block">
+<section className="mt-4 hidden w-full min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] lg:block">
   <div className="w-full min-w-0">
     <table className="w-full table-fixed">
       <thead>
-        <tr className="border-b border-white/10 text-left">
-          <th className="w-[11%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+        <tr className="border-b border-[var(--border-primary)] text-left">
+          <th className="w-[11%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Charger
           </th>
 
-          <th className="w-[19%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[19%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Station
           </th>
 
-          <th className="w-[16%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[16%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Type
           </th>
 
-          <th className="w-[10%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[10%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Connector
           </th>
 
-          <th className="w-[9%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[9%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Power
           </th>
 
-          <th className="w-[10%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[10%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Price/kWh
           </th>
 
-          <th className="w-[13%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[13%] px-3 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Status
           </th>
 
-          <th className="w-[12%] px-3 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+          <th className="w-[12%] px-3 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
             Actions
           </th>
         </tr>
@@ -859,15 +862,15 @@ function Chargers() {
               colSpan={8}
               className="px-5 py-16 text-center"
             >
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-                <Zap className="h-6 w-6 text-slate-600" />
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-tertiary)]">
+                <Zap className="h-6 w-6 text-[var(--text-muted)]" />
               </div>
 
-              <p className="mt-4 text-sm font-medium text-slate-400">
+              <p className="mt-4 text-sm font-medium text-[var(--text-secondary)]">
                 No chargers found
               </p>
 
-              <p className="mt-1 text-xs text-slate-600">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing your search or filters.
               </p>
             </td>
@@ -876,16 +879,16 @@ function Chargers() {
           filteredChargers.map((charger) => (
             <tr
               key={charger.id}
-              className="border-b border-white/5 last:border-0 transition hover:bg-white/[0.025]"
+              className="border-b border-[var(--border-primary)] last:border-0 transition hover:bg-[var(--bg-secondary)]"
             >
               {/* Charger */}
               <td className="min-w-0 px-3 py-4 xl:px-4">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-white">
+                  <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                     {charger.chargerId}
                   </p>
 
-                  <p className="mt-1 truncate text-xs text-slate-500">
+                  <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                     {charger.chargerNumber}
                   </p>
                 </div>
@@ -899,13 +902,13 @@ function Chargers() {
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-white">
+                    <p className="truncate text-sm font-medium text-[var(--text-primary)]">
                       {getStationName(
                         charger.stationId
                       )}
                     </p>
 
-                    <p className="mt-1 truncate text-xs text-slate-500">
+                    <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                       {getStation(
                         charger.stationId
                       )?.city ?? charger.stationId}
@@ -917,7 +920,7 @@ function Chargers() {
               {/* Charger Type */}
               <td className="min-w-0 px-3 py-4 xl:px-4">
                 <p
-                  className="truncate text-sm text-slate-300"
+                  className="truncate text-sm text-[var(--text-secondary)]"
                   title={charger.chargerType}
                 >
                   {charger.chargerType}
@@ -927,7 +930,7 @@ function Chargers() {
               {/* Connector */}
               <td className="min-w-0 px-3 py-4 xl:px-4">
                 <p
-                  className="truncate text-sm text-slate-300"
+                  className="truncate text-sm text-[var(--text-secondary)]"
                   title={charger.connectorType}
                 >
                   {charger.connectorType}
@@ -936,7 +939,7 @@ function Chargers() {
 
               {/* Power */}
               <td className="px-3 py-4 xl:px-4">
-                <span className="whitespace-nowrap text-sm font-medium text-white">
+                <span className="whitespace-nowrap text-sm font-medium text-[var(--text-primary)]">
                   {charger.powerOutput} kW
                 </span>
               </td>
@@ -1009,7 +1012,7 @@ function Chargers() {
                     onClick={() =>
                       setDeleteId(charger.id)
                     }
-                    className="hover:border-red-400/40 hover:bg-red-400 hover:text-white"
+                    className="hover:border-red-400/40 hover:bg-red-400 hover:text-[var(--text-primary)]"
                   >
                     <Trash2 className="h-4 w-4" />
                   </ActionButton>
@@ -1026,16 +1029,16 @@ function Chargers() {
       {/* Mobile / Tablet Cards */}
       <section className="mt-4 grid gap-4 lg:hidden">
         {filteredChargers.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] px-5 py-14 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-              <Zap className="h-6 w-6 text-slate-600" />
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-5 py-14 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-tertiary)]">
+              <Zap className="h-6 w-6 text-[var(--text-muted)]" />
             </div>
 
-            <p className="mt-4 text-sm font-medium text-slate-400">
+            <p className="mt-4 text-sm font-medium text-[var(--text-secondary)]">
               No chargers found
             </p>
 
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Try changing your search or filters.
             </p>
           </div>
@@ -1043,7 +1046,7 @@ function Chargers() {
           filteredChargers.map((charger) => (
             <div
               key={charger.id}
-              className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 transition hover:border-cyan-400/20"
+              className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 transition hover:border-cyan-400/20"
             >
               <div className="flex min-w-0 items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
@@ -1052,11 +1055,11 @@ function Chargers() {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-bold text-white">
+                    <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                       {charger.chargerId}
                     </p>
 
-                    <p className="mt-1 truncate text-xs text-slate-500">
+                    <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                       {charger.chargerNumber}
                     </p>
                   </div>
@@ -1110,7 +1113,7 @@ function Chargers() {
                 />
               </div>
 
-              <div className="mt-5 flex items-center justify-end gap-2 border-t border-white/5 pt-4">
+              <div className="mt-5 flex items-center justify-end gap-2 border-t border-[var(--border-primary)] pt-4">
                 <ActionButton
                   label="Edit charger"
                   onClick={() =>
@@ -1148,7 +1151,7 @@ function Chargers() {
                   onClick={() =>
                     setDeleteId(charger.id)
                   }
-                  className="hover:border-red-400/40 hover:bg-red-400 hover:text-white"
+                  className="hover:border-red-400/40 hover:bg-red-400 hover:text-[var(--text-primary)]"
                 >
                   <Trash2 className="h-4 w-4" />
                 </ActionButton>
@@ -1161,17 +1164,17 @@ function Chargers() {
       {/* Add / Edit Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-5">
-          <div className="flex max-h-[calc(100vh-24px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
+          <div className="flex max-h-[calc(100vh-24px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
             {/* Modal Header */}
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
               <div>
-                <h2 className="text-lg font-bold text-white">
+                <h2 className="text-lg font-bold text-[var(--text-primary)]">
                   {editingCharger
                     ? "Edit Charger"
                     : "Add Charger"}
                 </h2>
 
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-1 text-xs text-[var(--text-muted)]">
                   {editingCharger
                     ? "Update charger configuration and status."
                     : "Add a new charger to your network."}
@@ -1182,7 +1185,7 @@ function Chargers() {
                 type="button"
                 onClick={closeModal}
                 disabled={saving}
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1192,7 +1195,7 @@ function Chargers() {
             {/* Modal Content */}
             <form
               onSubmit={handleSubmit}
-              className="min-h-0 flex-1 px-5 py-5 sm:px-6"
+              className="scrollbar-hidden min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-6"
             >
               {error && (
                 <div className="mb-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-300">
@@ -1377,12 +1380,12 @@ function Chargers() {
               </div>
 
               {/* Footer */}
-              <div className="mt-5 flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:justify-end">
+              <div className="mt-5 flex shrink-0 flex-col-reverse gap-3 border-t border-[var(--border-primary)] pt-5 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={closeModal}
                   disabled={saving}
-                  className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Cancel
                 </button>
@@ -1407,16 +1410,16 @@ function Chargers() {
       {/* Delete Confirmation */}
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-6 shadow-2xl shadow-black/60">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-6 shadow-2xl shadow-black/60">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-400/10">
               <Trash2 className="h-5 w-5 text-red-400" />
             </div>
 
-            <h2 className="mt-5 text-lg font-bold text-white">
+            <h2 className="mt-5 text-lg font-bold text-[var(--text-primary)]">
               Delete Charger?
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               This action will permanently remove the
               charger from the system. This cannot be
               undone.
@@ -1426,7 +1429,7 @@ function Chargers() {
               <button
                 type="button"
                 onClick={() => setDeleteId(null)}
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Cancel
               </button>
@@ -1434,7 +1437,7 @@ function Chargers() {
               <button
                 type="button"
                 onClick={() => void handleDelete()}
-                className="h-11 rounded-xl bg-red-500 px-5 text-sm font-bold text-white transition hover:bg-red-400"
+                className="h-11 rounded-xl bg-red-500 px-5 text-sm font-bold text-[var(--text-primary)] transition hover:bg-red-400"
               >
                 Delete Charger
               </button>
@@ -1450,17 +1453,17 @@ function Chargers() {
           height: 44px;
           min-width: 0;
           border-radius: 0.75rem;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: #101f31;
+          border: 1px solid var(--border-primary);
+          background: var(--input-bg);
           padding: 0 0.875rem;
           font-size: 0.875rem;
-          color: white;
+          color: var(--input-text);
           outline: none;
           transition: all 0.2s ease;
         }
 
         .input-field::placeholder {
-          color: rgb(71 85 105);
+          color: var(--text-muted);
         }
 
         .input-field:focus {
@@ -1469,16 +1472,16 @@ function Chargers() {
         }
 
         .input-field option {
-          background: #101f31;
-          color: white;
+          background: var(--input-bg);
+          color: var(--input-text);
         }
 
         select.input-field {
-          color-scheme: dark;
+          color-scheme: inherit;
         }
 
         input[type="number"].input-field {
-          color-scheme: dark;
+          color-scheme: inherit;
         }
       `}</style>
     </div>
@@ -1503,18 +1506,18 @@ function StatCard({
   iconBg,
 }: StatCardProps) {
   return (
-    <div className="group min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[#102236]">
+    <div className="group min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[var(--bg-tertiary)]">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium uppercase tracking-wider text-slate-500">
+          <p className="truncate text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-600">
+          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -1587,7 +1590,7 @@ function ActionButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition ${className}`}
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition ${className}`}
     >
       {children}
     </button>
@@ -1604,12 +1607,12 @@ function InfoItem({
   value,
 }: InfoItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-3">
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-1 truncate text-xs font-medium text-slate-300">
+      <p className="mt-1 truncate text-xs font-medium text-[var(--text-secondary)]">
         {value}
       </p>
     </div>
@@ -1627,7 +1630,7 @@ function FormField({
 }: FormFieldProps) {
   return (
     <div className="min-w-0">
-      <label className="mb-2 block text-xs font-medium text-slate-400">
+      <label className="mb-2 block text-xs font-medium text-[var(--text-secondary)]">
         {label}
       </label>
 

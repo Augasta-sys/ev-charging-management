@@ -140,14 +140,17 @@ function Bookings() {
   ======================================================= */
 
   useEffect(() => {
-    if (viewBooking || deleteId) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!viewBooking && !deleteId) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, [viewBooking, deleteId]);
 
@@ -628,7 +631,7 @@ function Bookings() {
             <CalendarDays className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading bookings...
           </p>
 
@@ -651,15 +654,15 @@ function Bookings() {
         <div className="min-w-0">
 
           <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
-            <CalendarDays className="h-4 w-4 text-white" />
+            <CalendarDays className="h-4 w-4 text-[var(--text-primary)]" />
             Booking Management
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Bookings
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Manage charging station bookings
             and customer reservations.
           </p>
@@ -730,16 +733,16 @@ function Bookings() {
           SEARCH & FILTERS
       ===================================================== */}
 
-      <section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
 
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Find bookings by customer,
               station, date or status.
             </p>
@@ -752,7 +755,7 @@ function Bookings() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -853,13 +856,13 @@ function Bookings() {
       {/* RESULT COUNT */}
 
       <div className="mt-4">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--text-muted)]">
           Showing{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {filteredBookings.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {bookings.length}
           </span>{" "}
           bookings
@@ -870,7 +873,7 @@ function Bookings() {
           DESKTOP TABLE
       ===================================================== */}
 
-      <div className="mt-4 hidden w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A] lg:block">
+      <div className="mt-4 hidden w-full min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] lg:block">
 
         <table className="w-full table-fixed border-collapse">
 
@@ -885,33 +888,33 @@ function Bookings() {
           </colgroup>
 
           <thead>
-            <tr className="border-b border-white/10 text-left">
+            <tr className="border-b border-[var(--border-primary)] text-left">
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Booking ID
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Customer
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Station
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Charger / Slot
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Date & Time
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Status
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-4">
                 Actions
               </th>
 
@@ -926,13 +929,13 @@ function Bookings() {
                   colSpan={7}
                   className="px-6 py-16 text-center"
                 >
-                  <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+                  <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                  <p className="mt-3 text-sm font-medium text-slate-400">
+                  <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">
                     No bookings found
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-600">
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                     Try changing your search
                     or filters.
                   </p>
@@ -943,7 +946,7 @@ function Bookings() {
                 (booking) => (
                   <tr
                     key={booking.id}
-                    className="border-b border-white/5 last:border-b-0 transition-colors hover:bg-white/[0.025]"
+                    className="border-b border-[var(--border-primary)] last:border-b-0 transition-colors hover:bg-[var(--bg-tertiary)]"
                   >
 
                     {/* Booking ID */}
@@ -953,11 +956,11 @@ function Bookings() {
                       <div className="flex min-w-0 items-center gap-2">
 
                         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
-                          <CalendarDays className="h-4 w-4 text-white" />
+                          <CalendarDays className="h-4 w-4 text-[var(--text-primary)]" />
                         </div>
 
                         <span
-                          className="truncate text-sm font-semibold text-white"
+                          className="truncate text-sm font-semibold text-[var(--text-primary)]"
                           title={booking.bookingId}
                         >
                           {booking.bookingId}
@@ -975,10 +978,10 @@ function Bookings() {
 
                         <div className="flex min-w-0 items-center gap-2">
 
-                          <UserRound className="h-4 w-4 shrink-0 !text-white" />
+                          <UserRound className="h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
                           <p
-                            className="truncate text-sm font-semibold text-white"
+                            className="truncate text-sm font-semibold text-[var(--text-primary)]"
                             title={getCustomerName(
                               booking
                             )}
@@ -990,7 +993,7 @@ function Bookings() {
 
                         </div>
 
-                        <p className="mt-1 truncate pl-6 text-[11px] text-slate-500">
+                        <p className="mt-1 truncate pl-6 text-[11px] text-[var(--text-muted)]">
                           {getCustomerEmail(
                             booking
                           )}
@@ -1007,7 +1010,7 @@ function Bookings() {
                       <div className="min-w-0">
 
                         <p
-                          className="truncate text-sm font-semibold text-white"
+                          className="truncate text-sm font-semibold text-[var(--text-primary)]"
                           title={getStationName(
                             booking.stationId
                           )}
@@ -1017,7 +1020,7 @@ function Bookings() {
                           )}
                         </p>
 
-                        <p className="mt-1 truncate text-[11px] text-slate-500">
+                        <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
                           {getStationCity(
                             booking.stationId
                           )}
@@ -1035,9 +1038,9 @@ function Bookings() {
 
                         <div className="flex items-center gap-2">
 
-                          <Zap className="h-4 w-4 shrink-0 !text-white" />
+                          <Zap className="h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
-                          <span className="truncate text-sm font-medium text-white">
+                          <span className="truncate text-sm font-medium text-[var(--text-primary)]">
                             {getChargerName(
                               booking.chargerId
                             )}
@@ -1045,7 +1048,7 @@ function Bookings() {
 
                         </div>
 
-                        <p className="mt-1 truncate pl-6 text-[11px] text-slate-500">
+                        <p className="mt-1 truncate pl-6 text-[11px] text-[var(--text-muted)]">
                           {booking.slotId
                             ? `Slot ${booking.slotId}`
                             : "Slot not assigned"}
@@ -1063,9 +1066,9 @@ function Bookings() {
 
                         <div className="flex items-center gap-2">
 
-                          <CalendarDays className="h-4 w-4 shrink-0 !text-white" />
+                          <CalendarDays className="h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
-                          <span className="truncate text-xs font-medium text-white">
+                          <span className="truncate text-xs font-medium text-[var(--text-primary)]">
                             {formatDate(
                               booking.bookingDate
                             )}
@@ -1075,9 +1078,9 @@ function Bookings() {
 
                         <div className="mt-1 flex items-center gap-2">
 
-                          <Clock3 className="h-4 w-4 shrink-0 !text-white" />
+                          <Clock3 className="h-4 w-4 shrink-0 text-[var(--text-primary)]" />
 
-                          <span className="truncate text-[11px] text-slate-500">
+                          <span className="truncate text-[11px] text-[var(--text-muted)]">
                             {formatTime(
                               booking.startTime
                             )}{" "}
@@ -1117,7 +1120,7 @@ function Bookings() {
                             )
                           }
                         >
-                          <Eye className="h-4 w-4 !text-white" />
+                          <Eye className="h-4 w-4 text-[var(--text-primary)]" />
                         </ActionButton>
 
                         {booking.status ===
@@ -1132,7 +1135,7 @@ function Bookings() {
                             }
                             className="hover:border-emerald-400/30 hover:bg-emerald-400/10"
                           >
-                            <CheckCircle2 className="h-4 w-4 !text-white" />
+                            <CheckCircle2 className="h-4 w-4 text-[var(--text-primary)]" />
                           </ActionButton>
                         )}
 
@@ -1150,7 +1153,7 @@ function Bookings() {
                               }
                               className="hover:border-red-400/30 hover:bg-red-400/10"
                             >
-                              <X className="h-4 w-4 !text-white" />
+                              <X className="h-4 w-4 text-[var(--text-primary)]" />
                             </ActionButton>
                           )}
 
@@ -1163,7 +1166,7 @@ function Bookings() {
                           }
                           className="hover:border-red-400/30 hover:bg-red-400/10"
                         >
-                          <Trash2 className="h-4 w-4 !text-white" />
+                          <Trash2 className="h-4 w-4 text-[var(--text-primary)]" />
                         </ActionButton>
 
                       </div>
@@ -1188,15 +1191,15 @@ function Bookings() {
       <section className="mt-4 grid gap-4 lg:hidden">
 
         {filteredBookings.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] px-5 py-14 text-center">
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-5 py-14 text-center">
 
-            <CalendarDays className="mx-auto h-8 w-8 text-slate-600" />
+            <CalendarDays className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-            <p className="mt-3 text-sm font-medium text-slate-400">
+            <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">
               No bookings found
             </p>
 
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Try changing your search
               or filters.
             </p>
@@ -1207,7 +1210,7 @@ function Bookings() {
             (booking) => (
               <div
                 key={booking.id}
-                className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 transition hover:border-cyan-400/20"
+                className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 transition hover:border-cyan-400/20"
               >
 
                 {/* Header */}
@@ -1217,16 +1220,16 @@ function Bookings() {
                   <div className="flex min-w-0 items-center gap-3">
 
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
-                      <CalendarDays className="h-5 w-5 text-white" />
+                      <CalendarDays className="h-5 w-5 text-[var(--text-primary)]" />
                     </div>
 
                     <div className="min-w-0">
 
-                      <p className="truncate text-sm font-bold text-white">
+                      <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                         {booking.bookingId}
                       </p>
 
-                      <p className="mt-1 truncate text-xs text-slate-500">
+                      <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                         {getCustomerName(
                           booking
                         )}
@@ -1259,7 +1262,7 @@ function Bookings() {
                       booking.chargerId
                     )}
                     icon={
-                      <Zap className="h-3.5 w-3.5 text-white" />
+                      <Zap className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1269,7 +1272,7 @@ function Bookings() {
                       booking.bookingDate
                     )}
                     icon={
-                      <CalendarDays className="h-3.5 w-3.5 text-white" />
+                      <CalendarDays className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1281,7 +1284,7 @@ function Bookings() {
                       booking.endTime
                     )}`}
                     icon={
-                      <Clock3 className="h-3.5 w-3.5 text-white" />
+                      <Clock3 className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1291,7 +1294,7 @@ function Bookings() {
                       booking
                     ).toFixed(2)}`}
                     icon={
-                      <IndianRupee className="h-3.5 w-3.5 text-white" />
+                      <IndianRupee className="h-3.5 w-3.5 text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1307,7 +1310,7 @@ function Bookings() {
 
                 {/* Actions */}
 
-                <div className="mt-5 flex items-center justify-end gap-2 border-t border-white/5 pt-4">
+                <div className="mt-5 flex items-center justify-end gap-2 border-t border-[var(--border-primary)] pt-4">
 
                   <ActionButton
                     label="View booking"
@@ -1382,11 +1385,11 @@ function Bookings() {
     {viewBooking && (
   <div className="fixed inset-0 z-[100] flex min-h-0 items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-4">
 
-    <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+    <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
 
             {/* Header */}
 
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex items-center justify-between border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
 
               <div>
 
@@ -1394,7 +1397,7 @@ function Bookings() {
                   Booking Details
                 </p>
 
-                <h2 className="mt-1 text-lg font-bold text-white">
+                <h2 className="mt-1 text-lg font-bold text-[var(--text-primary)]">
                   {viewBooking.bookingId}
                 </h2>
 
@@ -1406,7 +1409,7 @@ function Bookings() {
                   setViewBooking(null)
                 }
                 aria-label="Close"
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-slate-950"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1415,7 +1418,7 @@ function Bookings() {
 
             {/* Details */}
 
-           <div className="grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-hidden p-4 sm:grid-cols-2 sm:gap-4 sm:p-5">
+           <div className="scrollbar-hidden grid min-h-0 flex-1 grid-cols-1 gap-3 overflow-y-auto p-4 sm:grid-cols-2 sm:gap-4 sm:p-5">
 
               <DetailItem
                 label="Customer"
@@ -1504,14 +1507,14 @@ function Bookings() {
 
             </div>
 
-            <div className="border-t border-white/10 px-5 py-4 sm:px-6">
+            <div className="border-t border-[var(--border-primary)] px-5 py-4 sm:px-6">
 
               <button
                 type="button"
                 onClick={() =>
                   setViewBooking(null)
                 }
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Close
               </button>
@@ -1529,17 +1532,17 @@ function Bookings() {
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
 
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-6 shadow-2xl shadow-black/60">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-6 shadow-2xl shadow-black/60">
 
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-400/10">
               <Trash2 className="h-5 w-5 text-red-400" />
             </div>
 
-            <h2 className="mt-5 text-lg font-bold text-white">
+            <h2 className="mt-5 text-lg font-bold text-[var(--text-primary)]">
               Delete Booking?
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               This booking will be permanently
               removed from the system. This action
               cannot be undone.
@@ -1552,7 +1555,7 @@ function Bookings() {
                 onClick={() =>
                   setDeleteId(null)
                 }
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Cancel
               </button>
@@ -1562,7 +1565,7 @@ function Bookings() {
                 onClick={() =>
                   void handleDelete()
                 }
-                className="h-11 rounded-xl bg-red-500 px-5 text-sm font-bold text-white transition hover:bg-red-400"
+                className="h-11 rounded-xl bg-red-500 px-5 text-sm font-bold text-[var(--text-primary)] transition hover:bg-red-400"
               >
                 Delete Booking
               </button>
@@ -1584,17 +1587,17 @@ function Bookings() {
           min-width: 0;
           max-width: 100%;
           border-radius: 0.75rem;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: #101f31;
+          border: 1px solid var(--border-primary);
+          background: var(--input-bg);
           padding: 0 0.875rem;
           font-size: 0.875rem;
-          color: white;
+          color: var(--input-text);
           outline: none;
           transition: all 0.2s ease;
         }
 
         .input-field::placeholder {
-          color: rgb(71 85 105);
+          color: var(--text-muted);
         }
 
         .input-field:focus {
@@ -1603,27 +1606,39 @@ function Bookings() {
         }
 
         .input-field option {
-          background: #101f31;
-          color: white;
+          background: var(--input-bg);
+          color: var(--input-text);
         }
 
         input[type="date"].input-field {
-          color-scheme: dark;
+          color-scheme: inherit;
         }
 
         input[type="date"].input-field::-webkit-calendar-picker-indicator {
-          filter: brightness(0) invert(1) !important;
           opacity: 1 !important;
           cursor: pointer;
         }
 
+        html.dark input[type="date"].input-field::-webkit-calendar-picker-indicator {
+          filter: brightness(0) invert(1) !important;
+        }
+
+        html.light input[type="date"].input-field::-webkit-calendar-picker-indicator {
+          filter: none !important;
+        }
+
         select.input-field {
+          color-scheme: inherit;
+        }
+
+        html.dark input[type="date"],
+        html.dark select {
           color-scheme: dark;
         }
 
-        input[type="date"],
-        select {
-          color-scheme: dark;
+        html.light input[type="date"],
+        html.light select {
+          color-scheme: light;
         }
       `}</style>
 
@@ -1653,21 +1668,21 @@ function StatCard({
   iconBg,
 }: StatCardProps) {
   return (
-    <div className="group min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[#102236]">
+    <div className="group min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[var(--bg-tertiary)]">
 
       <div className="flex items-start justify-between gap-4">
 
         <div className="min-w-0">
 
-          <p className="truncate text-xs font-medium uppercase tracking-wider text-slate-500">
+          <p className="truncate text-xs font-medium uppercase tracking-wider text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-600">
+          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
             {description}
           </p>
 
@@ -1721,7 +1736,7 @@ function StatusBadge({
       "border-red-400/20 bg-red-400/10 text-red-300",
 
     "No Show":
-      "border-slate-400/20 bg-slate-400/10 text-slate-300",
+      "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]",
   };
 
   return (
@@ -1765,11 +1780,11 @@ function ActionButton({
         justify-center
         rounded-lg
         border
-        border-white/10
-        bg-white/5
-        text-white
+        border-[var(--border-primary)]
+        bg-[var(--bg-tertiary)]
+        text-[var(--text-primary)]
         transition
-        hover:bg-white/10
+        hover:bg-[var(--bg-tertiary)]
         ${className}
       `}
     >
@@ -1794,9 +1809,9 @@ function InfoItem({
   icon,
 }: InfoItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-3">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
 
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
@@ -1804,7 +1819,7 @@ function InfoItem({
 
         {icon}
 
-        <p className="truncate text-xs font-medium text-slate-300">
+        <p className="truncate text-xs font-medium text-[var(--text-secondary)]">
           {value}
         </p>
 
@@ -1828,13 +1843,13 @@ function DetailItem({
   value,
 }: DetailItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-4">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
 
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 truncate text-sm font-medium text-white">
+      <p className="mt-2 truncate text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
 

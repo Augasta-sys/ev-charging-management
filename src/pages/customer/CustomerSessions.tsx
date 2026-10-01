@@ -239,7 +239,7 @@ function getStatusClasses(
 ) {
   switch (status) {
     case "Not Started":
-      return "border-slate-400/20 bg-slate-400/10 text-slate-300";
+      return "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]";
 
     case "Charging":
       return "border-cyan-400/20 bg-cyan-400/10 text-cyan-300";
@@ -254,7 +254,7 @@ function getStatusClasses(
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -266,12 +266,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -803,7 +803,7 @@ export default function CustomerSessions() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading charging
             sessions...
           </p>
@@ -818,20 +818,31 @@ export default function CustomerSessions() {
 
   return (
     <div className="w-full min-w-0 space-y-6">
+      <style>{`
+        .customer-sessions-banner { background: #ffffff; }
+        html.dark .customer-sessions-banner { background: linear-gradient(135deg, #0D1B2A 0%, #0B1726 52%, #111A35 100%); }
+        .customer-sessions-input, .customer-sessions-select { color: var(--input-text); }
+        html.dark .customer-sessions-input, html.dark .customer-sessions-select { color-scheme: dark; }
+        html.light .customer-sessions-input, html.light .customer-sessions-select { color-scheme: light; }
+        html.dark .customer-sessions-select option { background: #0D1B2A; color: #ffffff; }
+        html.light .customer-sessions-select option { background: #ffffff; color: #000000; }
+        html.light .customer-sessions-status { color: #334155 !important; }
+      `}</style>
+
       {/* HEADER */}
 
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 sm:p-6">
+      <section className="customer-sessions-banner rounded-2xl border border-[var(--border-primary)] p-5 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div>
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
               Customer Portal
             </span>
 
-            <h1 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
               Charging Sessions
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm text-[var(--text-secondary)]">
               View your active and
               completed EV charging
               sessions, energy usage and
@@ -844,7 +855,7 @@ export default function CustomerSessions() {
             onClick={() =>
               void fetchData()
             }
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -874,14 +885,14 @@ export default function CustomerSessions() {
       {/* STATS */}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Total Sessions
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {sessions.length}
               </p>
             </div>
@@ -892,14 +903,14 @@ export default function CustomerSessions() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Active Sessions
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {activeSessions}
               </p>
             </div>
@@ -910,20 +921,20 @@ export default function CustomerSessions() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Energy Consumed
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {Number(
                   totalEnergy.toFixed(2)
                 )}
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 kWh
               </p>
             </div>
@@ -934,20 +945,20 @@ export default function CustomerSessions() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="flex items-center justify-between gap-3">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">
+              <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                 Charging Cost
               </p>
 
-              <p className="mt-2 text-3xl font-bold text-white">
+              <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
                 {formatAmount(
                   totalCost
                 )}
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 {completedSessions}{" "}
                 completed
               </p>
@@ -964,10 +975,10 @@ export default function CustomerSessions() {
 
       {/* FILTERS */}
 
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="grid gap-3 md:grid-cols-[1fr_220px]">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -978,7 +989,7 @@ export default function CustomerSessions() {
                 )
               }
               placeholder="Search session, station, charger or vehicle..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/50"
+              className="customer-sessions-input h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-11 pr-4 text-sm text-[var(--input-text)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50"
             />
           </div>
 
@@ -989,7 +1000,7 @@ export default function CustomerSessions() {
                 event.target.value
               )
             }
-            className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-4 text-sm text-white outline-none"
+            className="customer-sessions-select h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 text-sm text-[var(--input-text)] outline-none"
           >
             <option value="All">
               All Statuses
@@ -1020,13 +1031,13 @@ export default function CustomerSessions() {
 
       {/* SESSION HISTORY */}
 
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="border-b border-white/10 p-5">
-          <h2 className="font-semibold text-white">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="border-b border-[var(--border-primary)] p-5">
+          <h2 className="font-semibold text-[var(--text-primary)]">
             Charging History
           </h2>
 
-          <p className="mt-1 text-xs text-slate-500">
+          <p className="mt-1 text-xs text-[var(--text-muted)]">
             {filteredSessions.length}{" "}
             session
             {filteredSessions.length ===
@@ -1040,14 +1051,14 @@ export default function CustomerSessions() {
         {filteredSessions.length ===
         0 ? (
           <div className="p-10 text-center">
-            <BatteryCharging className="mx-auto h-10 w-10 text-slate-600" />
+            <BatteryCharging className="mx-auto h-10 w-10 text-[var(--text-muted)]" />
 
-            <p className="mt-3 text-sm font-medium text-white">
+            <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
               No charging sessions
               found
             </p>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Your charging sessions
               will appear here after a
               booking is checked in and
@@ -1072,7 +1083,7 @@ export default function CustomerSessions() {
                 </colgroup>
 
                 <thead>
-                  <tr className="border-b border-white/10">
+                  <tr className="border-b border-[var(--border-primary)]">
                     {[
                       "Session",
                       "Station",
@@ -1085,7 +1096,7 @@ export default function CustomerSessions() {
                     ].map((heading) => (
                       <th
                         key={heading}
-                        className="px-3 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-slate-500"
+                        className="px-3 py-4 text-left text-[11px] font-semibold uppercase tracking-wide text-[var(--text-muted)]"
                       >
                         {heading}
                       </th>
@@ -1111,35 +1122,35 @@ export default function CustomerSessions() {
                           key={
                             session.id
                           }
-                          className="transition hover:bg-white/[0.02]"
+                          className="transition hover:bg-[var(--bg-tertiary)]"
                         >
                           <td className="px-3 py-5">
-                            <p className="truncate text-sm font-semibold text-white">
+                            <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                               {session.sessionId ||
                                 session.id}
                             </p>
 
-                            <p className="mt-1 truncate text-[10px] text-slate-500">
+                            <p className="mt-1 truncate text-[10px] text-[var(--text-muted)]">
                               {session.bookingId ||
                                 "—"}
                             </p>
                           </td>
 
                           <td className="px-3 py-5">
-                            <p className="truncate text-sm text-white">
+                            <p className="truncate text-sm text-[var(--text-primary)]">
                               {station?.stationName ||
                                 "—"}
                             </p>
                           </td>
 
                           <td className="px-3 py-5">
-                            <p className="truncate text-sm text-slate-300">
+                            <p className="truncate text-sm text-[var(--text-secondary)]">
                               {vehicle?.vehicleNumber ||
                                 "—"}
                             </p>
                           </td>
 
-                          <td className="px-3 py-5 text-sm text-slate-300">
+                          <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                             {formatDate(
                               getSessionDate(
                                 session
@@ -1147,13 +1158,13 @@ export default function CustomerSessions() {
                             )}
                           </td>
 
-                          <td className="px-3 py-5 text-sm text-slate-300">
+                          <td className="px-3 py-5 text-sm text-[var(--text-secondary)]">
                             {formatEnergy(
                               session.energyConsumed
                             )}
                           </td>
 
-                          <td className="px-3 py-5 text-sm font-medium text-white">
+                          <td className="px-3 py-5 text-sm font-medium text-[var(--text-primary)]">
                             {formatAmount(
                               getSessionCost(
                                 session
@@ -1163,7 +1174,7 @@ export default function CustomerSessions() {
 
                           <td className="px-3 py-5">
                             <span
-                              className={`inline-flex rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
+                              className={`customer-sessions-status inline-flex rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClasses(
                                 session.status
                               )}`}
                             >
@@ -1181,7 +1192,7 @@ export default function CustomerSessions() {
                                   session
                                 )
                               }
-                              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                              className="flex h-8 w-8 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                             >
                               <Eye className="h-3.5 w-3.5" />
                             </button>
@@ -1212,23 +1223,23 @@ export default function CustomerSessions() {
                   return (
                     <div
                       key={session.id}
-                      className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                      className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-white">
+                          <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                             {session.sessionId ||
                               session.id}
                           </p>
 
-                          <p className="mt-1 truncate text-xs text-slate-500">
+                          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
                             {station?.stationName ||
                               "—"}
                           </p>
                         </div>
 
                         <span
-                          className={`shrink-0 rounded-full border px-2 py-1 text-[10px] ${getStatusClasses(
+                          className={`customer-sessions-status shrink-0 rounded-full border px-2 py-1 text-[10px] ${getStatusClasses(
                             session.status
                           )}`}
                         >
@@ -1280,7 +1291,7 @@ export default function CustomerSessions() {
                               session
                             )
                           }
-                          className="inline-flex h-9 items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 text-xs font-medium text-white transition hover:bg-white hover:text-black"
+                          className="inline-flex h-9 items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 text-xs font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                         >
                           <Eye className="h-4 w-4" />
                           View
@@ -1301,16 +1312,16 @@ export default function CustomerSessions() {
 
       {viewSession && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/75 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* HEADER */}
 
-            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wide text-cyan-300">
                   Charging Session
                 </p>
 
-                <h2 className="mt-1 text-lg font-semibold text-white">
+                <h2 className="mt-1 text-lg font-semibold text-[var(--text-primary)]">
                   {viewSession.sessionId ||
                     viewSession.id}
                 </h2>
@@ -1321,7 +1332,7 @@ export default function CustomerSessions() {
                 onClick={() =>
                   setViewSession(null)
                 }
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1355,20 +1366,20 @@ export default function CustomerSessions() {
                   <div className="space-y-5">
                     {/* STATUS */}
 
-                    <div className="flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-3 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-[var(--text-muted)]">
                           Current Status
                         </p>
 
-                        <p className="mt-1 text-sm font-medium text-white">
+                        <p className="mt-1 text-sm font-medium text-[var(--text-primary)]">
                           Charging session
                           details
                         </p>
                       </div>
 
                       <span
-                        className={`inline-flex w-fit rounded-full border px-3 py-1.5 text-xs font-medium ${getStatusClasses(
+                        className={`customer-sessions-status inline-flex w-fit rounded-full border px-3 py-1.5 text-xs font-medium ${getStatusClasses(
                           viewSession.status
                         )}`}
                       >
@@ -1380,7 +1391,7 @@ export default function CustomerSessions() {
                     {/* GENERAL */}
 
                     <div>
-                      <h3 className="mb-3 text-sm font-semibold text-white">
+                      <h3 className="mb-3 text-sm font-semibold text-[var(--text-primary)]">
                         Session Information
                       </h3>
 
@@ -1455,7 +1466,7 @@ export default function CustomerSessions() {
                     {/* STATION / CHARGER */}
 
                     <div>
-                      <h3 className="mb-3 text-sm font-semibold text-white">
+                      <h3 className="mb-3 text-sm font-semibold text-[var(--text-primary)]">
                         Charging Location
                       </h3>
 
@@ -1534,7 +1545,7 @@ export default function CustomerSessions() {
                     {/* VEHICLE */}
 
                     <div>
-                      <h3 className="mb-3 text-sm font-semibold text-white">
+                      <h3 className="mb-3 text-sm font-semibold text-[var(--text-primary)]">
                         Vehicle
                       </h3>
 
@@ -1576,7 +1587,7 @@ export default function CustomerSessions() {
                     {/* USAGE */}
 
                     <div>
-                      <h3 className="mb-3 text-sm font-semibold text-white">
+                      <h3 className="mb-3 text-sm font-semibold text-[var(--text-primary)]">
                         Usage & Cost
                       </h3>
 
@@ -1614,13 +1625,13 @@ export default function CustomerSessions() {
 
             {/* FOOTER */}
 
-            <div className="flex shrink-0 justify-end border-t border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <button
                 type="button"
                 onClick={() =>
                   setViewSession(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 Close
               </button>

@@ -154,18 +154,18 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 shadow-lg shadow-black/10 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 shadow-lg shadow-black/10 sm:p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+          <p className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 break-words text-2xl font-bold text-white sm:text-3xl">
+          <p className="mt-2 break-words text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             {value}
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-slate-500">
+          <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -197,14 +197,14 @@ function ProgressRow({
   return (
     <div>
       <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="text-sm text-slate-300">{label}</p>
+        <p className="text-sm text-[var(--text-secondary)]">{label}</p>
 
-        <p className="text-sm font-semibold text-white">
+        <p className="text-sm font-semibold text-[var(--text-primary)]">
           {displayValue ?? value}
         </p>
       </div>
 
-      <div className="h-2 overflow-hidden rounded-full bg-white/5">
+      <div className="h-2 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
         <div
           className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 transition-all duration-300"
           style={{ width: `${percentage}%` }}
@@ -222,12 +222,12 @@ function SummaryItem({
   value: string | number;
 }) {
   return (
-    <div className="flex min-w-0 items-center justify-between gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="min-w-0 text-sm text-slate-400">
+    <div className="flex min-w-0 items-center justify-between gap-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="min-w-0 text-sm text-[var(--text-secondary)]">
         {label}
       </p>
 
-      <p className="shrink-0 text-sm font-semibold text-white">
+      <p className="shrink-0 text-sm font-semibold text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -553,7 +553,7 @@ export default function ManagerReports() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading manager reports...
           </p>
         </div>
@@ -564,7 +564,7 @@ export default function ManagerReports() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-white dark:bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -573,17 +573,17 @@ export default function ManagerReports() {
               </span>
 
               {station && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
+                <span className="rounded-full border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-1 text-xs font-medium text-[var(--text-secondary)]">
                   {station.stationId}
                 </span>
               )}
             </div>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Station Reports
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               View booking, charging, revenue, charger and
               maintenance performance for your assigned station.
             </p>
@@ -598,7 +598,7 @@ export default function ManagerReports() {
           <button
             type="button"
             onClick={() => void fetchReportData()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -616,18 +616,18 @@ export default function ManagerReports() {
       )}
 
       {/* Date filter */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <CalendarDays className="h-5 w-5 text-cyan-400" />
 
-              <h2 className="text-sm font-semibold text-white">
+              <h2 className="text-sm font-semibold text-[var(--text-primary)]">
                 Report Period
               </h2>
             </div>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Select the period used for bookings, sessions,
               payments and maintenance.
             </p>
@@ -649,7 +649,7 @@ export default function ManagerReports() {
                 className={`rounded-xl border px-4 py-2 text-xs font-semibold transition ${
                   dateFilter === filter
                     ? "border-cyan-400/30 bg-cyan-400/15 text-cyan-300"
-                    : "border-white/10 bg-white/5 text-slate-300 hover:bg-white hover:text-black"
+                    : "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)] hover:bg-white hover:text-black"
                 }`}
               >
                 {filter}
@@ -660,7 +660,7 @@ export default function ManagerReports() {
               <button
                 type="button"
                 onClick={() => setDateFilter("All")}
-                className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                 title="Reset period"
               >
                 <RotateCcw className="h-4 w-4" />
@@ -703,13 +703,13 @@ export default function ManagerReports() {
 
       {/* Booking + session reports */}
       <section className="grid min-w-0 gap-5 xl:grid-cols-2">
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="mb-6">
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Booking Summary
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Booking status distribution for the selected period.
             </p>
           </div>
@@ -740,13 +740,13 @@ export default function ManagerReports() {
           </div>
         </div>
 
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="mb-6">
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Charging Session Summary
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Charging activity and energy usage.
             </p>
           </div>
@@ -779,14 +779,14 @@ export default function ManagerReports() {
 
       {/* Charger + revenue */}
       <section className="grid min-w-0 gap-5 xl:grid-cols-2">
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="mb-6 flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Charger Utilization
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Current charger availability at your station.
               </p>
             </div>
@@ -797,21 +797,21 @@ export default function ManagerReports() {
           <div className="mb-6 rounded-xl border border-cyan-400/10 bg-cyan-400/5 p-4">
             <div className="flex items-end justify-between gap-3">
               <div>
-                <p className="text-xs uppercase tracking-wide text-slate-500">
+                <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
                   Utilization
                 </p>
 
-                <p className="mt-1 text-3xl font-bold text-white">
+                <p className="mt-1 text-3xl font-bold text-[var(--text-primary)]">
                   {chargerUtilization.toFixed(1)}%
                 </p>
               </div>
 
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[var(--text-secondary)]">
                 {occupiedChargers} / {chargers.length} in use
               </p>
             </div>
 
-            <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/5">
+            <div className="mt-4 h-2 overflow-hidden rounded-full bg-[var(--bg-tertiary)]">
               <div
                 className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-violet-500"
                 style={{
@@ -854,14 +854,14 @@ export default function ManagerReports() {
           </div>
         </div>
 
-        <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+        <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
           <div className="mb-6 flex items-start justify-between gap-3">
             <div>
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Payment & Revenue Summary
               </h2>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Payment performance for the selected period.
               </p>
             </div>
@@ -870,11 +870,11 @@ export default function ManagerReports() {
           </div>
 
           <div className="mb-5 rounded-xl border border-emerald-400/10 bg-emerald-400/5 p-5">
-            <p className="text-xs uppercase tracking-wide text-slate-500">
+            <p className="text-xs uppercase tracking-wide text-[var(--text-muted)]">
               Total Revenue
             </p>
 
-            <p className="mt-2 text-3xl font-bold text-white">
+            <p className="mt-2 text-3xl font-bold text-[var(--text-primary)]">
               {formatCurrency(displayedRevenue)}
             </p>
           </div>
@@ -904,14 +904,14 @@ export default function ManagerReports() {
       </section>
 
       {/* Maintenance */}
-      <section className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5">
+      <section className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5">
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Maintenance Summary
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Maintenance activity for the selected report period.
             </p>
           </div>
@@ -950,18 +950,18 @@ export default function ManagerReports() {
       </section>
 
       {/* Overall station report */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-r from-cyan-400/5 via-[#0D1B2A] to-violet-500/5 p-5 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-gradient-to-r from-cyan-400/5 via-[var(--card-bg)] to-violet-500/5 p-5 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="h-5 w-5 text-emerald-400" />
 
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Station Performance Overview
               </h2>
             </div>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-[var(--text-secondary)]">
               {station?.name || "Assigned Station"} •{" "}
               {dateFilter === "All"
                 ? "All-time report"
@@ -970,38 +970,38 @@ export default function ManagerReports() {
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 text-center">
-              <p className="text-lg font-bold text-white">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-black/10 px-4 py-3 text-center">
+              <p className="text-lg font-bold text-[var(--text-primary)]">
                 {filteredBookings.length}
               </p>
-              <p className="text-[10px] uppercase text-slate-500">
+              <p className="text-[10px] uppercase text-[var(--text-muted)]">
                 Bookings
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 text-center">
-              <p className="text-lg font-bold text-white">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-black/10 px-4 py-3 text-center">
+              <p className="text-lg font-bold text-[var(--text-primary)]">
                 {filteredSessions.length}
               </p>
-              <p className="text-[10px] uppercase text-slate-500">
+              <p className="text-[10px] uppercase text-[var(--text-muted)]">
                 Sessions
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 text-center">
-              <p className="text-lg font-bold text-white">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-black/10 px-4 py-3 text-center">
+              <p className="text-lg font-bold text-[var(--text-primary)]">
                 {formatNumber(totalEnergy)}
               </p>
-              <p className="text-[10px] uppercase text-slate-500">
+              <p className="text-[10px] uppercase text-[var(--text-muted)]">
                 kWh
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/10 bg-black/10 px-4 py-3 text-center">
-              <p className="text-lg font-bold text-white">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-black/10 px-4 py-3 text-center">
+              <p className="text-lg font-bold text-[var(--text-primary)]">
                 {formatCurrency(displayedRevenue)}
               </p>
-              <p className="text-[10px] uppercase text-slate-500">
+              <p className="text-[10px] uppercase text-[var(--text-muted)]">
                 Revenue
               </p>
             </div>

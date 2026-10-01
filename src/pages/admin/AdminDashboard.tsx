@@ -114,19 +114,31 @@ const StatCard = ({
     <button
       type="button"
       onClick={onClick}
-      className="group w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 text-left shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-[#102236] hover:shadow-lg hover:shadow-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+      className="
+        group w-full min-w-0 overflow-hidden rounded-2xl
+        border border-[var(--border-primary)]
+        bg-[var(--card-bg)]
+        p-5 text-left
+        shadow-lg shadow-black/10
+        transition-all duration-300
+        hover:-translate-y-1
+        hover:border-cyan-400/30
+        hover:bg-[var(--bg-secondary)]
+        hover:shadow-lg hover:shadow-cyan-500/5
+        focus:outline-none focus:ring-2 focus:ring-cyan-400/40
+      "
     >
       <div className="flex min-w-0 items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="truncate text-sm font-medium text-slate-400">
+          <p className="truncate text-sm font-medium text-[var(--text-primary)]">
             {title}
           </p>
 
-          <h3 className="mt-2 truncate text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h3 className="mt-2 truncate text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
             {value}
           </h3>
 
-          <p className="mt-2 truncate text-xs text-slate-500">
+          <p className="mt-2 truncate text-xs text-[var(--text-secondary)]">
             {subtitle}
           </p>
         </div>
@@ -138,7 +150,7 @@ const StatCard = ({
             <Icon className={`h-5 w-5 ${iconClass}`} />
           </div>
 
-          <ArrowUpRight className="h-4 w-4 text-slate-600 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-400" />
+          <ArrowUpRight className="h-4 w-4 text-[var(--text-secondary)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-cyan-400" />
         </div>
       </div>
     </button>
@@ -197,7 +209,8 @@ const formatDate = (date: string) => {
 };
 
 function AdminDashboard() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState<DashboardUser[]>([]);
   const [stations, setStations] = useState<DashboardStation[]>([]);
   const [chargers, setChargers] = useState<DashboardCharger[]>([]);
@@ -247,8 +260,9 @@ function AdminDashboard() {
       setActivities(activitiesResponse.data);
     } catch (err) {
       console.error("Failed to load admin dashboard:", err);
+
       setError(
-        "Unable to load dashboard data. Please make sure JSON Server is running."
+        "Unable to load dashboard data. Please make sure JSON Server is running.",
       );
     } finally {
       setLoading(false);
@@ -265,7 +279,7 @@ function AdminDashboard() {
   const todayBookings = useMemo(
     () =>
       bookings.filter((booking) => booking.bookingDate === today).length,
-    [bookings, today]
+    [bookings, today],
   );
 
   const activeCharging = useMemo(
@@ -273,22 +287,25 @@ function AdminDashboard() {
       sessions.filter(
         (session) =>
           session.status === "Charging" ||
-          session.status === "Paused"
+          session.status === "Paused",
       ).length,
-    [sessions]
+    [sessions],
   );
 
   const totalRevenue = useMemo(
     () =>
       payments
         .filter((payment) => payment.paymentStatus === "Paid")
-        .reduce((total, payment) => total + Number(payment.amount || 0), 0),
-    [payments]
+        .reduce(
+          (total, payment) => total + Number(payment.amount || 0),
+          0,
+        ),
+    [payments],
   );
 
   const activeUsers = useMemo(
     () => users.filter((user) => user.status === "Active").length,
-    [users]
+    [users],
   );
 
   const networkEnergy = useMemo(
@@ -296,9 +313,9 @@ function AdminDashboard() {
       sessions.reduce(
         (total, session) =>
           total + Number(session.energyConsumed || 0),
-        0
+        0,
       ),
-    [sessions]
+    [sessions],
   );
 
   const chargerStatusCounts = useMemo(() => {
@@ -309,7 +326,7 @@ function AdminDashboard() {
       Charging: chargers.filter((item) => item.status === "Charging")
         .length,
       Maintenance: chargers.filter(
-        (item) => item.status === "Maintenance"
+        (item) => item.status === "Maintenance",
       ).length,
       Offline: chargers.filter((item) => item.status === "Offline").length,
     };
@@ -321,10 +338,10 @@ function AdminDashboard() {
         .sort(
           (a, b) =>
             new Date(b.bookingDate).getTime() -
-            new Date(a.bookingDate).getTime()
+            new Date(a.bookingDate).getTime(),
         )
         .slice(0, 5),
-    [bookings]
+    [bookings],
   );
 
   const recentActivities = useMemo(
@@ -333,10 +350,10 @@ function AdminDashboard() {
         .sort(
           (a, b) =>
             new Date(b.createdAt).getTime() -
-            new Date(a.createdAt).getTime()
+            new Date(a.createdAt).getTime(),
         )
         .slice(0, 5),
-    [activities]
+    [activities],
   );
 
   const stationStatusCounts = useMemo(() => {
@@ -344,10 +361,10 @@ function AdminDashboard() {
       Active: stations.filter((item) => item.status === "Active").length,
       Inactive: stations.filter((item) => item.status === "Inactive").length,
       Maintenance: stations.filter(
-        (item) => item.status === "Under Maintenance"
+        (item) => item.status === "Under Maintenance",
       ).length,
       Closed: stations.filter(
-        (item) => item.status === "Temporarily Closed"
+        (item) => item.status === "Temporarily Closed",
       ).length,
     };
   }, [stations]);
@@ -360,7 +377,7 @@ function AdminDashboard() {
             <RefreshCw className="h-6 w-6 animate-spin text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-primary)]">
             Loading dashboard...
           </p>
         </div>
@@ -372,16 +389,16 @@ function AdminDashboard() {
     return (
       <div className="w-full min-w-0">
         <div className="mx-auto flex min-h-[60vh] w-full max-w-2xl items-center justify-center">
-          <div className="w-full rounded-2xl border border-red-400/20 bg-[#0D1B2A] p-6 text-center">
+          <div className="w-full rounded-2xl border border-red-400/20 bg-[var(--card-bg)] p-6 text-center">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-red-400/10">
               <AlertTriangle className="h-6 w-6 text-red-400" />
             </div>
 
-            <h2 className="mt-4 text-lg font-semibold text-white">
+            <h2 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
               Dashboard unavailable
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-primary)]">
               {error}
             </p>
 
@@ -409,11 +426,11 @@ function AdminDashboard() {
             <span>EV Charge Hub</span>
           </div>
 
-          <h1 className="mt-2 truncate text-2xl font-bold tracking-tight text-white sm:text-3xl">
+          <h1 className="mt-2 truncate text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
             Admin Dashboard
           </h1>
 
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-[var(--text-primary)]">
             Monitor your charging network and manage operations.
           </p>
         </div>
@@ -422,7 +439,20 @@ function AdminDashboard() {
           type="button"
           onClick={() => void loadDashboard(true)}
           disabled={refreshing}
-          className="inline-flex w-full shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#0D1B2A] px-4 py-2.5 text-sm font-medium text-slate-300 transition hover:border-cyan-400/30 hover:bg-[#122338] hover:text-white disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          className="
+            inline-flex w-full shrink-0 items-center justify-center gap-2
+            rounded-xl
+            border border-[var(--border-primary)]
+            bg-[var(--card-bg)]
+            px-4 py-2.5
+            text-sm font-medium text-[var(--text-primary)]
+            transition
+            hover:border-cyan-400/30
+            hover:bg-[var(--bg-secondary)]
+            disabled:cursor-not-allowed
+            disabled:opacity-60
+            sm:w-auto
+          "
         >
           <RefreshCw
             className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`}
@@ -433,90 +463,91 @@ function AdminDashboard() {
 
       {/* Stats */}
       <section className="grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-       <StatCard
-  title="Total Stations"
-  value={stations.length}
-  subtitle="Charging locations"
-  icon={MapPin}
-  iconClass="text-cyan-400"
-  iconBg="bg-cyan-400/10"
-  onClick={() => navigate("/admin/stations")}
-/>
+        <StatCard
+          title="Total Stations"
+          value={stations.length}
+          subtitle="Charging locations"
+          icon={MapPin}
+          iconClass="text-cyan-400"
+          iconBg="bg-cyan-400/10"
+          onClick={() => navigate("/admin/stations")}
+        />
 
-       <StatCard
-  title="Total Chargers"
-  value={chargers.length}
-  subtitle="Across all stations"
-  icon={BatteryCharging}
-  iconClass="text-violet-400"
-  iconBg="bg-violet-400/10"
-  onClick={() => navigate("/admin/chargers")}
-/>
+        <StatCard
+          title="Total Chargers"
+          value={chargers.length}
+          subtitle="Across all stations"
+          icon={BatteryCharging}
+          iconClass="text-violet-400"
+          iconBg="bg-violet-400/10"
+          onClick={() => navigate("/admin/chargers")}
+        />
 
-      <StatCard
-  title="Today's Bookings"
-  value={todayBookings}
-  subtitle="Scheduled for today"
-  icon={CalendarCheck}
-  iconClass="text-blue-400"
-  iconBg="bg-blue-400/10"
-  onClick={() => navigate("/admin/bookings")}
-/>
+        <StatCard
+          title="Today's Bookings"
+          value={todayBookings}
+          subtitle="Scheduled for today"
+          icon={CalendarCheck}
+          iconClass="text-blue-400"
+          iconBg="bg-blue-400/10"
+          onClick={() => navigate("/admin/bookings")}
+        />
 
-       <StatCard
-  title="Active Charging"
-  value={activeCharging}
-  subtitle="Sessions in progress"
-  icon={Zap}
-  iconClass="text-emerald-400"
-  iconBg="bg-emerald-400/10"
-  onClick={() => navigate("/admin/charging-sessions")}
-/>
+        <StatCard
+          title="Active Charging"
+          value={activeCharging}
+          subtitle="Sessions in progress"
+          icon={Zap}
+          iconClass="text-emerald-400"
+          iconBg="bg-emerald-400/10"
+          onClick={() => navigate("/admin/charging-sessions")}
+        />
       </section>
 
       {/* Secondary stats */}
       <section className="mt-4 grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
         <StatCard
-  title="Revenue"
-  value={formatCurrency(totalRevenue)}
-  subtitle="Total paid transactions"
-  icon={CircleDollarSign}
-  iconClass="text-emerald-400"
-  iconBg="bg-emerald-400/10"
-  onClick={() => navigate("/admin/payments")}
-/>
+          title="Revenue"
+          value={formatCurrency(totalRevenue)}
+          subtitle="Total paid transactions"
+          icon={CircleDollarSign}
+          iconClass="text-emerald-400"
+          iconBg="bg-emerald-400/10"
+          onClick={() => navigate("/admin/payments")}
+        />
 
         <StatCard
-  title="Active Users"
-  value={activeUsers}
-  subtitle={`${users.length} registered users`}
-  icon={Users}
-  iconClass="text-blue-400"
-  iconBg="bg-blue-400/10"
-  onClick={() => navigate("/admin/users")}
-/>
+          title="Active Users"
+          value={activeUsers}
+          subtitle={`${users.length} registered users`}
+          icon={Users}
+          iconClass="text-blue-400"
+          iconBg="bg-blue-400/10"
+          onClick={() => navigate("/admin/users")}
+        />
 
-      <StatCard
-  title="Network Energy"
-  value={`${networkEnergy.toFixed(1)} kWh`}
-  subtitle="Energy delivered"
-  icon={Gauge}
-  iconClass="text-cyan-400"
-  iconBg="bg-cyan-400/10"
-  onClick={() => navigate("/admin/charging-sessions")}
-/>
+        <StatCard
+          title="Network Energy"
+          value={`${networkEnergy.toFixed(1)} kWh`}
+          subtitle="Energy delivered"
+          icon={Gauge}
+          iconClass="text-cyan-400"
+          iconBg="bg-cyan-400/10"
+          onClick={() => navigate("/admin/charging-sessions")}
+        />
       </section>
 
       {/* Overview */}
       <section className="mt-6 grid w-full min-w-0 grid-cols-1 gap-6 xl:grid-cols-2">
         {/* Charger Overview */}
-        <div className="min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-4 border-b border-white/10 p-5">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-4 border-b border-[var(--border-primary)] p-5">
             <div className="min-w-0">
-              <h2 className="truncate text-base font-semibold text-white">
+              <h2 className="truncate text-base font-semibold text-[var(--text-primary)]">
                 Charger Overview
               </h2>
-              <p className="mt-1 text-xs text-slate-500">
+
+              <p className="mt-1 text-xs text-[var(--text-primary)]">
                 Current network availability
               </p>
             </div>
@@ -529,37 +560,38 @@ function AdminDashboard() {
               ([status, count]) => (
                 <div
                   key={status}
-                  className="min-w-0 rounded-xl border border-white/5 bg-[#091522] p-3"
+                  className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3"
                 >
                   <div
                     className={`mx-auto flex h-9 w-9 items-center justify-center rounded-lg ${getStatusClass(
-                      status
+                      status,
                     )}`}
                   >
                     <BatteryCharging className="h-4 w-4" />
                   </div>
 
-                  <p className="mt-3 truncate text-center text-lg font-bold text-white">
+                  <p className="mt-3 truncate text-center text-lg font-bold text-[var(--text-primary)]">
                     {count}
                   </p>
 
-                  <p className="mt-1 truncate text-center text-[11px] text-slate-500">
+                  <p className="mt-1 truncate text-center text-[11px] text-[var(--text-primary)]">
                     {status}
                   </p>
                 </div>
-              )
+              ),
             )}
           </div>
         </div>
 
         {/* Station Status */}
-        <div className="min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-4 border-b border-white/10 p-5">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-4 border-b border-[var(--border-primary)] p-5">
             <div className="min-w-0">
-              <h2 className="truncate text-base font-semibold text-white">
+              <h2 className="truncate text-base font-semibold text-[var(--text-primary)]">
                 Station Status
               </h2>
-              <p className="mt-1 text-xs text-slate-500">
+
+              <p className="mt-1 text-xs text-[var(--text-primary)]">
                 Network station health
               </p>
             </div>
@@ -576,7 +608,7 @@ function AdminDashboard() {
             ].map(([status, count]) => (
               <div
                 key={String(status)}
-                className="flex min-w-0 items-center justify-between gap-4 rounded-xl border border-white/5 bg-[#091522] px-4 py-3"
+                className="flex min-w-0 items-center justify-between gap-4 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-4 py-3"
               >
                 <div className="flex min-w-0 items-center gap-3">
                   <span
@@ -591,12 +623,12 @@ function AdminDashboard() {
                     }`}
                   />
 
-                  <span className="truncate text-sm text-slate-300">
+                  <span className="truncate text-sm text-[var(--text-primary)]">
                     {status}
                   </span>
                 </div>
 
-                <span className="shrink-0 text-sm font-semibold text-white">
+                <span className="shrink-0 text-sm font-semibold text-[var(--text-primary)]">
                   {count}
                 </span>
               </div>
@@ -606,13 +638,14 @@ function AdminDashboard() {
       </section>
 
       {/* Recent bookings */}
-      <section className="mt-6 min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex flex-col gap-3 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+      <section className="mt-6 min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="flex flex-col gap-3 border-b border-[var(--border-primary)] p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="min-w-0">
-            <h2 className="text-base font-semibold text-white">
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">
               Recent Bookings
             </h2>
-            <p className="mt-1 text-xs text-slate-500">
+
+            <p className="mt-1 text-xs text-[var(--text-primary)]">
               Latest booking activity across the network
             </p>
           </div>
@@ -622,8 +655,9 @@ function AdminDashboard() {
 
         {recentBookings.length === 0 ? (
           <div className="p-8 text-center">
-            <CalendarCheck className="mx-auto h-8 w-8 text-slate-600" />
-            <p className="mt-3 text-sm text-slate-500">
+            <CalendarCheck className="mx-auto h-8 w-8 text-[var(--text-primary)]" />
+
+            <p className="mt-3 text-sm text-[var(--text-primary)]">
               No bookings available.
             </p>
           </div>
@@ -631,23 +665,28 @@ function AdminDashboard() {
           <div className="w-full max-w-full overflow-x-auto">
             <table className="w-full min-w-[950px]">
               <thead>
-                <tr className="border-b border-white/5 text-left">
-                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+                <tr className="border-b border-[var(--border-primary)] text-left">
+                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Booking
                   </th>
-                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+
+                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Customer
                   </th>
-                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+
+                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Station
                   </th>
-                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+
+                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Date
                   </th>
-                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+
+                  <th className="px-5 py-4 text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Status
                   </th>
-                  <th className="px-5 py-4 text-right text-xs font-medium uppercase tracking-wider text-slate-500">
+
+                  <th className="px-5 py-4 text-right text-xs font-medium uppercase tracking-wider text-[var(--text-primary)]">
                     Amount
                   </th>
                 </tr>
@@ -657,49 +696,50 @@ function AdminDashboard() {
                 {recentBookings.map((booking) => (
                   <tr
                     key={booking.id}
-                    className="border-b border-white/5 transition hover:bg-white/[0.025]"
+                    className="border-b border-[var(--border-primary)] transition hover:bg-[var(--bg-secondary)]"
                   >
                     <td className="px-5 py-4">
-                      <div className="font-medium text-white">
+                      <div className="font-medium text-[var(--text-primary)]">
                         {booking.bookingId}
                       </div>
-                      <div className="mt-1 text-xs text-slate-500">
+
+                      <div className="mt-1 text-xs text-[var(--text-primary)]">
                         {booking.chargerId}
                       </div>
                     </td>
 
-                    <td className="px-5 py-4 text-sm text-slate-300">
+                    <td className="px-5 py-4 text-sm text-[var(--text-primary)]">
                       {booking.customerName}
                     </td>
 
-                   <td className="px-5 py-4">
-  <div className="flex min-w-[180px] items-center gap-2">
-    <MapPin className="h-4 w-4 shrink-0 text-cyan-400" />
+                    <td className="px-5 py-4">
+                      <div className="flex min-w-[180px] items-center gap-2">
+                        <MapPin className="h-4 w-4 shrink-0 text-cyan-400" />
 
-    <span
-      className="max-w-[220px] truncate text-sm font-medium text-slate-300"
-      title={booking.stationName}
-    >
-      {booking.stationName || "Station not available"}
-    </span>
-  </div>
-</td>
+                        <span
+                          className="max-w-[220px] truncate text-sm font-medium text-[var(--text-primary)]"
+                          title={booking.stationName}
+                        >
+                          {booking.stationName || "Station not available"}
+                        </span>
+                      </div>
+                    </td>
 
-                    <td className="px-5 py-4 text-sm text-slate-400">
+                    <td className="px-5 py-4 text-sm text-[var(--text-primary)]">
                       {formatDate(booking.bookingDate)}
                     </td>
 
                     <td className="px-5 py-4">
                       <span
                         className={`inline-flex whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium ${getStatusClass(
-                          booking.status
+                          booking.status,
                         )}`}
                       >
                         {booking.status}
                       </span>
                     </td>
 
-                    <td className="px-5 py-4 text-right text-sm font-semibold text-white">
+                    <td className="px-5 py-4 text-right text-sm font-semibold text-[var(--text-primary)]">
                       {formatCurrency(Number(booking.amount || 0))}
                     </td>
                   </tr>
@@ -711,15 +751,16 @@ function AdminDashboard() {
       </section>
 
       {/* Bottom sections */}
-     <section className="mt-6 grid w-full min-w-0 grid-cols-1 gap-6">
+      <section className="mt-6 grid w-full min-w-0 grid-cols-1 gap-6">
         {/* Recent Activity */}
-        <div className="min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-          <div className="flex items-center justify-between gap-4 border-b border-white/10 p-5">
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-4 border-b border-[var(--border-primary)] p-5">
             <div className="min-w-0">
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Recent Activity
               </h2>
-              <p className="mt-1 text-xs text-slate-500">
+
+              <p className="mt-1 text-xs text-[var(--text-primary)]">
                 Latest system events
               </p>
             </div>
@@ -727,11 +768,12 @@ function AdminDashboard() {
             <Activity className="h-5 w-5 shrink-0 text-cyan-400" />
           </div>
 
-          <div className="divide-y divide-white/5">
+          <div className="divide-y divide-[var(--border-primary)]">
             {recentActivities.length === 0 ? (
               <div className="p-8 text-center">
-                <Activity className="mx-auto h-8 w-8 text-slate-600" />
-                <p className="mt-3 text-sm text-slate-500">
+                <Activity className="mx-auto h-8 w-8 text-[var(--text-primary)]" />
+
+                <p className="mt-3 text-sm text-[var(--text-primary)]">
                   No recent activity.
                 </p>
               </div>
@@ -739,18 +781,18 @@ function AdminDashboard() {
               recentActivities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex min-w-0 gap-3 p-4 transition hover:bg-white/[0.025]"
+                  className="flex min-w-0 gap-3 p-4 transition hover:bg-[var(--bg-secondary)]"
                 >
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
                     <Activity className="h-4 w-4 text-cyan-400" />
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <p className="break-words text-sm leading-5 text-slate-300">
+                    <p className="break-words text-sm leading-5 text-[var(--text-primary)]">
                       {activity.description}
                     </p>
 
-                    <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
+                    <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-primary)]">
                       <span>{activity.userName}</span>
                       <span className="hidden sm:inline">•</span>
                       <span>{formatDate(activity.createdAt)}</span>
@@ -762,124 +804,132 @@ function AdminDashboard() {
           </div>
         </div>
 
-      {/* Charging Stations */}
-<div className="min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-  <div className="flex items-center justify-between gap-4 border-b border-white/10 p-5">
-    <div className="min-w-0">
-      <h2 className="text-base font-semibold text-white">
-        Charging Stations
-      </h2>
+        {/* Charging Stations */}
+        <div className="min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+          <div className="flex items-center justify-between gap-4 border-b border-[var(--border-primary)] p-5">
+            <div className="min-w-0">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
+                Charging Stations
+              </h2>
 
-      <p className="mt-1 text-xs text-slate-500">
-        Current station network
-      </p>
-    </div>
-
-    <MapPin className="h-5 w-5 shrink-0 text-violet-400" />
-  </div>
-
-  {stations.length === 0 ? (
-    <div className="p-8 text-center">
-      <MapPin className="mx-auto h-8 w-8 text-slate-600" />
-
-      <p className="mt-3 text-sm text-slate-500">
-        No charging stations found.
-      </p>
-    </div>
-  ) : (
-    <div className="grid w-full min-w-0 grid-cols-1 gap-3 p-5 sm:grid-cols-2">
-      {stations.slice(0, 4).map((station) => (
-        <div
-          key={station.id}
-          className="min-w-0 w-full overflow-hidden rounded-xl border border-white/5 bg-[#091522] p-4 transition-all duration-300 hover:border-cyan-400/20 hover:bg-[#0c1b2b]"
-        >
-          {/* Station header */}
-          <div className="flex min-w-0 items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h3
-                className="truncate text-sm font-semibold text-white"
-                title={station.stationName}
-              >
-                {station.stationName}
-              </h3>
-
-              <div className="mt-1 flex min-w-0 items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
-
-                <span
-                  className="truncate text-xs text-slate-500"
-                  title={station.city}
-                >
-                  {station.city}
-                </span>
-              </div>
-            </div>
-
-            <span
-              className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClass(
-                station.status
-              )}`}
-            >
-              {station.status}
-            </span>
-          </div>
-
-          {/* Station details */}
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <div className="min-w-0 rounded-lg border border-white/5 bg-white/[0.025] p-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
-                Chargers
+              <p className="mt-1 text-xs text-[var(--text-primary)]">
+                Current station network
               </p>
-
-              <div className="mt-1 flex items-center gap-2">
-                <BatteryCharging className="h-4 w-4 shrink-0 text-violet-400" />
-
-                <p className="text-sm font-semibold text-white">
-                  {station.numberOfChargers}
-                </p>
-              </div>
             </div>
 
-            <div className="min-w-0 rounded-lg border border-white/5 bg-white/[0.025] p-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
-                Timing
+            <MapPin className="h-5 w-5 shrink-0 text-violet-400" />
+          </div>
+
+          {stations.length === 0 ? (
+            <div className="p-8 text-center">
+              <MapPin className="mx-auto h-8 w-8 text-[var(--text-primary)]" />
+
+              <p className="mt-3 text-sm text-[var(--text-primary)]">
+                No charging stations found.
               </p>
-
-              <div className="mt-1 flex items-center gap-2">
-                <Clock3 className="h-4 w-4 shrink-0 text-cyan-400" />
-
-                <p
-                  className="truncate text-xs font-medium text-slate-300"
-                  title={`${station.openingTime} - ${station.closingTime}`}
-                >
-                  {station.openingTime} - {station.closingTime}
-                </p>
-              </div>
             </div>
-          </div>
+          ) : (
+            <div className="grid w-full min-w-0 grid-cols-1 gap-3 p-5 sm:grid-cols-2">
+              {stations.slice(0, 4).map((station) => (
+                <div
+                  key={station.id}
+                  className="
+                    w-full min-w-0 overflow-hidden rounded-xl
+                    border border-[var(--border-primary)]
+                    bg-[var(--bg-secondary)]
+                    p-4
+                    transition-all duration-300
+                    hover:border-cyan-400/20
+                    hover:bg-[var(--bg-tertiary)]
+                  "
+                >
+                  {/* Station header */}
+                  <div className="flex min-w-0 items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <h3
+                        className="truncate text-sm font-semibold text-[var(--text-primary)]"
+                        title={station.stationName}
+                      >
+                        {station.stationName}
+                      </h3>
 
-          {/* Station ID */}
-          <div className="mt-3 flex min-w-0 items-center justify-between gap-3 border-t border-white/5 pt-3">
-            <span className="text-[10px] uppercase tracking-wide text-slate-600">
-              Station ID
-            </span>
+                      <div className="mt-1 flex min-w-0 items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
 
-            <span
-              className="truncate text-xs font-medium text-slate-400"
-              title={station.stationId}
-            >
-              {station.stationId}
-            </span>
-          </div>
-        </div>
-      ))}
-    </div>
-  )}
+                        <span
+                          className="truncate text-xs text-[var(--text-primary)]"
+                          title={station.city}
+                        >
+                          {station.city}
+                        </span>
+                      </div>
+                    </div>
+
+                    <span
+                      className={`shrink-0 whitespace-nowrap rounded-full border px-2 py-1 text-[10px] font-medium ${getStatusClass(
+                        station.status,
+                      )}`}
+                    >
+                      {station.status}
+                    </span>
+                  </div>
+
+                  {/* Station details */}
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    <div className="min-w-0 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+                      <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
+                        Chargers
+                      </p>
+
+                      <div className="mt-1 flex items-center gap-2">
+                        <BatteryCharging className="h-4 w-4 shrink-0 text-violet-400" />
+
+                        <p className="text-sm font-semibold text-[var(--text-primary)]">
+                          {station.numberOfChargers}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="min-w-0 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
+                      <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
+                        Timing
+                      </p>
+
+                      <div className="mt-1 flex items-center gap-2">
+                        <Clock3 className="h-4 w-4 shrink-0 text-cyan-400" />
+
+                        <p
+                          className="truncate text-xs font-medium text-[var(--text-primary)]"
+                          title={`${station.openingTime} - ${station.closingTime}`}
+                        >
+                          {station.openingTime} - {station.closingTime}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Station ID */}
+                  <div className="mt-3 flex min-w-0 items-center justify-between gap-3 border-t border-[var(--border-primary)] pt-3">
+                    <span className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
+                      Station ID
+                    </span>
+
+                    <span
+                      className="truncate text-xs font-medium text-[var(--text-primary)]"
+                      title={station.stationId}
+                    >
+                      {station.stationId}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
       {/* Network summary */}
-      <section className="mt-6 overflow-hidden rounded-2xl border border-cyan-400/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1827] to-[#11152B] p-5 sm:p-6">
+      <section className="mt-6 overflow-hidden rounded-2xl border border-cyan-400/10 bg-gradient-to-br from-[var(--card-bg)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)] p-5 sm:p-6">
         <div className="flex min-w-0 flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 items-start gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cyan-400/10">
@@ -887,11 +937,11 @@ function AdminDashboard() {
             </div>
 
             <div className="min-w-0">
-              <h2 className="text-base font-semibold text-white">
+              <h2 className="text-base font-semibold text-[var(--text-primary)]">
                 Network Summary
               </h2>
 
-              <p className="mt-1 text-sm leading-6 text-slate-400">
+              <p className="mt-1 text-sm leading-6 text-[var(--text-primary)]">
                 Your EV charging network currently has{" "}
                 <span className="font-semibold text-cyan-400">
                   {stations.length} stations
@@ -906,38 +956,42 @@ function AdminDashboard() {
           </div>
 
           <div className="grid shrink-0 grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="rounded-xl border border-white/5 bg-black/10 px-4 py-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-3">
+              <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
                 Bookings
               </p>
-              <p className="mt-1 text-lg font-bold text-white">
+
+              <p className="mt-1 text-lg font-bold text-[var(--text-primary)]">
                 {bookings.length}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-black/10 px-4 py-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-3">
+              <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
                 Sessions
               </p>
-              <p className="mt-1 text-lg font-bold text-white">
+
+              <p className="mt-1 text-lg font-bold text-[var(--text-primary)]">
                 {sessions.length}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-black/10 px-4 py-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-3">
+              <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
                 Payments
               </p>
-              <p className="mt-1 text-lg font-bold text-white">
+
+              <p className="mt-1 text-lg font-bold text-[var(--text-primary)]">
                 {payments.length}
               </p>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-black/10 px-4 py-3">
-              <p className="text-[10px] uppercase tracking-wide text-slate-600">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-3">
+              <p className="text-[10px] uppercase tracking-wide text-[var(--text-primary)]">
                 Activities
               </p>
-              <p className="mt-1 text-lg font-bold text-white">
+
+              <p className="mt-1 text-lg font-bold text-[var(--text-primary)]">
                 {activities.length}
               </p>
             </div>

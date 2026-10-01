@@ -126,15 +126,21 @@ export default function Activity() {
       Boolean(viewActivity) ||
       Boolean(deleteId);
 
-    if (modalOpen) {
-      document.body.style.overflow =
-        "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!modalOpen) return;
+
+    const originalBodyOverflow =
+      document.body.style.overflow;
+    const originalHtmlOverflow =
+      document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow =
+        originalBodyOverflow;
+      document.documentElement.style.overflow =
+        originalHtmlOverflow;
     };
   }, [viewActivity, deleteId]);
 
@@ -339,7 +345,7 @@ export default function Activity() {
         return "border-red-400/20 bg-red-400/10 text-red-300";
 
       default:
-        return "border-white/10 bg-white/5 text-slate-300";
+        return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
     }
   };
 
@@ -370,7 +376,7 @@ export default function Activity() {
         return "border-red-400/20 bg-red-400/10 text-red-300";
 
       default:
-        return "border-white/10 bg-white/5 text-slate-300";
+        return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
     }
   };
 
@@ -446,7 +452,7 @@ export default function Activity() {
             <ActivityIcon className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading activity...
           </p>
         </div>
@@ -472,11 +478,11 @@ export default function Activity() {
             Activity Management
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Activity Log
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Monitor system activity and user actions.
           </p>
         </div>
@@ -485,7 +491,7 @@ export default function Activity() {
           type="button"
           onClick={handleRefresh}
           disabled={refreshing}
-          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-[var(--bg-primary)] disabled:cursor-not-allowed disabled:opacity-60"
         >
           <RefreshCw
             className={`h-4 w-4 ${
@@ -510,7 +516,7 @@ export default function Activity() {
           <button
             type="button"
             onClick={() => setError("")}
-            className="shrink-0 text-red-300 transition hover:text-white"
+            className="shrink-0 text-red-300 transition hover:text-[var(--text-primary)]"
             aria-label="Close error"
           >
             <X className="h-4 w-4" />
@@ -579,14 +585,14 @@ export default function Activity() {
     SEARCH & FILTERS
 =================================================== */}
 
-<section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+<section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
   <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
     <div>
-      <h2 className="text-sm font-semibold text-white">
+      <h2 className="text-sm font-semibold text-[var(--text-primary)]">
         Search & Filters
       </h2>
 
-      <p className="mt-1 text-xs text-slate-500">
+      <p className="mt-1 text-xs text-[var(--text-muted)]">
         Find activities by user, action, activity ID or status.
       </p>
     </div>
@@ -595,7 +601,7 @@ export default function Activity() {
       <button
         type="button"
         onClick={clearFilters}
-        className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+        className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
       >
         <X className="h-3.5 w-3.5" />
         Clear filters
@@ -608,7 +614,7 @@ export default function Activity() {
     {/* Search */}
 
     <div className="relative min-w-0">
-      <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+      <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
       <input
         type="text"
@@ -617,7 +623,7 @@ export default function Activity() {
           setSearch(event.target.value)
         }
         placeholder="Search activities..."
-        className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-500 transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        className="activity-input h-11 w-full rounded-xl border px-4 pl-11 pr-4 text-sm outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
       />
     </div>
 
@@ -629,89 +635,89 @@ export default function Activity() {
         onChange={(event) =>
           setTypeFilter(event.target.value)
         }
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-        style={{ colorScheme: "dark" }}
+        className="activity-select h-11 w-full appearance-none rounded-xl border px-4 pr-11 text-sm outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        style={{ colorScheme: "inherit" }}
       >
         <option
           value=""
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           All Activity Types
         </option>
 
         <option
           value="Login"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Login
         </option>
 
         <option
           value="Logout"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Logout
         </option>
 
         <option
           value="Booking"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Booking
         </option>
 
         <option
           value="Charging"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Charging
         </option>
 
         <option
           value="Payment"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Payment
         </option>
 
         <option
           value="User"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           User
         </option>
 
         <option
           value="Station"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Station
         </option>
 
         <option
           value="Charger"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Charger
         </option>
 
         <option
           value="Maintenance"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Maintenance
         </option>
 
         <option
           value="System"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           System
         </option>
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -732,47 +738,47 @@ export default function Activity() {
         onChange={(event) =>
           setStatusFilter(event.target.value)
         }
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
-        style={{ colorScheme: "dark" }}
+        className="activity-select h-11 w-full appearance-none rounded-xl border px-4 pr-11 text-sm outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        style={{ colorScheme: "inherit" }}
       >
         <option
           value=""
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           All Statuses
         </option>
 
         <option
           value="Success"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Success
         </option>
 
         <option
           value="Info"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Info
         </option>
 
         <option
           value="Warning"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Warning
         </option>
 
         <option
           value="Failed"
-          className="bg-[#0D1B2A] text-white"
+          className="bg-[var(--card-bg)] text-[var(--text-primary)]"
         >
           Failed
         </option>
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -792,14 +798,14 @@ export default function Activity() {
           RESULTS
       =================================================== */}
 
-      <section className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A]">
-        <div className="flex flex-col gap-2 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
+      <section className="mt-6 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
+        <div className="flex flex-col gap-2 border-b border-[var(--border-primary)] px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-5">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Recent Activity
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Showing {filteredActivities.length} of{" "}
               {activities.length} activities.
             </p>
@@ -823,32 +829,32 @@ export default function Activity() {
             </colgroup>
 
             <thead>
-              <tr className="border-b border-white/10 text-left">
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+              <tr className="border-b border-[var(--border-primary)] text-left">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Activity ID
                 </th>
 
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   User
                 </th>
 
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Type
                 </th>
 
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Activity
                 </th>
 
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Date & Time
                 </th>
 
-                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Status
                 </th>
 
-                <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 xl:px-5">
+                <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] xl:px-5">
                   Actions
                 </th>
               </tr>
@@ -862,15 +868,15 @@ export default function Activity() {
                     colSpan={7}
                     className="px-5 py-16 text-center"
                   >
-                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-                      <ActivityIcon className="h-6 w-6 text-white" />
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-tertiary)]">
+                      <ActivityIcon className="h-6 w-6 text-[var(--text-primary)]" />
                     </div>
 
-                    <p className="mt-4 text-sm font-medium text-slate-400">
+                    <p className="mt-4 text-sm font-medium text-[var(--text-secondary)]">
                       No activities found
                     </p>
 
-                    <p className="mt-1 text-xs text-slate-600">
+                    <p className="mt-1 text-xs text-[var(--text-muted)]">
                       Try changing your search or filters.
                     </p>
                   </td>
@@ -880,17 +886,17 @@ export default function Activity() {
                   (activity) => (
                     <tr
                       key={activity.id}
-                      className="border-b border-white/5 transition hover:bg-white/[0.025]"
+                      className="border-b border-[var(--border-primary)] transition hover:bg-[var(--bg-tertiary)]"
                     >
                       {/* Activity ID */}
 
                       <td className="min-w-0 px-4 py-5 align-middle xl:px-5">
-                        <p className="truncate text-sm font-bold text-white">
+                        <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                           {activity.activityId}
                         </p>
 
                         {activity.entityId && (
-                          <p className="mt-1 truncate text-[11px] text-slate-500">
+                          <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
                             {activity.entityId}
                           </p>
                         )}
@@ -901,18 +907,18 @@ export default function Activity() {
                       <td className="min-w-0 px-4 py-5 align-middle xl:px-5">
                         <div className="flex min-w-0 items-center gap-2">
                           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-400/10">
-                            <User className="h-4 w-4 !text-white" />
+                            <User className="h-4 w-4 !text-[var(--text-primary)]" />
                           </div>
 
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-semibold text-white">
+                            <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
                               {activity.userName ||
                                 activity.userId ||
                                 "System"}
                             </p>
 
                             {activity.userId && (
-                              <p className="mt-0.5 truncate text-[10px] text-slate-500">
+                              <p className="mt-0.5 truncate text-[10px] text-[var(--text-muted)]">
                                 {activity.userId}
                               </p>
                             )}
@@ -941,7 +947,7 @@ export default function Activity() {
 
                       <td className="min-w-0 px-4 py-5 align-middle xl:px-5">
                         <p
-                          className="truncate text-sm font-semibold text-white"
+                          className="truncate text-sm font-semibold text-[var(--text-primary)]"
                           title={
                             activity.action
                           }
@@ -950,7 +956,7 @@ export default function Activity() {
                         </p>
 
                         <p
-                          className="mt-1 truncate text-[11px] text-slate-500"
+                          className="mt-1 truncate text-[11px] text-[var(--text-muted)]"
                           title={
                             activity.description
                           }
@@ -963,9 +969,9 @@ export default function Activity() {
 
                       <td className="px-4 py-5 align-middle xl:px-5">
                         <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 shrink-0 !text-white" />
+                          <CalendarDays className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-                          <span className="text-xs text-slate-300">
+                          <span className="text-xs text-[var(--text-secondary)]">
                             {formatDateTime(
                               activity.timestamp ||
                                 activity.createdDate,
@@ -999,7 +1005,7 @@ export default function Activity() {
                               )
                             }
                           >
-                            <Eye className="h-4 w-4 !text-white" />
+                            <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
                           </ActionButton>
 
                           <ActionButton
@@ -1011,7 +1017,7 @@ export default function Activity() {
                             }
                             className="hover:border-red-400/30 hover:bg-red-400/10"
                           >
-                            <Trash2 className="h-4 w-4 !text-white" />
+                            <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
                           </ActionButton>
                         </div>
                       </td>
@@ -1031,15 +1037,15 @@ export default function Activity() {
           {filteredActivities.length ===
           0 ? (
             <div className="px-4 py-14 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-                <ActivityIcon className="h-6 w-6 text-white" />
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--bg-tertiary)]">
+                <ActivityIcon className="h-6 w-6 text-[var(--text-primary)]" />
               </div>
 
-              <p className="mt-4 text-sm font-medium text-slate-400">
+              <p className="mt-4 text-sm font-medium text-[var(--text-secondary)]">
                 No activities found
               </p>
 
-              <p className="mt-1 text-xs text-slate-600">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing your search or filters.
               </p>
             </div>
@@ -1048,7 +1054,7 @@ export default function Activity() {
               (activity) => (
                 <div
                   key={activity.id}
-                  className="rounded-xl border border-white/10 bg-white/[0.025] p-4"
+                  className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
@@ -1060,11 +1066,11 @@ export default function Activity() {
                         </div>
 
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-bold text-white">
+                          <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                             {activity.activityId}
                           </p>
 
-                          <p className="mt-0.5 truncate text-[10px] text-slate-500">
+                          <p className="mt-0.5 truncate text-[10px] text-[var(--text-muted)]">
                             {activity.userName ||
                               activity.userId ||
                               "System"}
@@ -1084,18 +1090,18 @@ export default function Activity() {
                   </div>
 
                   <div className="mt-4">
-                    <p className="text-sm font-semibold text-white">
+                    <p className="text-sm font-semibold text-[var(--text-primary)]">
                       {activity.action}
                     </p>
 
-                    <p className="mt-1 text-xs leading-5 text-slate-500">
+                    <p className="mt-1 text-xs leading-5 text-[var(--text-muted)]">
                       {activity.description}
                     </p>
                   </div>
 
-                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-3">
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400">
-                      <CalendarDays className="h-3.5 w-3.5 !text-white" />
+                  <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border-primary)] pt-3">
+                    <div className="flex items-center gap-2 text-[11px] text-[var(--text-secondary)]">
+                      <CalendarDays className="h-3.5 w-3.5 !text-[var(--text-primary)]" />
 
                       {formatDateTime(
                         activity.timestamp ||
@@ -1112,7 +1118,7 @@ export default function Activity() {
                           )
                         }
                       >
-                        <Eye className="h-4 w-4 !text-white" />
+                        <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
 
                       <ActionButton
@@ -1124,7 +1130,7 @@ export default function Activity() {
                         }
                         className="hover:border-red-400/30 hover:bg-red-400/10"
                       >
-                        <Trash2 className="h-4 w-4 !text-white" />
+                        <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
                     </div>
                   </div>
@@ -1141,21 +1147,21 @@ export default function Activity() {
 
       {viewActivity && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex h-full max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Header */}
 
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-4 sm:px-5">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-4 py-4 sm:px-5">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-300">
                   <ActivityIcon className="h-5 w-5" />
                 </div>
 
                 <div>
-                  <h2 className="text-base font-semibold text-white">
+                  <h2 className="text-base font-semibold text-[var(--text-primary)]">
                     Activity Details
                   </h2>
 
-                  <p className="mt-0.5 text-xs text-slate-500">
+                  <p className="mt-0.5 text-xs text-[var(--text-muted)]">
                     {viewActivity.activityId}
                   </p>
                 </div>
@@ -1166,7 +1172,7 @@ export default function Activity() {
                 onClick={() =>
                   setViewActivity(null)
                 }
-                className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white/10"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)]"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -1248,12 +1254,12 @@ export default function Activity() {
                   }
                 />
 
-                <div className="rounded-xl border border-white/10 bg-white/[0.025] p-4 sm:col-span-2">
-                  <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4 sm:col-span-2">
+                  <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                     Description
                   </p>
 
-                  <p className="mt-2 text-sm leading-6 text-white">
+                  <p className="mt-2 text-sm leading-6 text-[var(--text-primary)]">
                     {viewActivity.description ||
                       "No description available."}
                   </p>
@@ -1263,13 +1269,13 @@ export default function Activity() {
 
             {/* Footer */}
 
-            <div className="flex shrink-0 justify-end border-t border-white/10 px-4 py-3 sm:px-5">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] px-4 py-3 sm:px-5">
               <button
                 type="button"
                 onClick={() =>
                   setViewActivity(null)
                 }
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+                className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)]"
               >
                 Close
               </button>
@@ -1284,18 +1290,18 @@ export default function Activity() {
 
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex min-h-0 items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-5 shadow-2xl shadow-black/60 sm:p-6">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-2xl shadow-black/60 sm:p-6">
             <div className="flex items-start gap-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-400/10 text-red-400">
                 <Trash2 className="h-5 w-5" />
               </div>
 
               <div>
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-[var(--text-primary)]">
                   Delete Activity
                 </h2>
 
-                <p className="mt-1.5 text-sm leading-6 text-slate-400">
+                <p className="mt-1.5 text-sm leading-6 text-[var(--text-secondary)]">
                   Are you sure you want to delete this activity record? This action cannot be undone.
                 </p>
               </div>
@@ -1307,7 +1313,7 @@ export default function Activity() {
                 onClick={() =>
                   setDeleteId(null)
                 }
-                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+                className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)]"
               >
                 Cancel
               </button>
@@ -1329,6 +1335,37 @@ export default function Activity() {
       =================================================== */}
 
       <style>{`
+        .activity-input {
+          border-color: var(--border-primary);
+          background: var(--input-bg);
+          color: var(--input-text);
+        }
+
+        .activity-input::placeholder {
+          color: var(--text-muted);
+        }
+
+        .activity-select {
+          border-color: var(--border-primary);
+          background: var(--input-bg);
+          color: var(--input-text);
+        }
+
+        .activity-select option {
+          background: var(--input-bg);
+          color: var(--input-text);
+        }
+
+        html.dark .activity-select,
+        html.dark .activity-input {
+          color-scheme: dark;
+        }
+
+        html.light .activity-select,
+        html.light .activity-input {
+          color-scheme: light;
+        }
+
         .hide-scrollbar {
           scrollbar-width: none;
           -ms-overflow-style: none;
@@ -1365,18 +1402,18 @@ function StatCard({
   iconBg: string;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-xs font-medium text-slate-500">
+          <p className="text-xs font-medium text-[var(--text-muted)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold tracking-tight text-white">
+          <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-[11px] text-slate-500">
+          <p className="mt-1 truncate text-[11px] text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -1414,7 +1451,7 @@ function ActionButton({
       onClick={onClick}
       aria-label={label}
       title={label}
-      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white/10 ${className}`}
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-[var(--bg-tertiary)] ${className}`}
     >
       {children}
     </button>
@@ -1433,12 +1470,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.025] p-4">
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>

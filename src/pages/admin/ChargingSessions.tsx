@@ -124,12 +124,15 @@ function ChargingSessions() {
   useEffect(() => {
     if (viewSession || deleteId) {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [viewSession, deleteId]);
 
@@ -608,7 +611,7 @@ function ChargingSessions() {
             <BatteryCharging className="h-6 w-6 animate-pulse text-cyan-400" />
           </div>
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading charging sessions...
           </p>
         </div>
@@ -628,15 +631,15 @@ function ChargingSessions() {
       <div className="mb-6 flex min-w-0 flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
           <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-cyan-400">
-            <BatteryCharging className="h-4 w-4 !text-white" />
+            <BatteryCharging className="h-4 w-4 !text-[var(--text-primary)]" />
             Charging Management
           </div>
 
-          <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+          <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
             Charging Sessions
           </h1>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-secondary)]">
             Monitor and manage active and completed charging sessions.
           </p>
         </div>
@@ -733,16 +736,16 @@ function ChargingSessions() {
 
       {/* SEARCH & FILTERS */}
 
-      <section className="mt-6 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="mt-6 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
 
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-secondary)]">
               Find sessions by customer, station, date or status.
             </p>
           </div>
@@ -754,7 +757,7 @@ function ChargingSessions() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 self-start text-xs font-medium text-cyan-400 transition hover:text-[var(--text-primary)]"
             >
               <X className="h-3.5 w-3.5" />
               Clear filters
@@ -768,7 +771,7 @@ function ChargingSessions() {
           {/* SEARCH */}
 
           <div className="relative min-w-0">
-            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 z-10 h-4 w-4 -translate-y-1/2 !text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -852,13 +855,13 @@ function ChargingSessions() {
       {/* RESULT COUNT */}
 
       <div className="mt-4">
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-[var(--text-secondary)]">
           Showing{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {filteredSessions.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-300">
+          <span className="font-semibold text-[var(--text-secondary)]">
             {sessions.length}
           </span>{" "}
           charging sessions
@@ -867,7 +870,7 @@ function ChargingSessions() {
 
       {/* DESKTOP TABLE */}
 
-      <div className="mt-4 hidden w-full min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#0D1B2A] lg:block">
+      <div className="mt-4 hidden w-full min-w-0 overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] lg:block">
 
         <table className="w-full table-fixed border-collapse">
 
@@ -882,33 +885,33 @@ function ChargingSessions() {
           </colgroup>
 
           <thead>
-            <tr className="border-b border-white/10 text-left">
+            <tr className="border-b border-[var(--border-primary)] text-left">
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Session ID
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Customer
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Station
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Charger
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Start / End
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Status
               </th>
 
-              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-slate-500 xl:px-4">
+              <th className="px-3 py-4 text-[10px] font-semibold uppercase tracking-wider text-[var(--text-secondary)] xl:px-4">
                 Actions
               </th>
 
@@ -923,13 +926,13 @@ function ChargingSessions() {
                   colSpan={7}
                   className="px-6 py-16 text-center"
                 >
-                  <BatteryCharging className="mx-auto h-8 w-8 text-slate-600" />
+                  <BatteryCharging className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-                  <p className="mt-3 text-sm font-medium text-slate-400">
+                  <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">
                     No charging sessions found
                   </p>
 
-                  <p className="mt-1 text-xs text-slate-600">
+                  <p className="mt-1 text-xs text-[var(--text-muted)]">
                     Try changing your search or filters.
                   </p>
                 </td>
@@ -939,7 +942,7 @@ function ChargingSessions() {
                 (session) => (
                   <tr
                     key={session.id}
-                    className="border-b border-white/5 last:border-b-0 transition-colors hover:bg-white/[0.025]"
+                    className="border-b border-[var(--border-primary)] last:border-b-0 transition-colors hover:bg-[var(--bg-tertiary)]"
                   >
 
                     {/* SESSION ID */}
@@ -948,11 +951,11 @@ function ChargingSessions() {
                       <div className="flex min-w-0 items-center gap-2">
 
                         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10">
-                          <BatteryCharging className="h-4 w-4 !text-white" />
+                          <BatteryCharging className="h-4 w-4 !text-[var(--text-primary)]" />
                         </div>
 
                         <span
-                          className="truncate text-sm font-semibold text-white"
+                          className="truncate text-sm font-semibold text-[var(--text-primary)]"
                           title={session.sessionId}
                         >
                           {session.sessionId}
@@ -967,17 +970,17 @@ function ChargingSessions() {
                       <div className="min-w-0">
 
                         <div className="flex min-w-0 items-center gap-2">
-                          <UserRound className="h-4 w-4 shrink-0 !text-white" />
+                          <UserRound className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
                           <p
-                            className="truncate text-sm font-semibold text-white"
+                            className="truncate text-sm font-semibold text-[var(--text-primary)]"
                             title={getCustomerName(session)}
                           >
                             {getCustomerName(session)}
                           </p>
                         </div>
 
-                        <p className="mt-1 truncate pl-6 text-[11px] text-slate-500">
+                        <p className="mt-1 truncate pl-6 text-[11px] text-[var(--text-secondary)]">
                           {getCustomerEmail(session)}
                         </p>
 
@@ -990,13 +993,13 @@ function ChargingSessions() {
                       <div className="min-w-0">
 
                         <p
-                          className="truncate text-sm font-semibold text-white"
+                          className="truncate text-sm font-semibold text-[var(--text-primary)]"
                           title={getStationName(session.stationId)}
                         >
                           {getStationName(session.stationId)}
                         </p>
 
-                        <p className="mt-1 truncate text-[11px] text-slate-500">
+                        <p className="mt-1 truncate text-[11px] text-[var(--text-secondary)]">
                           {getStationCity(session.stationId)}
                         </p>
 
@@ -1008,9 +1011,9 @@ function ChargingSessions() {
                     <td className="px-3 py-5 align-middle xl:px-4">
                       <div className="flex min-w-0 items-center gap-2">
 
-                        <Zap className="h-4 w-4 shrink-0 !text-white" />
+                        <Zap className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-                        <span className="truncate text-sm font-medium text-white">
+                        <span className="truncate text-sm font-medium text-[var(--text-primary)]">
                           {getChargerName(
                             session.chargerId
                           )}
@@ -1025,9 +1028,9 @@ function ChargingSessions() {
                       <div className="min-w-0">
 
                         <div className="flex items-center gap-2">
-                          <CalendarDays className="h-4 w-4 shrink-0 !text-white" />
+                          <CalendarDays className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-                          <span className="truncate text-xs font-medium text-white">
+                          <span className="truncate text-xs font-medium text-[var(--text-primary)]">
                             {formatDateTime(
                               session.startDate,
                               session.startTime
@@ -1036,9 +1039,9 @@ function ChargingSessions() {
                         </div>
 
                         <div className="mt-1 flex items-center gap-2">
-                          <Clock3 className="h-4 w-4 shrink-0 !text-white" />
+                          <Clock3 className="h-4 w-4 shrink-0 !text-[var(--text-primary)]" />
 
-                          <span className="truncate text-[11px] text-slate-500">
+                          <span className="truncate text-[11px] text-[var(--text-secondary)]">
                             {session.endDate || session.endTime
                               ? formatDateTime(
                                   session.endDate ??
@@ -1071,7 +1074,7 @@ function ChargingSessions() {
                             setViewSession(session)
                           }
                         >
-                          <Eye className="h-4 w-4 !text-white" />
+                          <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
                         </ActionButton>
 
                         {session.status ===
@@ -1086,7 +1089,7 @@ function ChargingSessions() {
                             }
                             className="hover:border-emerald-400/30 hover:bg-emerald-400/10"
                           >
-                            <Zap className="h-4 w-4 !text-white" />
+                            <Zap className="h-4 w-4 !text-[var(--text-primary)]" />
                           </ActionButton>
                         )}
 
@@ -1102,7 +1105,7 @@ function ChargingSessions() {
                             }
                             className="hover:border-emerald-400/30 hover:bg-emerald-400/10"
                           >
-                            <CheckCircle2 className="h-4 w-4 !text-white" />
+                            <CheckCircle2 className="h-4 w-4 !text-[var(--text-primary)]" />
                           </ActionButton>
                         )}
 
@@ -1120,7 +1123,7 @@ function ChargingSessions() {
                               }
                               className="hover:border-red-400/30 hover:bg-red-400/10"
                             >
-                              <X className="h-4 w-4 !text-white" />
+                              <X className="h-4 w-4 !text-[var(--text-primary)]" />
                             </ActionButton>
                           )}
 
@@ -1133,7 +1136,7 @@ function ChargingSessions() {
                           }
                           className="hover:border-red-400/30 hover:bg-red-400/10"
                         >
-                          <Trash2 className="h-4 w-4 !text-white" />
+                          <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
                         </ActionButton>
 
                       </div>
@@ -1153,15 +1156,15 @@ function ChargingSessions() {
       <section className="mt-4 grid gap-4 lg:hidden">
 
         {filteredSessions.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] px-5 py-14 text-center">
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] px-5 py-14 text-center">
 
-            <BatteryCharging className="mx-auto h-8 w-8 text-slate-600" />
+            <BatteryCharging className="mx-auto h-8 w-8 text-[var(--text-muted)]" />
 
-            <p className="mt-3 text-sm font-medium text-slate-400">
+            <p className="mt-3 text-sm font-medium text-[var(--text-secondary)]">
               No charging sessions found
             </p>
 
-            <p className="mt-1 text-xs text-slate-600">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Try changing your search or filters.
             </p>
 
@@ -1171,7 +1174,7 @@ function ChargingSessions() {
             (session) => (
               <div
                 key={session.id}
-                className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 transition hover:border-cyan-400/20"
+                className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 transition hover:border-cyan-400/20"
               >
 
                 <div className="flex items-start justify-between gap-3">
@@ -1179,15 +1182,15 @@ function ChargingSessions() {
                   <div className="flex min-w-0 items-center gap-3">
 
                     <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
-                      <BatteryCharging className="h-5 w-5 !text-white" />
+                      <BatteryCharging className="h-5 w-5 !text-[var(--text-primary)]" />
                     </div>
 
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-bold text-white">
+                      <p className="truncate text-sm font-bold text-[var(--text-primary)]">
                         {session.sessionId}
                       </p>
 
-                      <p className="mt-1 truncate text-xs text-slate-500">
+                      <p className="mt-1 truncate text-xs text-[var(--text-secondary)]">
                         {getCustomerName(session)}
                       </p>
                     </div>
@@ -1215,7 +1218,7 @@ function ChargingSessions() {
                       session.chargerId
                     )}
                     icon={
-                      <Zap className="h-3.5 w-3.5 !text-white" />
+                      <Zap className="h-3.5 w-3.5 !text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1226,7 +1229,7 @@ function ChargingSessions() {
                       session.startTime
                     )}
                     icon={
-                      <CalendarDays className="h-3.5 w-3.5 !text-white" />
+                      <CalendarDays className="h-3.5 w-3.5 !text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1234,7 +1237,7 @@ function ChargingSessions() {
                     label="Energy"
                     value={`${getEnergy(session).toFixed(2)} kWh`}
                     icon={
-                      <Zap className="h-3.5 w-3.5 !text-white" />
+                      <Zap className="h-3.5 w-3.5 !text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1242,7 +1245,7 @@ function ChargingSessions() {
                     label="Amount"
                     value={`₹${getAmount(session).toFixed(2)}`}
                     icon={
-                      <IndianRupee className="h-3.5 w-3.5 !text-white" />
+                      <IndianRupee className="h-3.5 w-3.5 !text-[var(--text-primary)]" />
                     }
                   />
 
@@ -1256,7 +1259,7 @@ function ChargingSessions() {
 
                 </div>
 
-                <div className="mt-5 flex items-center justify-end gap-1 border-t border-white/5 pt-4">
+                <div className="mt-5 flex items-center justify-end gap-1 border-t border-[var(--border-primary)] pt-4">
 
                   <ActionButton
                     label="View session"
@@ -1264,7 +1267,7 @@ function ChargingSessions() {
                       setViewSession(session)
                     }
                   >
-                    <Eye className="h-4 w-4 !text-white" />
+                    <Eye className="h-4 w-4 !text-[var(--text-primary)]" />
                   </ActionButton>
 
                   {session.status ===
@@ -1279,7 +1282,7 @@ function ChargingSessions() {
                       }
                       className="hover:border-emerald-400/30 hover:bg-emerald-400/10"
                     >
-                      <Zap className="h-4 w-4 !text-white" />
+                      <Zap className="h-4 w-4 !text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1295,7 +1298,7 @@ function ChargingSessions() {
                       }
                       className="hover:border-emerald-400/30 hover:bg-emerald-400/10"
                     >
-                      <CheckCircle2 className="h-4 w-4 !text-white" />
+                      <CheckCircle2 className="h-4 w-4 !text-[var(--text-primary)]" />
                     </ActionButton>
                   )}
 
@@ -1313,7 +1316,7 @@ function ChargingSessions() {
                         }
                         className="hover:border-red-400/30 hover:bg-red-400/10"
                       >
-                        <X className="h-4 w-4 !text-white" />
+                        <X className="h-4 w-4 !text-[var(--text-primary)]" />
                       </ActionButton>
                     )}
 
@@ -1324,7 +1327,7 @@ function ChargingSessions() {
                     }
                     className="hover:border-red-400/30 hover:bg-red-400/10"
                   >
-                    <Trash2 className="h-4 w-4 !text-white" />
+                    <Trash2 className="h-4 w-4 !text-[var(--text-primary)]" />
                   </ActionButton>
 
                 </div>
@@ -1343,18 +1346,18 @@ function ChargingSessions() {
       {viewSession && (
         <div className="fixed inset-0 z-[100] flex min-h-0 items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-4">
 
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
 
             {/* HEADER */}
 
-            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
 
               <div className="min-w-0">
                 <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
                   Charging Session
                 </p>
 
-                <h2 className="mt-1 truncate text-lg font-bold text-white">
+                <h2 className="mt-1 truncate text-lg font-bold text-[var(--text-primary)]">
                   {viewSession.sessionId}
                 </h2>
               </div>
@@ -1365,7 +1368,7 @@ function ChargingSessions() {
                   setViewSession(null)
                 }
                 aria-label="Close"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-slate-950"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -1468,14 +1471,14 @@ function ChargingSessions() {
 
             {/* FOOTER */}
 
-            <div className="flex shrink-0 justify-end border-t border-white/10 px-5 py-4 sm:px-6">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] px-5 py-4 sm:px-6">
 
               <button
                 type="button"
                 onClick={() =>
                   setViewSession(null)
                 }
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Close
               </button>
@@ -1493,17 +1496,17 @@ function ChargingSessions() {
       {deleteId && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
 
-          <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0D1A2A] p-6 shadow-2xl shadow-black/60">
+          <div className="w-full max-w-md rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-6 shadow-2xl shadow-black/60">
 
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-400/10">
               <Trash2 className="h-5 w-5 text-red-400" />
             </div>
 
-            <h2 className="mt-5 text-lg font-bold text-white">
+            <h2 className="mt-5 text-lg font-bold text-[var(--text-primary)]">
               Delete Charging Session?
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               This charging session will be permanently removed from the system. This action cannot be undone.
             </p>
 
@@ -1514,7 +1517,7 @@ function ChargingSessions() {
                 onClick={() =>
                   setDeleteId(null)
                 }
-                className="h-11 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-semibold text-white transition hover:bg-white hover:text-slate-950"
+                className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-semibold text-[var(--text-primary)] transition hover:bg-white hover:text-slate-950"
               >
                 Cancel
               </button>
@@ -1546,17 +1549,17 @@ function ChargingSessions() {
           min-width: 0;
           max-width: 100%;
           border-radius: 0.75rem;
-          border: 1px solid rgba(255,255,255,0.10);
-          background: #101f31;
+          border: 1px solid var(--border-primary);
+          background: var(--input-bg);
           padding: 0 0.875rem;
           font-size: 0.875rem;
-          color: white;
+          color: var(--input-text);
           outline: none;
           transition: all 0.2s ease;
         }
 
         .input-field::placeholder {
-          color: rgb(71 85 105);
+          color: var(--text-muted);
         }
 
         .input-field:focus {
@@ -1565,27 +1568,40 @@ function ChargingSessions() {
         }
 
         .input-field option {
-          background: #101f31;
-          color: white;
+          background: var(--input-bg);
+          color: var(--input-text);
         }
 
-        input[type="date"].input-field {
+        html.dark input[type="date"].input-field,
+        html.dark select.input-field {
           color-scheme: dark;
         }
 
-        input[type="date"].input-field::-webkit-calendar-picker-indicator {
+        html.light input[type="date"].input-field,
+        html.light select.input-field {
+          color-scheme: light;
+        }
+
+        html.dark input[type="date"].input-field::-webkit-calendar-picker-indicator {
           filter: brightness(0) invert(1) !important;
           opacity: 1 !important;
           cursor: pointer;
         }
 
-        select.input-field {
+        html.light input[type="date"].input-field::-webkit-calendar-picker-indicator {
+          filter: none !important;
+          opacity: 1 !important;
+          cursor: pointer;
+        }
+
+        html.dark input[type="date"],
+        html.dark select {
           color-scheme: dark;
         }
 
-        input[type="date"],
-        select {
-          color-scheme: dark;
+        html.light input[type="date"],
+        html.light select {
+          color-scheme: light;
         }
       `}</style>
 
@@ -1615,20 +1631,20 @@ function StatCard({
   iconBg,
 }: StatCardProps) {
   return (
-    <div className="group min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[#102236]">
+    <div className="group min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 shadow-lg shadow-black/10 transition duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:bg-[var(--bg-tertiary)]">
 
       <div className="flex items-start justify-between gap-4">
 
         <div className="min-w-0">
-          <p className="truncate text-xs font-medium uppercase tracking-wider text-slate-500">
+          <p className="truncate text-xs font-medium uppercase tracking-wider text-[var(--text-secondary)]">
             {title}
           </p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {value}
           </p>
 
-          <p className="mt-1 truncate text-xs text-slate-600">
+          <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
             {description}
           </p>
         </div>
@@ -1662,7 +1678,7 @@ function StatusBadge({
     string
   > = {
     "Not Started":
-      "border-slate-400/20 bg-slate-400/10 text-slate-300",
+      "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]",
 
     Charging:
       "border-cyan-400/20 bg-cyan-400/10 text-cyan-300",
@@ -1718,9 +1734,9 @@ function ActionButton({
         justify-center
         rounded-lg
         border
-        border-white/10
-        bg-white/5
-        text-white
+        border-[var(--border-primary)]
+        bg-[var(--bg-tertiary)]
+        text-[var(--text-primary)]
         transition
         hover:bg-white/10
         ${className}
@@ -1747,9 +1763,9 @@ function InfoItem({
   icon,
 }: InfoItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-3">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3">
 
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
@@ -1758,7 +1774,7 @@ function InfoItem({
         {icon}
 
         <p
-          className="truncate text-xs font-medium text-slate-300"
+          className="truncate text-xs font-medium text-[var(--text-secondary)]"
           title={value}
         >
           {value}
@@ -1783,14 +1799,14 @@ function DetailItem({
   value,
 }: DetailItemProps) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/5 bg-white/[0.025] p-4">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
 
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-600">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--text-muted)]">
         {label}
       </p>
 
       <p
-        className="mt-2 truncate text-sm font-medium text-white"
+        className="mt-2 truncate text-sm font-medium text-[var(--text-primary)]"
         title={value}
       >
         {value}

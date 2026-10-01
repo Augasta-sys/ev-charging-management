@@ -161,7 +161,7 @@ function getStationStatusClasses(status?: string) {
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -186,7 +186,7 @@ function getChargerStatusClasses(status?: string) {
       return "border-red-400/20 bg-red-400/10 text-red-300";
 
     default:
-      return "border-white/10 bg-white/5 text-slate-300";
+      return "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-secondary)]";
   }
 }
 
@@ -206,13 +206,13 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full appearance-none rounded-xl border border-white/10 bg-[#0D1B2A] px-4 pr-11 text-sm text-white outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+        className="customer-station-select h-11 w-full appearance-none rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-4 pr-11 text-sm text-[var(--input-text)] outline-none transition focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
       >
         {options.map((option) => (
           <option
             key={option}
             value={option}
-            className="bg-[#0D1B2A] text-white"
+            className="customer-station-option bg-[var(--input-bg)] text-[var(--input-text)]"
           >
             {option === "All" ? placeholder : option}
           </option>
@@ -220,7 +220,7 @@ function FilterSelect({
       </select>
 
       <svg
-        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+        className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]"
         viewBox="0 0 20 20"
         fill="currentColor"
         aria-hidden="true"
@@ -231,6 +231,52 @@ function FilterSelect({
           clipRule="evenodd"
         />
       </svg>
+      
+      <style>{`
+      html.light .customer-station-status-badge,
+      html.light .customer-charger-status-badge {
+        color: #334155 !important;
+      }
+      
+      html.light .customer-station-input,
+      html.light .customer-station-select {
+        color: #000000 !important;
+        background-color: #ffffff !important;
+      }
+      
+      html.dark .customer-station-input,
+      html.dark .customer-station-select {
+        color: #ffffff !important;
+        background-color: #101d31 !important;
+      }
+      
+      html.light .customer-station-option {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      
+      html.dark .customer-station-option {
+        background-color: #0d1b2a !important;
+        color: #ffffff !important;
+      }
+      
+      html.light .customer-station-input::placeholder {
+        color: #64748b !important;
+      }
+      
+      html.dark .customer-station-input::placeholder {
+        color: #64748b !important;
+      }
+      
+      html.dark .customer-station-select {
+        color-scheme: dark;
+      }
+      
+      html.light .customer-station-select {
+        color-scheme: light;
+      }
+      `}</style>
+      
     </div>
   );
 }
@@ -243,12 +289,12 @@ function DetailItem({
   value: string;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
+      <p className="text-[11px] font-medium uppercase tracking-wide text-[var(--text-muted)]">
         {label}
       </p>
 
-      <p className="mt-2 break-words text-sm font-medium text-white">
+      <p className="mt-2 break-words text-sm font-medium text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -532,7 +578,7 @@ export default function CustomerStations() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-[var(--text-secondary)]">
             Loading charging stations...
           </p>
         </div>
@@ -543,18 +589,18 @@ export default function CustomerStations() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#0D1B2A] via-[#0B1726] to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-gradient-to-br from-[var(--card-bg)] via-[var(--bg-secondary)] to-[var(--bg-tertiary)] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
               Station Search & Availability
             </span>
 
-            <h1 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
               Find Charging Stations
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
               Search stations, compare chargers and find
               available charging slots for your EV.
             </p>
@@ -563,7 +609,7 @@ export default function CustomerStations() {
           <button
             type="button"
             onClick={() => void fetchData()}
-            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+            className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -594,14 +640,14 @@ export default function CustomerStations() {
       )}
 
       {/* Search and filters */}
-      <section className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-4 sm:p-5">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-white">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)]">
               Search & Filters
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               Search by station name, city or station code.
             </p>
           </div>
@@ -620,7 +666,7 @@ export default function CustomerStations() {
 
         <div className="grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-4">
           <div className="relative min-w-0 sm:col-span-2">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-white" />
+            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-primary)]" />
 
             <input
               type="text"
@@ -629,7 +675,7 @@ export default function CustomerStations() {
                 setSearch(event.target.value)
               }
               placeholder="Search station name, city or code..."
-              className="h-11 w-full rounded-xl border border-white/10 bg-[#0D1B2A] pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
+              className="customer-station-input h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-11 pr-4 text-sm text-[var(--input-text)] outline-none transition placeholder:text-[var(--text-muted)] focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/10"
             />
           </div>
 
@@ -684,7 +730,7 @@ export default function CustomerStations() {
             className={`h-11 rounded-xl border px-4 text-sm font-medium transition ${
               availabilityOnly
                 ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-300"
-                : "border-white/10 bg-white/5 text-white hover:bg-white hover:text-black"
+                : "border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-white hover:text-black"
             }`}
           >
             Available Slots Only
@@ -696,11 +742,11 @@ export default function CustomerStations() {
       <section>
         <div className="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-semibold text-white">
+            <h2 className="text-lg font-semibold text-[var(--text-primary)]">
               Charging Stations
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500">
+            <p className="mt-1 text-xs text-[var(--text-muted)]">
               {filteredStations.length} active station
               {filteredStations.length === 1 ? "" : "s"}{" "}
               found
@@ -709,15 +755,15 @@ export default function CustomerStations() {
         </div>
 
         {filteredStations.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-[#0D1B2A] p-6">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-8 text-center">
-              <MapPin className="mx-auto h-9 w-9 text-slate-600" />
+          <div className="rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-6">
+            <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-8 text-center">
+              <MapPin className="mx-auto h-9 w-9 text-[var(--text-muted)]" />
 
-              <p className="mt-3 text-sm font-medium text-white">
+              <p className="mt-3 text-sm font-medium text-[var(--text-primary)]">
                 No stations found
               </p>
 
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-[var(--text-muted)]">
                 Try changing your search or filters.
               </p>
             </div>
@@ -745,11 +791,11 @@ export default function CustomerStations() {
               return (
                 <article
                   key={station.id}
-                  className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1B2A] p-5 transition hover:border-cyan-400/20"
+                  className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 transition hover:border-cyan-400/20"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="truncate text-lg font-semibold text-white">
+                      <p className="truncate text-lg font-semibold text-[var(--text-primary)]">
                         {station.name}
                       </p>
 
@@ -760,7 +806,7 @@ export default function CustomerStations() {
                     </div>
 
                     <span
-                      className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStationStatusClasses(
+                      className={`customer-station-status-badge shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStationStatusClasses(
                         station.status
                       )}`}
                     >
@@ -769,9 +815,9 @@ export default function CustomerStations() {
                   </div>
 
                   <div className="mt-4 flex items-start gap-2">
-                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--text-muted)]" />
 
-                    <p className="text-sm leading-5 text-slate-400">
+                    <p className="text-sm leading-5 text-[var(--text-secondary)]">
                       {[
                         station.address,
                         station.city,
@@ -784,32 +830,32 @@ export default function CustomerStations() {
                   </div>
 
                   <div className="mt-5 grid grid-cols-3 gap-2">
-                    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 text-center">
-                      <p className="text-lg font-bold text-white">
+                    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 text-center">
+                      <p className="text-lg font-bold text-[var(--text-primary)]">
                         {stationChargers.length}
                       </p>
 
-                      <p className="mt-1 text-[10px] uppercase tracking-wide text-slate-500">
+                      <p className="mt-1 text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
                         Chargers
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 text-center">
+                    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 text-center">
                       <p className="text-lg font-bold text-emerald-300">
                         {availableChargers.length}
                       </p>
 
-                      <p className="mt-1 text-[10px] uppercase tracking-wide text-slate-500">
+                      <p className="mt-1 text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
                         Available
                       </p>
                     </div>
 
-                    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 text-center">
+                    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 text-center">
                       <p className="text-lg font-bold text-cyan-300">
                         {availableSlots}
                       </p>
 
-                      <p className="mt-1 text-[10px] uppercase tracking-wide text-slate-500">
+                      <p className="mt-1 text-[10px] uppercase tracking-wide text-[var(--text-muted)]">
                         Slots
                       </p>
                     </div>
@@ -821,7 +867,7 @@ export default function CustomerStations() {
                       onClick={() =>
                         setSelectedStation(station)
                       }
-                      className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                      className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                     >
                       <Eye className="h-4 w-4" />
                       View Details
@@ -835,7 +881,7 @@ export default function CustomerStations() {
                           `/customer/bookings?station=${station.stationId}`
                         )
                       }
-                      className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 text-sm font-semibold text-[#07111F] transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                      className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 text-sm font-semibold text-[#07111F] transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-[var(--text-secondary)]"
                     >
                       <CalendarDays className="h-4 w-4" />
                       Book Slot
@@ -851,17 +897,17 @@ export default function CustomerStations() {
       {/* Station Details Popup */}
       {selectedStation && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
-          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
+          <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">
             {/* Popup header */}
-            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-white/10 px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 items-start justify-between gap-4 border-b border-[var(--border-primary)] px-4 py-4 sm:px-6">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">
-                  <h2 className="text-lg font-semibold text-white sm:text-xl">
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)] sm:text-xl">
                     {selectedStation.name}
                   </h2>
 
                   <span
-                    className={`rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStationStatusClasses(
+                    className={`customer-station-status-badge rounded-full border px-2.5 py-1 text-[10px] font-medium ${getStationStatusClasses(
                       selectedStation.status
                     )}`}
                   >
@@ -880,7 +926,7 @@ export default function CustomerStations() {
                 onClick={() =>
                   setSelectedStation(null)
                 }
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white hover:text-black"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white hover:text-black"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />
@@ -895,7 +941,7 @@ export default function CustomerStations() {
                   <div className="mb-3 flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-cyan-400" />
 
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-sm font-semibold text-[var(--text-primary)]">
                       Station Information
                     </h3>
                   </div>
@@ -969,7 +1015,7 @@ export default function CustomerStations() {
                   <div className="mb-3 flex items-center gap-2">
                     <BatteryCharging className="h-4 w-4 text-cyan-400" />
 
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-sm font-semibold text-[var(--text-primary)]">
                       Chargers
                     </h3>
                   </div>
@@ -977,10 +1023,10 @@ export default function CustomerStations() {
                   {getStationChargers(
                     selectedStation
                   ).length === 0 ? (
-                    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center">
-                      <Zap className="mx-auto h-7 w-7 text-slate-600" />
+                    <div className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-6 text-center">
+                      <Zap className="mx-auto h-7 w-7 text-[var(--text-muted)]" />
 
-                      <p className="mt-2 text-sm text-slate-400">
+                      <p className="mt-2 text-sm text-[var(--text-secondary)]">
                         No chargers found for this station.
                       </p>
                     </div>
@@ -1000,23 +1046,23 @@ export default function CustomerStations() {
                         return (
                           <div
                             key={charger.id}
-                            className="min-w-0 rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                            className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <div className="min-w-0">
-                                <p className="text-sm font-semibold text-white">
+                                <p className="text-sm font-semibold text-[var(--text-primary)]">
                                   {charger.chargerNumber
                                     ? `Charger ${charger.chargerNumber}`
                                     : charger.chargerId}
                                 </p>
 
-                                <p className="mt-1 text-xs text-slate-500">
+                                <p className="mt-1 text-xs text-[var(--text-muted)]">
                                   {charger.chargerId}
                                 </p>
                               </div>
 
                               <span
-                                className={`shrink-0 rounded-full border px-2 py-1 text-[10px] font-medium ${getChargerStatusClasses(
+                                className={`customer-charger-status-badge shrink-0 rounded-full border px-2 py-1 text-[10px] font-medium ${getChargerStatusClasses(
                                   charger.status
                                 )}`}
                               >
@@ -1063,7 +1109,7 @@ export default function CustomerStations() {
 
                             <div className="mt-4">
                               <div className="flex items-center justify-between gap-3">
-                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-[var(--text-muted)]">
                                   Available Slots
                                 </p>
 
@@ -1076,7 +1122,7 @@ export default function CustomerStations() {
 
                               {chargerSlots.length ===
                               0 ? (
-                                <div className="mt-3 rounded-lg border border-white/10 bg-[#07111F]/40 p-3 text-xs text-slate-500">
+                                <div className="mt-3 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 text-xs text-[var(--text-muted)]">
                                   No available future slots.
                                 </div>
                               ) : (
@@ -1086,12 +1132,12 @@ export default function CustomerStations() {
                                     .map((slot) => (
                                       <div
                                         key={slot.id}
-                                        className="flex flex-col gap-2 rounded-lg border border-white/10 bg-[#07111F]/40 p-3 sm:flex-row sm:items-center sm:justify-between"
+                                        className="flex flex-col gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 sm:flex-row sm:items-center sm:justify-between"
                                       >
                                         <div className="flex items-center gap-2">
                                           <CalendarDays className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
 
-                                          <span className="text-xs text-slate-300">
+                                          <span className="text-xs text-[var(--text-secondary)]">
                                             {formatDate(
                                               slot.date
                                             )}
@@ -1101,7 +1147,7 @@ export default function CustomerStations() {
                                         <div className="flex items-center gap-2">
                                           <Clock3 className="h-3.5 w-3.5 shrink-0 text-cyan-400" />
 
-                                          <span className="text-xs text-slate-300">
+                                          <span className="text-xs text-[var(--text-secondary)]">
                                             {formatTime(
                                               slot.startTime
                                             )}{" "}
@@ -1116,7 +1162,7 @@ export default function CustomerStations() {
 
                                   {chargerSlots.length >
                                     4 && (
-                                    <p className="text-xs text-slate-500">
+                                    <p className="text-xs text-[var(--text-muted)]">
                                       +
                                       {chargerSlots.length -
                                         4}{" "}
@@ -1135,7 +1181,7 @@ export default function CustomerStations() {
                                   `/customer/bookings?station=${selectedStation.stationId}&charger=${charger.chargerId}`
                                 )
                               }
-                              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 text-sm font-semibold text-[#07111F] transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400"
+                              className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl bg-cyan-400 px-4 text-sm font-semibold text-[#07111F] transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-[var(--text-secondary)]"
                             >
                               <CalendarDays className="h-4 w-4" />
                               {canBook
@@ -1152,13 +1198,13 @@ export default function CustomerStations() {
             </div>
 
             {/* Footer */}
-            <div className="flex shrink-0 justify-end border-t border-white/10 bg-[#0D1A2A] px-4 py-4 sm:px-6">
+            <div className="flex shrink-0 justify-end border-t border-[var(--border-primary)] bg-[var(--card-bg)] px-4 py-4 sm:px-6">
               <button
                 type="button"
                 onClick={() =>
                   setSelectedStation(null)
                 }
-                className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-white transition hover:bg-white hover:text-black"
+                className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-primary)] transition hover:bg-white hover:text-black"
               >
                 Close
               </button>
@@ -1166,6 +1212,51 @@ export default function CustomerStations() {
           </div>
         </div>
       )}
+
+      <style>{`
+        html.light .customer-station-status-badge,
+        html.light .customer-charger-status-badge {
+          color: #334155 !important;
+        }
+
+        html.light .customer-station-input,
+        html.light .customer-station-select {
+          color: #000000 !important;
+          background-color: #ffffff !important;
+        }
+
+        html.dark .customer-station-input,
+        html.dark .customer-station-select {
+          color: #ffffff !important;
+          background-color: #101d31 !important;
+        }
+
+        html.light .customer-station-option {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+        }
+
+        html.dark .customer-station-option {
+          background-color: #0d1b2a !important;
+          color: #ffffff !important;
+        }
+
+        html.light .customer-station-input::placeholder {
+          color: #64748b !important;
+        }
+
+        html.dark .customer-station-input::placeholder {
+          color: #64748b !important;
+        }
+
+        html.dark .customer-station-select {
+          color-scheme: dark;
+        }
+
+        html.light .customer-station-select {
+          color-scheme: light;
+        }
+      `}</style>
     </div>
   );
 }

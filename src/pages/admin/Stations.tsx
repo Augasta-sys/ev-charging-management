@@ -88,14 +88,17 @@ function Stations() {
   }, []);
 
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!showModal) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, [showModal]);
 
@@ -428,11 +431,11 @@ function Stations() {
             </div>
 
             <div className="min-w-0">
-              <h1 className="truncate text-2xl font-bold text-white sm:text-3xl">
+              <h1 className="truncate text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
                 Charging Stations
               </h1>
 
-              <p className="mt-1 text-sm text-slate-400">
+              <p className="mt-1 text-sm text-[var(--text-secondary)]">
                 Manage charging stations across the network
               </p>
             </div>
@@ -481,13 +484,13 @@ function Stations() {
       </div>
 
       {/* Filters */}
-      <div className="mt-6 w-full min-w-0 rounded-2xl border border-white/10 bg-[#0D1A2A] p-4 sm:p-5">
+      <div className="mt-6 w-full min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-4 sm:p-5">
         <div className="grid w-full min-w-0 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_180px_200px_auto]">
           {/* Search */}
           <div className="relative min-w-0">
             <Search
               size={18}
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]"
             />
 
             <input
@@ -495,7 +498,7 @@ function Stations() {
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
               placeholder="Search station, code, city..."
-              className="h-11 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] pl-10 pr-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-cyan-400/50"
+              className="h-11 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] pl-10 pr-4 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50"
             />
           </div>
 
@@ -507,7 +510,7 @@ function Stations() {
                 event.target.value as "All" | StationStatus
               )
             }
-            className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+            className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
           >
             <option value="All">All Status</option>
             <option value="Active">Active</option>
@@ -518,7 +521,7 @@ function Stations() {
           <select
             value={managerFilter}
             onChange={(event) => setManagerFilter(event.target.value)}
-            className="h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+            className="h-11 w-full rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
           >
             <option value="All">All Managers</option>
 
@@ -535,7 +538,7 @@ function Stations() {
           <button
             type="button"
             onClick={clearFilters}
-            className="h-11 rounded-xl border border-white/10 bg-white/5 px-4 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+            className="h-11 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-white/10 hover:text-[var(--text-primary)]"
           >
             Clear
           </button>
@@ -545,23 +548,23 @@ function Stations() {
       {/* Station Count */}
       <div className="mt-6 flex min-w-0 items-center justify-between gap-3">
         <div className="min-w-0">
-          <h2 className="text-lg font-semibold text-white">
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">
             Station List
           </h2>
 
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Showing {filteredStations.length} of {stations.length} stations
           </p>
         </div>
 
-        <div className="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-400 sm:flex">
+        <div className="hidden items-center gap-2 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-2 text-xs text-[var(--text-secondary)] sm:flex">
           <Users size={14} />
           {managers.length} active managers
         </div>
       </div>
 
       {/* Station Container */}
-      <div className="mt-4 w-full min-w-0 max-w-full rounded-2xl border border-white/10 bg-[#0D1A2A]">
+      <div className="mt-4 w-full min-w-0 max-w-full rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)]">
         {loading ? (
           <LoadingState />
         ) : filteredStations.length === 0 ? (
@@ -576,32 +579,32 @@ function Stations() {
             <div className="hidden w-full min-w-0 md:block">
               <table className="w-full table-fixed border-collapse">
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="w-[21%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500 lg:px-5">
+                  <tr className="border-b border-[var(--border-primary)] text-left">
+                    <th className="w-[21%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] lg:px-5">
                       Station
                     </th>
 
-                    <th className="w-[16%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[16%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Location
                     </th>
 
-                    <th className="w-[12%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[12%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Manager
                     </th>
 
-                    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Chargers
                     </th>
 
-                    <th className="w-[11%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[11%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Hours
                     </th>
 
-                    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[10%] px-4 py-4 text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Status
                     </th>
 
-                    <th className="w-[20%] px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <th className="w-[20%] px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)]">
                       Actions
                     </th>
                   </tr>
@@ -672,12 +675,12 @@ function SummaryCard({
   iconClass: string;
 }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-[#0D1A2A] p-5 transition hover:border-white/20">
+    <div className="min-w-0 rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] p-5 transition hover:border-white/20">
       <div className="flex min-w-0 items-center justify-between gap-4">
         <div className="min-w-0">
-          <p className="truncate text-sm text-slate-400">{title}</p>
+          <p className="truncate text-sm text-[var(--text-secondary)]">{title}</p>
 
-          <p className="mt-2 text-2xl font-bold text-white">
+          <p className="mt-2 text-2xl font-bold text-[var(--text-primary)]">
             {value}
           </p>
         </div>
@@ -710,7 +713,7 @@ function StationTableRow({
   onDelete: (station: Station) => void;
 }) {
   return (
-    <tr className="border-b border-white/5 last:border-b-0 hover:bg-white/[0.02]">
+    <tr className="border-b border-[var(--border-primary)] last:border-b-0 hover:bg-[var(--bg-secondary)]">
       {/* Station */}
       <td className="px-4 py-4 lg:px-5">
         <div className="flex min-w-0 items-center gap-3">
@@ -719,11 +722,11 @@ function StationTableRow({
           </div>
 
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-white">
+            <p className="truncate text-sm font-semibold text-[var(--text-primary)]">
               {station.stationName}
             </p>
 
-            <p className="mt-1 truncate text-xs text-slate-500">
+            <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
               {station.stationCode} · {station.stationId}
             </p>
           </div>
@@ -735,15 +738,15 @@ function StationTableRow({
         <div className="flex min-w-0 items-start gap-2">
           <MapPin
             size={15}
-            className="mt-0.5 shrink-0 text-slate-500"
+            className="mt-0.5 shrink-0 text-[var(--text-muted)]"
           />
 
           <div className="min-w-0">
-            <p className="truncate text-sm text-slate-300">
+            <p className="truncate text-sm text-[var(--text-secondary)]">
               {station.city}
             </p>
 
-            <p className="truncate text-xs text-slate-500">
+            <p className="truncate text-xs text-[var(--text-muted)]">
               {station.state} - {station.pincode}
             </p>
           </div>
@@ -752,7 +755,7 @@ function StationTableRow({
 
       {/* Manager */}
       <td className="px-4 py-4">
-        <p className="truncate text-sm text-slate-300">
+        <p className="truncate text-sm text-[var(--text-secondary)]">
           {managerName}
         </p>
       </td>
@@ -762,7 +765,7 @@ function StationTableRow({
         <div className="flex items-center gap-2">
           <Zap size={15} className="shrink-0 text-violet-300" />
 
-          <span className="text-sm font-medium text-white">
+          <span className="text-sm font-medium text-[var(--text-primary)]">
             {station.numberOfChargers}
           </span>
         </div>
@@ -770,11 +773,11 @@ function StationTableRow({
 
       {/* Hours */}
       <td className="px-4 py-4">
-        <p className="whitespace-nowrap text-sm text-slate-300">
+        <p className="whitespace-nowrap text-sm text-[var(--text-secondary)]">
           {station.openingTime}
         </p>
 
-        <p className="mt-1 whitespace-nowrap text-xs text-slate-500">
+        <p className="mt-1 whitespace-nowrap text-xs text-[var(--text-muted)]">
           to {station.closingTime}
         </p>
       </td>
@@ -790,7 +793,7 @@ function StationTableRow({
          <ActionButton
   title="Edit station"
   icon={<Edit3 size={16} />}
-  className="border-white/10 bg-white/5 text-white hover:bg-cyan-400 hover:text-[#07111F]"
+  className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-cyan-400 hover:text-[var(--text-primary)]"
   onClick={() => onEdit(station)}
 />
 
@@ -807,14 +810,14 @@ function StationTableRow({
       <UserCheck size={16} />
     )
   }
-  className="border-white/10 bg-white/5 text-white hover:bg-amber-400 hover:text-[#07111F]"
+  className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-amber-400 hover:text-[var(--text-primary)]"
   onClick={() => onToggleStatus(station)}
 />
 
 <ActionButton
   title="Delete station"
   icon={<Trash2 size={16} />}
-  className="border-white/10 bg-white/5 text-white hover:bg-red-500 hover:text-white"
+  className="border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-red-500 hover:text-[var(--text-primary)]"
   onClick={() => onDelete(station)}
 />
         </div>
@@ -841,7 +844,7 @@ function StationMobileCard({
   onDelete: (station: Station) => void;
 }) {
   return (
-    <div className="min-w-0 rounded-xl border border-white/10 bg-[#101D2C] p-4">
+    <div className="min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-4">
       {/* Header */}
       <div className="flex min-w-0 items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
@@ -850,11 +853,11 @@ function StationMobileCard({
           </div>
 
           <div className="min-w-0">
-            <h3 className="truncate text-sm font-semibold text-white">
+            <h3 className="truncate text-sm font-semibold text-[var(--text-primary)]">
               {station.stationName}
             </h3>
 
-            <p className="mt-1 truncate text-xs text-slate-500">
+            <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
               {station.stationCode} · {station.stationId}
             </p>
           </div>
@@ -903,11 +906,11 @@ function StationMobileCard({
       </div>
 
       {/* Actions */}
-      <div className="mt-4 flex items-center justify-end gap-2 border-t border-white/10 pt-4">
+      <div className="mt-4 flex items-center justify-end gap-2 border-t border-[var(--border-primary)] pt-4">
         <ActionButton
           title="Edit station"
           icon={<Edit3 size={16} />}
-          className="border-cyan-400/20 bg-cyan-400/10 text-cyan-300 hover:bg-cyan-400 hover:text-[#07111F]"
+          className="border-cyan-400/20 bg-cyan-400/10 text-cyan-300 hover:bg-cyan-400 hover:text-[var(--text-primary)]"
           onClick={() => onEdit(station)}
         />
 
@@ -926,8 +929,8 @@ function StationMobileCard({
           }
           className={
             station.status === "Active"
-              ? "border-amber-400/20 bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-[#07111F]"
-              : "border-emerald-400/20 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400 hover:text-[#07111F]"
+              ? "border-amber-400/20 bg-amber-400/10 text-amber-300 hover:bg-amber-400 hover:text-[var(--text-primary)]"
+              : "border-emerald-400/20 bg-emerald-400/10 text-emerald-300 hover:bg-emerald-400 hover:text-[var(--text-primary)]"
           }
           onClick={() => onToggleStatus(station)}
         />
@@ -935,7 +938,7 @@ function StationMobileCard({
         <ActionButton
           title="Delete station"
           icon={<Trash2 size={16} />}
-          className="border-red-400/20 bg-red-400/10 text-red-300 hover:bg-red-500 hover:text-white"
+          className="border-red-400/20 bg-red-400/10 text-red-300 hover:bg-red-500 hover:text-[var(--text-primary)]"
           onClick={() => onDelete(station)}
         />
       </div>
@@ -987,7 +990,7 @@ function StatusBadge({
       className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border px-2.5 py-1 text-xs font-medium ${
         isActive
           ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-300"
-          : "border-slate-400/20 bg-slate-400/10 text-slate-400"
+          : "border-slate-400/20 bg-slate-400/10 text-[var(--text-secondary)]"
       }`}
     >
       <span
@@ -1015,8 +1018,8 @@ function DetailItem({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="min-w-0 rounded-lg border border-white/5 bg-white/[0.02] p-3">
-      <div className="flex items-center gap-2 text-slate-500">
+    <div className="min-w-0 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3">
+      <div className="flex items-center gap-2 text-[var(--text-muted)]">
         {icon}
 
         <span className="text-xs">{label}</span>
@@ -1039,7 +1042,7 @@ function LoadingState() {
       <div className="text-center">
         <div className="mx-auto h-9 w-9 animate-spin rounded-full border-2 border-cyan-400/20 border-t-cyan-400" />
 
-        <p className="mt-4 text-sm text-slate-400">
+        <p className="mt-4 text-sm text-[var(--text-secondary)]">
           Loading stations...
         </p>
       </div>
@@ -1063,15 +1066,15 @@ function EmptyState({
   return (
     <div className="flex min-h-[320px] items-center justify-center p-8">
       <div className="max-w-md text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-          <Building2 size={25} className="text-slate-500" />
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)]">
+          <Building2 size={25} className="text-[var(--text-muted)]" />
         </div>
 
-        <h3 className="mt-4 text-lg font-semibold text-white">
+        <h3 className="mt-4 text-lg font-semibold text-[var(--text-primary)]">
           No stations found
         </h3>
 
-        <p className="mt-2 text-sm leading-6 text-slate-500">
+        <p className="mt-2 text-sm leading-6 text-[var(--text-muted)]">
           {searchTerm
             ? "No stations match your current search or filters."
             : "There are no charging stations available yet."}
@@ -1082,7 +1085,7 @@ function EmptyState({
             <button
               type="button"
               onClick={onClear}
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-medium text-slate-300 hover:bg-white/10 hover:text-white"
+              className="rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-4 py-2.5 text-sm font-medium text-[var(--text-secondary)] hover:bg-white/10 hover:text-[var(--text-primary)]"
             >
               Clear Filters
             </button>
@@ -1130,16 +1133,16 @@ function StationFormModal({
 }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-3 backdrop-blur-sm sm:p-5">
-      <div className="flex max-h-[calc(100vh-24px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0D1A2A] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
+      <div className="flex max-h-[calc(100vh-24px)] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-40px)]">
         
         {/* Header */}
-        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-6">
+        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[var(--border-primary)] px-5 py-4 sm:px-6">
           <div className="min-w-0">
-            <h2 className="truncate text-lg font-bold text-white sm:text-xl">
+            <h2 className="truncate text-lg font-bold text-[var(--text-primary)] sm:text-xl">
               {editingStation ? "Edit Station" : "Add New Station"}
             </h2>
 
-            <p className="mt-1 text-xs text-slate-500 sm:text-sm">
+            <p className="mt-1 text-xs text-[var(--text-muted)] sm:text-sm">
               {editingStation
                 ? "Update charging station details"
                 : "Create a new charging station"}
@@ -1150,7 +1153,7 @@ function StationFormModal({
   type="button"
   onClick={onClose}
   disabled={saving}
-  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] text-[var(--text-primary)] transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
 >
   <X size={18} />
 </button>
@@ -1162,7 +1165,7 @@ function StationFormModal({
           className="flex min-h-0 flex-col"
         >
           {/* Form Content */}
-          <div className="px-5 py-4 sm:px-6 sm:py-5">
+          <div className="scrollbar-hidden min-h-0 overflow-y-auto px-5 py-4 sm:px-6 sm:py-5">
             {error && (
               <div className="mb-4 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-2.5 text-sm text-red-300">
                 {error}
@@ -1261,7 +1264,7 @@ function StationFormModal({
 
               {/* Manager */}
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-slate-300">
+                <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
                   Station Manager
                 </label>
 
@@ -1273,7 +1276,7 @@ function StationFormModal({
                       event.target.value
                     )
                   }
-                  className="h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="h-10 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
                 >
                   <option value="">Unassigned</option>
 
@@ -1290,7 +1293,7 @@ function StationFormModal({
 
               {/* Chargers */}
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-slate-300">
+                <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
                   Number of Chargers
                 </label>
 
@@ -1307,13 +1310,13 @@ function StationFormModal({
                       )
                     )
                   }
-                  className="h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="h-10 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
                 />
               </div>
 
               {/* Opening Time */}
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-slate-300">
+                <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
                   Opening Time
                 </label>
 
@@ -1323,13 +1326,13 @@ function StationFormModal({
   onChange={(event) =>
     onChange("openingTime", event.target.value)
   }
-  className="h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+  className="h-10 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
 />
               </div>
 
               {/* Closing Time */}
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-slate-300">
+                <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
                   Closing Time
                 </label>
 
@@ -1339,13 +1342,13 @@ function StationFormModal({
   onChange={(event) =>
     onChange("closingTime", event.target.value)
   }
-  className="h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+  className="h-10 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
 />
               </div>
 
               {/* Status */}
               <div className="min-w-0">
-                <label className="mb-1.5 block text-sm font-medium text-slate-300">
+                <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
                   Status
                 </label>
 
@@ -1357,7 +1360,7 @@ function StationFormModal({
       event.target.value as StationStatus
     )
   }
-  className="h-10 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none focus:border-cyan-400/50"
+  className="h-10 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none focus:border-cyan-400/50"
 >
   <option value="Active">Active</option>
   <option value="Inactive">Inactive</option>
@@ -1367,12 +1370,12 @@ function StationFormModal({
           </div>
 
           {/* Footer */}
-          <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-white/10 px-5 py-4 sm:flex-row sm:justify-end sm:px-6">
+          <div className="flex shrink-0 flex-col-reverse gap-3 border-t border-[var(--border-primary)] px-5 py-4 sm:flex-row sm:justify-end sm:px-6">
             <button
               type="button"
               onClick={onClose}
               disabled={saving}
-              className="h-10 rounded-xl border border-white/10 bg-white/5 px-5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-10 rounded-xl border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-5 text-sm font-medium text-[var(--text-secondary)] transition hover:bg-white/10 hover:text-[var(--text-primary)] disabled:cursor-not-allowed disabled:opacity-50"
             >
               Cancel
             </button>
@@ -1420,7 +1423,7 @@ function FormInput({
 }) {
   return (
     <div className="min-w-0">
-      <label className="mb-2 block text-sm font-medium text-slate-300">
+      <label className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
         {label}
 
         {required && (
@@ -1436,7 +1439,7 @@ function FormInput({
         maxLength={maxLength}
         inputMode={inputMode}
         onChange={(event) => onChange(event.target.value)}
-        className="h-11 w-full min-w-0 rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-cyan-400/50"
+        className="h-11 w-full min-w-0 rounded-xl border border-[var(--border-primary)] bg-[var(--input-bg)] px-3 text-sm text-[var(--text-primary)] outline-none placeholder:text-[var(--text-muted)] focus:border-cyan-400/50"
       />
     </div>
   );
