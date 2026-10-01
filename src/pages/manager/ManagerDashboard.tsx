@@ -558,11 +558,11 @@ export default function ManagerDashboard() {
           ASSIGNED STATION
       =================================================== */}
 
-      <section className="mb-6 rounded-2xl border border-cyan-400/10 bg-white dark:bg-[#0D1B2A] p-4 shadow-xl shadow-black/10 sm:p-5">
+     <section className="manager-station-banner mb-6 rounded-2xl border border-cyan-400/10 bg-white p-4 shadow-xl shadow-black/10 sm:p-5">
         <div className="flex min-w-0 flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex min-w-0 items-center gap-4">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-400/10">
-              <MapPin className="h-6 w-6 text-[var(--text-primary)]" />
+              <MapPin className="h-6 w-6 text-[var(--text-primary)] dark:!text-white" />
             </div>
 
             <div className="min-w-0">
@@ -570,12 +570,12 @@ export default function ManagerDashboard() {
                 Assigned Station
               </p>
 
-              <h2 className="mt-1 truncate text-lg font-bold text-[var(--text-primary)] sm:text-xl">
+              <h2 className="mt-1 truncate text-lg font-bold text-[var(--text-primary)] dark:!text-white sm:text-xl">
                 {assignedStation?.stationName ||
                   "No station assigned"}
               </h2>
 
-              <p className="mt-1 truncate text-xs text-[var(--text-muted)]">
+              <p className="mt-1 truncate text-xs text-[var(--text-muted)] dark:!text-white">
                 {assignedStation
                   ? `${assignedStation.stationId}${
                       assignedStation.city
@@ -1010,7 +1010,7 @@ function MiniInfo({
         {label}
       </p>
 
-      <p className="mt-1 text-xs font-medium text-[var(--text-primary)]">
+      <p className="mt-1 text-xs font-medium text-[var(--text-primary)] dark:!text-white">
         {value}
       </p>
     </div>

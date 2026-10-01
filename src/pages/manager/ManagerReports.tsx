@@ -563,8 +563,26 @@ export default function ManagerReports() {
 
   return (
     <div className="w-full min-w-0 space-y-6">
+      <style>{`
+        html.dark .manager-reports-banner {
+          background-color: #0D1B2A !important;
+          color: #FFFFFF !important;
+        }
+
+        html.dark .manager-reports-banner h1,
+        html.dark .manager-reports-banner h2,
+        html.dark .manager-reports-banner p,
+        html.dark .manager-reports-banner span {
+          color: #FFFFFF !important;
+        }
+
+        html.dark .manager-reports-banner .text-cyan-300 {
+          color: #22D3EE !important;
+        }
+      `}</style>
+
       {/* Header */}
-      <section className="rounded-2xl border border-[var(--border-primary)] bg-white dark:bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="manager-reports-banner rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -1009,5 +1027,5 @@ export default function ManagerReports() {
         </div>
       </section>
     </div>
-  );
+     );
 }

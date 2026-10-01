@@ -577,7 +577,7 @@ export default function ManagerMaintenance() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-[var(--border-primary)] bg-white dark:bg-[var(--card-bg)] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="manager-maintenance-banner rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -1024,6 +1024,23 @@ export default function ManagerMaintenance() {
       `}</style>
 
       /* View popup */}
+      <style>{`
+        html.dark .manager-maintenance-banner {
+          background-color: #0D1B2A !important;
+          color: #FFFFFF !important;
+        }
+
+        html.dark .manager-maintenance-banner h1,
+        html.dark .manager-maintenance-banner p,
+        html.dark .manager-maintenance-banner span {
+          color: #FFFFFF !important;
+        }
+
+        html.dark .manager-maintenance-banner .text-cyan-300 {
+          color: #22D3EE !important;
+        }
+      `}</style>
+
       {viewMaintenance && (
         <div className="fixed inset-0 z-[100] flex h-screen w-screen items-center justify-center overflow-hidden bg-black/70 p-3 backdrop-blur-sm sm:p-4">
           <div className="flex max-h-[calc(100vh-1.5rem)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[var(--border-primary)] bg-[var(--card-bg)] shadow-2xl shadow-black/60 sm:max-h-[calc(100vh-2rem)]">

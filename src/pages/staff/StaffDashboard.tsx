@@ -522,8 +522,24 @@ export default function StaffDashboard() {
 
   return (
     <div className="w-full min-w-0 space-y-6 text-[var(--text-primary)]">
+      <style>{`
+        html.dark .staff-dashboard-banner {
+          background-color: #0D1B2A !important;
+          color: #FFFFFF !important;
+        }
+
+        html.dark .staff-dashboard-banner h1,
+        html.dark .staff-dashboard-banner p,
+        html.dark .staff-dashboard-banner span {
+          color: #FFFFFF !important;
+        }
+
+        html.dark .staff-dashboard-banner .text-cyan-300 {
+          color: #22D3EE !important;
+        }
+      `}</style>
       {/* Header */}
-      <section className="rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 dark:bg-[var(--card-bg)] sm:p-6">
+      <section className="staff-dashboard-banner rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">

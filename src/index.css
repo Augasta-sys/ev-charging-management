@@ -251,6 +251,25 @@ html.light select option {
   color: #000000;
 }
 
+/* Manager Dashboard - Assigned Station Banner */
+html.dark .manager-station-banner {
+  background-color: #0D1B2A !important;
+  color: #FFFFFF !important;
+}
+
+html.dark .manager-station-banner h2,
+html.dark .manager-station-banner p {
+  color: #FFFFFF !important;
+}
+
+html.dark .manager-station-banner svg {
+  color: #FFFFFF !important;
+}
+
+html.light .manager-station-banner {
+  background-color: #FFFFFF;
+}
+
 /* =========================================================
    LOADING SPINNER
    ========================================================= */

@@ -246,7 +246,7 @@ function StatCard({
             {title}
           </p>
 
-          <p className="mt-2 break-words text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
+          <p className="mt-2 break-words text-2xl font-bold text-[var(--text-primary)] sm:text-3xl dark:text-white">
             {value}
           </p>
 
@@ -513,7 +513,7 @@ export default function CustomerDashboard() {
         <div className="flex flex-col items-center gap-3">
           <RefreshCw className="h-7 w-7 animate-spin text-cyan-400" />
 
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-[var(--text-secondary)] dark:text-white">
             Loading your dashboard...
           </p>
         </div>
@@ -524,7 +524,7 @@ export default function CustomerDashboard() {
   return (
     <div className="w-full min-w-0 space-y-6">
       {/* Header */}
-      <section className="rounded-2xl border border-[var(--border-primary)] bg-white p-5 shadow-xl shadow-black/10 dark:bg-gradient-to-br dark:from-[#0D1B2A] dark:via-[#0B1726] dark:to-[#111A35] sm:p-6">
+      <section className="rounded-2xl border border-[var(--border-primary)] bg-[var(--bg-primary)] p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <span className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-300">
@@ -536,7 +536,7 @@ export default function CustomerDashboard() {
               {user?.name ? `, ${user.name}` : ""}
             </h1>
 
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-[var(--text-primary)]">
               Manage your EV charging bookings, sessions,
               payments and charging history.
             </p>

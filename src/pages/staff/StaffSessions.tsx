@@ -874,8 +874,25 @@ export default function StaffSessions() {
 
   return (
     <div className="w-full min-w-0 space-y-6">
+      <style>{`
+        html.dark .staff-sessions-banner {
+          background-color: #0D1B2A !important;
+          color: #FFFFFF !important;
+        }
+
+        html.dark .staff-sessions-banner h1,
+        html.dark .staff-sessions-banner p,
+        html.dark .staff-sessions-banner span {
+          color: #FFFFFF !important;
+        }
+
+        html.dark .staff-sessions-banner .text-cyan-300,
+        html.dark .staff-sessions-banner .text-cyan-700 {
+          color: #22D3EE !important;
+        }
+      `}</style>
       {/* Header */}
-      <section className="rounded-2xl border border-white/10 bg-white dark:bg-gradient-to-br dark:from-[#0D1B2A] dark:via-[#0B1726] dark:to-[#111A35] p-5 shadow-xl shadow-black/10 sm:p-6">
+      <section className="staff-sessions-banner rounded-2xl border border-white/10 bg-white p-5 shadow-xl shadow-black/10 sm:p-6">
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
